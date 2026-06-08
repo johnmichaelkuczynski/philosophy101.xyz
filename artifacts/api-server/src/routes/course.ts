@@ -21,24 +21,29 @@ const router: IRouter = Router();
 
 const WEEK_TITLES: Record<number, { title: string; summary: string }> = {
   1: {
-    title: "Logic and Critical Reasoning",
+    title: "The Analysis of Analysis",
     summary:
-      "What philosophy is, arguments with premises and conclusions, validity and soundness, deductive vs. inductive reasoning, common fallacies, reconstructing arguments, and philosophical method.",
+      "What analytic philosophy is and does: logical form and conceptual analysis, properties beyond space and time, propositions as sets of properties, and clarifying meanings rather than positing entities.",
   },
   2: {
-    title: "Knowledge and Reality",
+    title: "Philosophy of Language",
     summary:
-      "Epistemology and what we can know, rationalism vs. empiricism, skepticism and doubt, justified true belief and Gettier problems, perception and reality, theories of truth, and faith and reason.",
+      "Meaning, reference, and semantic rules: thought without language, definite descriptions and scope, Frege's logicism and incompleteness, semantic and content externalism, and how thought connects to the world.",
   },
   3: {
-    title: "Philosophy of Mind",
+    title: "Knowledge & Epistemology",
     summary:
-      "The mind-body problem, dualism, materialism and physicalism, personal identity over time, free will and determinism, consciousness and the self, and artificial minds.",
+      "Justified true belief and beyond: hyper-justified belief and Gettier-style cases, Descartes and skepticism, inference and causal anomalies, and the reach and limits of empiricism.",
   },
   4: {
-    title: "Metaphysics, God, and Ethics",
+    title: "Metaphysics, Mind & Modality",
     summary:
-      "What exists, arguments for and against God, the problem of evil, consequentialism, deontology, virtue ethics, justice and political philosophy, and a capstone synthesis.",
+      "Determinism and predictability, compatibilist freedom and the will, personal and objectual identity, causality and explanation, and modality and analytic truth.",
+  },
+  5: {
+    title: "Ethics, Value & Religion",
+    summary:
+      "Intrinsic good and the right, emotivism and its collapse, moral conventionalism and nihilism, subjecthood and flourishing, Kant on rationality and autonomy, welfare and duty, religion and the Euthyphro, existentialism, and moral protection in law.",
   },
 };
 
@@ -113,7 +118,7 @@ async function buildWeek(weekNumber: number) {
 }
 
 router.get("/course/overview", async (_req, res) => {
-  const weeks = await Promise.all([1, 2, 3, 4].map(buildWeek));
+  const weeks = await Promise.all([1, 2, 3, 4, 5].map(buildWeek));
   const assignmentsTotal = weeks.reduce((s, w) => s + w.assignments.length, 0);
   const assignmentsCompleted = weeks.reduce(
     (s, w) => s + w.assignments.filter((a) => a.status === "submitted").length,
@@ -139,7 +144,7 @@ router.get("/course/weeks/:weekNumber", async (req, res): Promise<void> => {
     ? req.params.weekNumber[0]
     : req.params.weekNumber;
   const weekNumber = parseInt(raw ?? "", 10);
-  if (!Number.isFinite(weekNumber) || weekNumber < 1 || weekNumber > 4) {
+  if (!Number.isFinite(weekNumber) || weekNumber < 1 || weekNumber > 5) {
     res.status(400).json({ error: "invalid weekNumber" });
     return;
   }

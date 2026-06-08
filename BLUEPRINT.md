@@ -6,7 +6,7 @@ A complete architectural blueprint for the Philosophy 101 4-unit college Philoso
 
 ## 1. Product summary
 
-Philosophy 101 is a self-paced, single-user, no-login web course covering a four-unit college Philosophy 101 curriculum (29 topics across Logic & Critical Reasoning, Knowledge & Reality, Philosophy of Mind, and Metaphysics, God & Ethics). Students read AI-rewritten lecture notes at three lengths, ask an AI tutor scoped to the section they're reading, drill on adaptive practice problems, and submit homework / tests / midterm / final that are AI-graded and AI-detection-screened.
+Philosophy 101 is a self-paced, single-user, no-login web course covering a five-unit analytic-philosophy curriculum derived strictly from the source text (27 chapters across The Analysis of Analysis, Philosophy of Language, Knowledge & Epistemology, Metaphysics, Mind & Modality, and Ethics, Value & Religion). Students read AI-rewritten lecture notes at three lengths, ask an AI tutor scoped to the section they're reading, drill on adaptive practice problems, and submit homework / tests / midterm / final that are AI-graded and AI-detection-screened.
 
 The product surface is three deployable artifacts in one pnpm monorepo:
 

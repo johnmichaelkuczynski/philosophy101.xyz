@@ -1,6 +1,6 @@
 # 🦉 Philosophy 101
 
-**The Philosophy Studio — A Four-Unit College Course That Teaches, Tutors, and Proofs Itself**
+**The Philosophy Studio — A Five-Unit Analytic Philosophy Course That Teaches, Tutors, and Proofs Itself**
 
 ---
 
@@ -10,7 +10,7 @@ Philosophy 101 is a self-paced, single-user web course that delivers a full coll
 
 It compresses the experience of a semester-style introductory philosophy class into one focused product: read the lecture at the depth you want, ask a tutor scoped to the exact section you're on, drill problems whose difficulty adapts to you in real time, and submit homework, tests, a midterm, and a final that are AI-graded with feedback and screened for AI-generated answers.
 
-The curriculum is organized into **four units and 29 topics**: Unit 1 (Logic & Critical Reasoning), Unit 2 (Knowledge & Reality — Epistemology), Unit 3 (Philosophy of Mind), and Unit 4 (Metaphysics, God & Ethics).
+The curriculum is organized into **five units and 27 chapters**, derived strictly from the source analytic-philosophy text: Unit 1 (The Analysis of Analysis), Unit 2 (Philosophy of Language), Unit 3 (Knowledge & Epistemology), Unit 4 (Metaphysics, Mind & Modality), and Unit 5 (Ethics, Value & Religion).
 
 Designed for **students, instructors evaluating AI-taught coursework, and researchers studying AI academic integrity**, Philosophy 101 pairs a real curriculum with two layers of AI-authorship detection — surfacing not just *whether* the writing looks AI-generated, but whether the *act of producing it* did.
 
@@ -18,7 +18,7 @@ Designed for **students, instructors evaluating AI-taught coursework, and resear
 
 ## 🧠 What It Does
 
-- **Four-Unit Structured Curriculum** — A complete Philosophy 101 syllabus across 29 topics. Each unit ships with lectures, homework, and a test; Unit 2 adds a midterm and Unit 4 adds a final.
+- **Five-Unit Structured Curriculum** — A complete analytic-philosophy syllabus across 27 chapters, taught strictly from the source text. Each unit ships with lectures, homework, and a test; a midterm follows Unit 3 and a comprehensive final follows Unit 5.
 - **Three-Depth Lectures** — Every lecture is available at **Short / Medium / Long** length, AI-rewritten while preserving the same examples and learning objectives. Skim the concept, expand it on demand, or read the textbook-style deep cut.
 - **Section-Scoped AI Tutor** — Ask a question about the paragraph you're reading and the answer streams back token-by-token, grounded in that exact lecture section. Suggested starter questions are pre-generated per lecture.
 - **Adaptive Topic Practice** — Generated problem sets that move difficulty up after a streak and down after a miss, with explanations on every answer. Per-session difficulty persists, so each drill picks up where the last one left off.

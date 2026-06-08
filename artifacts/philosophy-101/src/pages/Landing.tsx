@@ -36,16 +36,17 @@ const features = [
   },
   {
     icon: Scale,
-    title: "Four Units, 29 Topics",
-    body: "From how to argue to what exists, the mind, God, and how to live.",
+    title: "Five Units, 27 Chapters",
+    body: "From the analysis of meaning to language, knowledge, mind, and value.",
   },
 ];
 
 const units = [
-  { n: 1, title: "Logic and Critical Reasoning" },
-  { n: 2, title: "Knowledge and Reality" },
-  { n: 3, title: "Philosophy of Mind" },
-  { n: 4, title: "Metaphysics, God, and Ethics" },
+  { n: 1, title: "The Analysis of Analysis" },
+  { n: 2, title: "Philosophy of Language" },
+  { n: 3, title: "Knowledge & Epistemology" },
+  { n: 4, title: "Metaphysics, Mind & Modality" },
+  { n: 5, title: "Ethics, Value & Religion" },
 ];
 
 export default function Landing() {
@@ -84,15 +85,15 @@ export default function Landing() {
         <section className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-medium mb-6">
             <Scale className="w-3.5 h-3.5" />
-            A four-unit college Philosophy 101 course
+            A five-unit college analytic philosophy course
           </div>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary leading-tight mb-5">
             Read the idea. Ground the idea. Write the idea.
           </h1>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
-            A self-paced Philosophy 101 course that teaches, tutors, drills, and
-            grades you — from how to build an argument all the way to what exists,
-            what minds are, and how we ought to live.
+            A self-paced analytic philosophy course that teaches, tutors, drills,
+            and grades you — from the analysis of meaning and language to
+            knowledge, mind, modality, and how we ought to live.
           </p>
           <div className="flex items-center justify-center gap-3">
             <Link href="/sign-up">

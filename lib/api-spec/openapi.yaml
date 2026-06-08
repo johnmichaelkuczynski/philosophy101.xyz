@@ -58,7 +58,7 @@ paths:
         - name: weekNumber
           in: path
           required: true
-          schema: { type: integer, minimum: 1, maximum: 4 }
+          schema: { type: integer, minimum: 1, maximum: 5 }
       responses:
         "200":
           description: OK

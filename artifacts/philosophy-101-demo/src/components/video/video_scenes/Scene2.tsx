@@ -93,7 +93,7 @@ export function Scene2({ setCursorPos, setIsClicking }: { setCursorPos: (pos: {x
                   The common thread is argument: a philosophical claim is only as good as the reasoning offered for it. So the first task is learning to build and evaluate arguments well.
                 </p>
                 <p>
-                  This course is organized into four areas — logic and critical reasoning, epistemology, philosophy of mind, and metaphysics and ethics — and we begin, deliberately, with logic.
+                  This course is organized into five areas — the analysis of analysis, philosophy of language, knowledge and epistemology, metaphysics, mind and modality, and ethics, value and religion — and we begin, deliberately, with analysis itself.
                 </p>
               </motion.div>
             )}

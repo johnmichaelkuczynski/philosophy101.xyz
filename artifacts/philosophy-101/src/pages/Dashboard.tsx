@@ -53,7 +53,7 @@ export default function Dashboard() {
           <div className="md:col-span-2 flex flex-col gap-4">
             <h2 className="text-xl font-serif font-semibold">Course Schedule</h2>
             {isLoadingOverview ? (
-              Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-32 w-full" />)
+              Array.from({ length: 5 }).map((_, i) => <Skeleton key={i} className="h-32 w-full" />)
             ) : (
               overview?.weeks.map(week => (
                 <Link key={week.weekNumber} href={`/weeks/${week.weekNumber}`}>
