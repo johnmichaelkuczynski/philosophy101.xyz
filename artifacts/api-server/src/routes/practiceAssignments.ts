@@ -1,5 +1,5 @@
 import { Router, type IRouter } from "express";
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, eq, sql } from "drizzle-orm";
 import {
   db,
   assignmentsTable,
@@ -335,6 +335,140 @@ router.post(
           : "This is what practice is for — every miss here is one you won't make on the real thing. Run another practice version and watch your score climb.";
     }
 
+    // ---- Evolving profile + surgically-precise focus pointers ----------
+    // Build a per-topic profile from ALL logged practice activity (this
+    // assignment-practice history + topic drills), blended with how the
+    // student did per topic on THIS run, to drive precise prep guidance.
+    const topicRows = await db.select().from(topicsTable);
+    const topicTitleById = new Map(topicRows.map((t) => [t.id, t.title]));
+
+    const runByTopic = new Map<
+      number,
+      { title: string; correct: number; total: number }
+    >();
+    for (const g of graded) {
+      const tid = g.p.topicId;
+      const cur =
+        runByTopic.get(tid) ??
+        { title: topicTitleById.get(tid) ?? "Topic", correct: 0, total: 0 };
+      cur.total += 1;
+      if (g.correct) cur.correct += 1;
+      runByTopic.set(tid, cur);
+    }
+
+    const histByTopic = new Map<
+      number,
+      { title: string; n: number; correctSum: number }
+    >();
+    const addHist = (
+      rows: Array<{ topic_id: unknown; n: unknown; acc: unknown }>,
+    ) => {
+      for (const r of rows) {
+        const tid = Number(r.topic_id);
+        const n = Number(r.n);
+        const acc = Number(r.acc);
+        if (!Number.isFinite(tid) || !Number.isFinite(n) || n <= 0) continue;
+        const cur =
+          histByTopic.get(tid) ??
+          { title: topicTitleById.get(tid) ?? "Topic", n: 0, correctSum: 0 };
+        cur.n += n;
+        cur.correctSum += (Number.isFinite(acc) ? acc : 0) * n;
+        histByTopic.set(tid, cur);
+      }
+    };
+    try {
+      const r1 = await db.execute(sql`
+        select pap.topic_id as topic_id, count(*)::int as n,
+          avg(case when paa.correct then 1.0 else 0.0 end) as acc
+        from practice_assignment_answers paa
+        join practice_assignment_problems pap on pap.id = paa.problem_id
+        group by pap.topic_id
+      `);
+      addHist(r1.rows as Array<{ topic_id: unknown; n: unknown; acc: unknown }>);
+      const r2 = await db.execute(sql`
+        select topic_id, count(*)::int as n,
+          avg(case when correct then 1.0 else 0.0 end) as acc
+        from practice_attempts group by topic_id
+      `);
+      addHist(r2.rows as Array<{ topic_id: unknown; n: unknown; acc: unknown }>);
+    } catch {
+      /* profile is best-effort; pointers still work from this run */
+    }
+
+    const profile = [...histByTopic.entries()]
+      .map(([tid, v]) => ({
+        topicTitle: v.title,
+        lifetimeAttempts: v.n,
+        lifetimeAccuracy: Number((v.correctSum / v.n).toFixed(2)),
+        thisRun: runByTopic.get(tid)
+          ? `${runByTopic.get(tid)!.correct}/${runByTopic.get(tid)!.total}`
+          : null,
+      }))
+      .sort((a, b) => a.lifetimeAccuracy - b.lifetimeAccuracy);
+
+    const missed = graded
+      .filter((g) => !g.correct)
+      .map((g) => ({
+        topic: topicTitleById.get(g.p.topicId) ?? "Topic",
+        prompt: g.p.prompt,
+        whatStrongAnswerNeeds: g.p.explanation,
+      }));
+
+    let focusPointers: Array<{
+      topicTitle: string | null;
+      priority: string | null;
+      pointer: string;
+    }> = [];
+    let focusSummary: string | null = null;
+    try {
+      const out = await chatJson<{
+        summary: string;
+        pointers: Array<{
+          topic: string;
+          priority: "high" | "medium" | "low";
+          pointer: string;
+        }>;
+      }>(
+        'You are an academic coach preparing a college Philosophy 101 student for a GRADED assignment, using their actual performance data. You are given: their lifetime per-topic practice accuracy (the evolving profile), how they did per topic on THIS practice run, and the specific problems they just missed with what a strong answer requires. Produce SURGICALLY PRECISE, analytics-grounded pointers: name the exact concept or skill to drill, cite the data (e.g. "62% lifetime on this topic", "you missed the validity-vs-soundness distinction just now"), and say concretely what to do before the graded version. Never be generic. Rank by priority. Respond as strict JSON: {"summary": string (2-3 sentences naming the single highest-leverage focus), "pointers": [{"topic": string, "priority": "high"|"medium"|"low", "pointer": string (one concrete, specific action tied to the data)}]} with 3 to 6 pointers.',
+        JSON.stringify({
+          assignmentKind: pa.kind,
+          thisRunScore: `${score}/${total}`,
+          evolvingProfile: profile,
+          missedThisRun: missed,
+        }),
+      );
+      focusSummary = out?.summary?.trim() || null;
+      focusPointers = (out?.pointers ?? [])
+        .filter((p) => p?.pointer?.trim())
+        .map((p) => ({
+          topicTitle: p.topic?.trim() || null,
+          priority: ["high", "medium", "low"].includes(p.priority)
+            ? p.priority
+            : null,
+          pointer: p.pointer.trim(),
+        }));
+    } catch {
+      /* deterministic fallback below */
+    }
+    if (focusPointers.length === 0) {
+      const weak = profile.filter((p) => p.lifetimeAccuracy < 0.75).slice(0, 3);
+      const basis = weak.length > 0 ? weak : profile.slice(0, 3);
+      focusPointers = basis.map((p) => ({
+        topicTitle: p.topicTitle,
+        priority: p.lifetimeAccuracy < 0.5 ? "high" : "medium",
+        pointer:
+          `You're at ${Math.round(p.lifetimeAccuracy * 100)}% on "${p.topicTitle}" ` +
+          `across ${p.lifetimeAttempts} logged practice answer(s). Run another practice ` +
+          `version focused here and review the model answers before the graded assignment.`,
+      }));
+      if (focusSummary == null) {
+        focusSummary =
+          missed.length === 0
+            ? "Clean run — do one more practice version to lock it in, then take the graded assignment."
+            : `Focus your prep on ${focusPointers[0]?.topicTitle ?? "your weakest topic"} before the graded version.`;
+      }
+    }
+
     res.json(
       SubmitPracticeAssignmentResponse.parse({
         practiceId: id,
@@ -342,6 +476,8 @@ router.post(
         total,
         percent,
         encouragement,
+        focusSummary,
+        focusPointers,
         perProblem: graded.map((g) => ({
           problemId: g.p.id,
           correct: g.correct,

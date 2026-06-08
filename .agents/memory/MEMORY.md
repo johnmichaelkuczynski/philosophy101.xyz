@@ -4,3 +4,4 @@
 - [Demo video answer scripts](demo-video-answer-scripts.md) — Scene typed-answer text lives in setTimeout state scripts decoupled from the displayed question/feedback; converting course content must update both or the demo self-contradicts.
 - [Course content re-seed](course-content-reseed.md) — seedIfEmpty skips when topics exist; truncate course tables + restart api-server to apply seed.ts content edits.
 - [Practice vs graded asymmetry](practice-vs-graded.md) — practice = no AI-detection + live tutor + unlimited fresh instances; graded = detection on, tutor off. Don't "unify" them.
+- [Lazy gen request-scoping](lazy-gen-request-scoping.md) — async generate-on-open responses must be ignored if the user navigated away, or stale content bleeds across items.

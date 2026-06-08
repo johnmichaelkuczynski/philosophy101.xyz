@@ -105,6 +105,28 @@ export const GetLectureResponse = zod.object({
 
 
 /**
+ * @summary Generate (and persist) the medium or long version of a lecture on demand
+ */
+export const ExpandLectureParams = zod.object({
+  "lectureId": zod.coerce.number()
+})
+
+export const ExpandLectureBody = zod.object({
+  "level": zod.enum(['medium', 'long'])
+})
+
+export const ExpandLectureResponse = zod.object({
+  "id": zod.number(),
+  "topicId": zod.number(),
+  "title": zod.string(),
+  "weekNumber": zod.number(),
+  "body": zod.string().describe('Short Markdown lecture text (the baseline \/ minimum-detail version). The frontend lets users select passages and send them to the tutor.'),
+  "bodyMedium": zod.string().nullish().describe('Medium-length version with more explanation and more examples. Null if not yet generated.'),
+  "bodyLong": zod.string().nullish().describe('Long version with the most explanation and the most examples. Null if not yet generated.')
+})
+
+
+/**
  * @summary List all course topics (used for analytics + tutor scoping)
  */
 export const ListTopicsResponseItem = zod.object({
@@ -446,12 +468,18 @@ export const SubmitPracticeAssignmentResponse = zod.object({
   "total": zod.number(),
   "percent": zod.number(),
   "encouragement": zod.string().nullish(),
+  "focusSummary": zod.string().nullish(),
   "perProblem": zod.array(zod.object({
   "problemId": zod.number(),
   "correct": zod.boolean(),
   "userAnswer": zod.string().optional(),
   "modelAnswer": zod.string(),
   "feedback": zod.string()
+})),
+  "focusPointers": zod.array(zod.object({
+  "topicTitle": zod.string().nullish(),
+  "priority": zod.union([zod.literal('high'),zod.literal('medium'),zod.literal('low'),zod.literal(null)]).nullish(),
+  "pointer": zod.string()
 }))
 })
 

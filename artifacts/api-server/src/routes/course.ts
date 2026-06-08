@@ -12,7 +12,10 @@ import {
   GetWeekResponse,
   GetLectureResponse,
   ListTopicsResponse,
+  ExpandLectureBody,
+  ExpandLectureResponse,
 } from "@workspace/api-zod";
+import { chatText } from "../lib/ai";
 
 const router: IRouter = Router();
 
@@ -163,6 +166,88 @@ router.get("/course/lectures/:lectureId", async (req, res): Promise<void> => {
   }
   res.json(GetLectureResponse.parse(lecture));
 });
+
+// Generate (and persist) the medium or long version of a lecture on demand.
+// Lazy-cached: once generated it's stored on the lecture row so future
+// requests are instant. The UI prefetches both depths on lecture open so
+// the depth toggle is "already there" with no waiting.
+router.post(
+  "/course/lectures/:lectureId/expand",
+  async (req, res): Promise<void> => {
+    const raw = Array.isArray(req.params.lectureId)
+      ? req.params.lectureId[0]
+      : req.params.lectureId;
+    const lectureId = parseInt(raw ?? "", 10);
+    if (!Number.isFinite(lectureId)) {
+      res.status(400).json({ error: "invalid lectureId" });
+      return;
+    }
+    const parsed = ExpandLectureBody.safeParse(req.body);
+    if (!parsed.success) {
+      res.status(400).json({ error: parsed.error.message });
+      return;
+    }
+    const level = parsed.data.level;
+
+    const [lecture] = await db
+      .select()
+      .from(lecturesTable)
+      .where(eq(lecturesTable.id, lectureId));
+    if (!lecture) {
+      res.status(404).json({ error: "lecture not found" });
+      return;
+    }
+
+    // Already generated — return as-is (instant).
+    const existing = level === "medium" ? lecture.bodyMedium : lecture.bodyLong;
+    if (existing && existing.trim()) {
+      res.json(GetLectureResponse.parse(lecture));
+      return;
+    }
+
+    const target =
+      level === "medium"
+        ? {
+            words: "roughly 1.6 to 2x the length of the short version",
+            style:
+              "Expand the SHORT lecture into a MEDIUM-depth version: keep every example, term, and learning objective from the short version, but add more explanation, intuition, and a worked example or two. Stay focused and readable.",
+          }
+        : {
+            words: "roughly 3 to 4x the length of the short version",
+            style:
+              "Expand the SHORT lecture into a LONG, textbook-depth version: keep every example, term, and learning objective from the short version, then go deep — fuller motivation, historical context, multiple worked examples, common misconceptions, objections and replies, and a short recap. It should read like a thorough chapter.",
+          };
+
+    let generated = "";
+    try {
+      generated = await chatText(
+        "You are a college Philosophy 101 textbook author. You rewrite a lecture at greater depth WITHOUT changing its meaning, its examples, or its learning objectives. Preserve the same concepts and the same running examples; only add depth, clarity, and detail. Output clean Markdown with headings and short paragraphs. Do not add a title (the page already shows it).",
+        `${target.style}\n\nLength target: ${target.words}.\n\nLECTURE TITLE: ${lecture.title}\n\nSHORT VERSION:\n${lecture.body}`,
+      );
+    } catch {
+      generated = "";
+    }
+
+    if (!generated.trim()) {
+      res
+        .status(502)
+        .json({ error: "could not generate expanded lecture, please retry" });
+      return;
+    }
+
+    const [updated] = await db
+      .update(lecturesTable)
+      .set(
+        level === "medium"
+          ? { bodyMedium: generated.trim() }
+          : { bodyLong: generated.trim() },
+      )
+      .where(eq(lecturesTable.id, lectureId))
+      .returning();
+
+    res.json(ExpandLectureResponse.parse(updated ?? lecture));
+  },
+);
 
 router.get("/course/topics", async (_req, res) => {
   const rows = await db

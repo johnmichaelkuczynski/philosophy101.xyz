@@ -85,6 +85,30 @@ paths:
               schema:
                 $ref: "#/components/schemas/Lecture"
 
+  /course/lectures/{lectureId}/expand:
+    post:
+      operationId: expandLecture
+      tags: [course]
+      summary: Generate (and persist) the medium or long version of a lecture on demand
+      parameters:
+        - name: lectureId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExpandLectureInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Lecture"
+
   /course/topics:
     get:
       operationId: listTopics
@@ -763,17 +787,32 @@ components:
 
     PracticeAssignmentResult:
       type: object
-      required: [practiceId, score, total, percent, perProblem]
+      required: [practiceId, score, total, percent, perProblem, focusPointers]
       properties:
         practiceId: { type: integer }
         score: { type: number }
         total: { type: number }
         percent: { type: number }
         encouragement: { type: ["string", "null"] }
+        focusSummary: { type: ["string", "null"] }
         perProblem:
           type: array
           items:
             $ref: "#/components/schemas/PracticeProblemFeedback"
+        focusPointers:
+          type: array
+          items:
+            $ref: "#/components/schemas/PracticeFocusPointer"
+
+    PracticeFocusPointer:
+      type: object
+      required: [pointer]
+      properties:
+        topicTitle: { type: ["string", "null"] }
+        priority:
+          type: ["string", "null"]
+          enum: [high, medium, low, null]
+        pointer: { type: string }
 
     PracticeProblemFeedback:
       type: object
@@ -807,6 +846,14 @@ components:
       required: [reply]
       properties:
         reply: { type: string }
+
+    ExpandLectureInput:
+      type: object
+      required: [level]
+      properties:
+        level:
+          type: string
+          enum: [medium, long]
 
     TutorAskInput:
       type: object

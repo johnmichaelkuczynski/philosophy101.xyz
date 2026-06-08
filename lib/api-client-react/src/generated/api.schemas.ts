@@ -340,6 +340,26 @@ export interface PracticeProblemFeedback {
   feedback: string;
 }
 
+/**
+ * @nullable
+ */
+export type PracticeFocusPointerPriority = typeof PracticeFocusPointerPriority[keyof typeof PracticeFocusPointerPriority] | null;
+
+
+export const PracticeFocusPointerPriority = {
+  high: 'high',
+  medium: 'medium',
+  low: 'low',
+} as const;
+
+export interface PracticeFocusPointer {
+  /** @nullable */
+  topicTitle?: string | null;
+  /** @nullable */
+  priority?: PracticeFocusPointerPriority;
+  pointer: string;
+}
+
 export interface PracticeAssignmentResult {
   practiceId: number;
   score: number;
@@ -347,7 +367,10 @@ export interface PracticeAssignmentResult {
   percent: number;
   /** @nullable */
   encouragement?: string | null;
+  /** @nullable */
+  focusSummary?: string | null;
   perProblem: PracticeProblemFeedback[];
+  focusPointers: PracticeFocusPointer[];
 }
 
 export interface DiscussFeedbackInput {
@@ -358,6 +381,18 @@ export interface DiscussFeedbackInput {
 
 export interface DiscussReply {
   reply: string;
+}
+
+export type ExpandLectureInputLevel = typeof ExpandLectureInputLevel[keyof typeof ExpandLectureInputLevel];
+
+
+export const ExpandLectureInputLevel = {
+  medium: 'medium',
+  long: 'long',
+} as const;
+
+export interface ExpandLectureInput {
+  level: ExpandLectureInputLevel;
 }
 
 export interface TutorAskInput {

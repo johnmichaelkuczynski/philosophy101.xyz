@@ -1,6 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   useGetLecture,
+  useExpandLecture,
   useAskTutor,
   useStartPracticeSession,
   useNextPracticeProblem,
@@ -53,18 +54,89 @@ export default function LectureView() {
   const [tab, setTab] = useState<"tutor" | "practice">("tutor");
   const [level, setLevel] = useState<"short" | "medium" | "long">("short");
 
+  // On-demand depth generation: when a lecture opens we immediately kick off
+  // generation of any missing medium/long version in the background and cache
+  // the result locally, so the depth toggle is "already there" with no waiting.
+  const expand = useExpandLecture();
+  const [genBodies, setGenBodies] = useState<{ medium: string | null; long: string | null }>({
+    medium: null,
+    long: null,
+  });
+  const [generating, setGenerating] = useState<{ medium: boolean; long: boolean }>({
+    medium: false,
+    long: false,
+  });
+  const [genError, setGenError] = useState<{ medium: boolean; long: boolean }>({
+    medium: false,
+    long: false,
+  });
+  const requestedRef = useRef<Set<string>>(new Set());
+  // The lecture currently in view; used to ignore late responses from a
+  // lecture the user has already navigated away from (avoids cross-lecture bleed).
+  const currentLectureRef = useRef(lectureId);
+
+  const mediumBody = lecture?.bodyMedium ?? genBodies.medium;
+  const longBody = lecture?.bodyLong ?? genBodies.long;
+
+  const ensureLevel = useCallback(
+    (lvl: "medium" | "long") => {
+      if (!Number.isFinite(lectureId)) return;
+      const forLecture = lectureId;
+      const stillCurrent = () => currentLectureRef.current === forLecture;
+      setGenerating((g) => ({ ...g, [lvl]: true }));
+      setGenError((e) => ({ ...e, [lvl]: false }));
+      expand
+        .mutateAsync({ lectureId: forLecture, data: { level: lvl } })
+        .then((updated) => {
+          if (!stillCurrent()) return;
+          setGenBodies((b) => ({
+            ...b,
+            [lvl]: lvl === "medium" ? updated.bodyMedium ?? null : updated.bodyLong ?? null,
+          }));
+        })
+        .catch(() => {
+          if (stillCurrent()) setGenError((e) => ({ ...e, [lvl]: true }));
+        })
+        .finally(() => {
+          if (stillCurrent()) setGenerating((g) => ({ ...g, [lvl]: false }));
+        });
+    },
+    [expand, lectureId],
+  );
+
+  // Reset per-lecture state when navigating between lectures.
+  useEffect(() => {
+    currentLectureRef.current = lectureId;
+    requestedRef.current = new Set();
+    setLevel("short");
+    setGenBodies({ medium: null, long: null });
+    setGenerating({ medium: false, long: false });
+    setGenError({ medium: false, long: false });
+  }, [lectureId]);
+
+  // Prefetch both depths once the lecture is loaded (only the missing ones).
+  useEffect(() => {
+    if (!lecture) return;
+    (["medium", "long"] as const).forEach((lvl) => {
+      const has = lvl === "medium" ? lecture.bodyMedium : lecture.bodyLong;
+      if (has || requestedRef.current.has(lvl)) return;
+      requestedRef.current.add(lvl);
+      ensureLevel(lvl);
+    });
+  }, [lecture, ensureLevel]);
+
   const availableLevels = useMemo(() => {
     const out: Array<"short" | "medium" | "long"> = ["short"];
-    if (lecture?.bodyMedium) out.push("medium");
-    if (lecture?.bodyLong) out.push("long");
+    if (mediumBody) out.push("medium");
+    if (longBody) out.push("long");
     return out;
-  }, [lecture?.bodyMedium, lecture?.bodyLong]);
+  }, [mediumBody, longBody]);
 
   const activeBody =
-    level === "long" && lecture?.bodyLong
-      ? lecture.bodyLong
-      : level === "medium" && lecture?.bodyMedium
-        ? lecture.bodyMedium
+    level === "long" && longBody
+      ? longBody
+      : level === "medium" && mediumBody
+        ? mediumBody
         : (lecture?.body ?? "");
 
   return (
@@ -102,27 +174,44 @@ export default function LectureView() {
                   <div className="inline-flex rounded-md border border-border overflow-hidden text-xs">
                     {(["short", "medium", "long"] as const).map((lvl) => {
                       const enabled = availableLevels.includes(lvl);
+                      const isGen =
+                        lvl !== "short" && generating[lvl as "medium" | "long"];
+                      const isErr =
+                        lvl !== "short" && genError[lvl as "medium" | "long"];
                       const active = level === lvl;
+                      const label = lvl[0].toUpperCase() + lvl.slice(1);
+                      const clickable = enabled || isErr;
                       return (
                         <button
                           key={lvl}
-                          onClick={() => enabled && setLevel(lvl)}
-                          disabled={!enabled}
+                          onClick={() => {
+                            if (enabled) setLevel(lvl);
+                            else if (isErr) ensureLevel(lvl as "medium" | "long");
+                          }}
+                          disabled={!clickable}
                           title={
                             enabled
-                              ? `${lvl[0].toUpperCase() + lvl.slice(1)} version`
-                              : `${lvl[0].toUpperCase() + lvl.slice(1)} version not generated yet — click "Generate medium + long lectures" in the top bar`
+                              ? `${label} version`
+                              : isGen
+                                ? `${label} version is generating…`
+                                : isErr
+                                  ? `${label} version failed to generate — click to retry`
+                                  : `${label} version`
                           }
-                          className={`px-3 py-1.5 font-medium uppercase tracking-wider transition-colors ${
+                          className={`px-3 py-1.5 font-medium uppercase tracking-wider transition-colors inline-flex items-center gap-1 ${
                             active
                               ? "bg-primary text-primary-foreground"
-                              : enabled
+                              : clickable
                                 ? "bg-background hover:bg-secondary text-foreground"
-                                : "bg-background/50 text-muted-foreground/50 cursor-not-allowed"
+                                : "bg-background/50 text-muted-foreground/50 cursor-wait"
                           }`}
                           data-testid={`button-level-${lvl}`}
                         >
                           {lvl}
+                          {isGen && (
+                            <RefreshCw className="w-3 h-3 animate-spin" />
+                          )}
+                          {isErr && <span className="text-destructive">↻</span>}
                         </button>
                       );
                     })}

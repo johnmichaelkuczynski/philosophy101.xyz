@@ -5,6 +5,7 @@
  * API specification
  * OpenAPI spec version: 0.1.0
  */
+import type { PracticeFocusPointer } from './practiceFocusPointer';
 import type { PracticeProblemFeedback } from './practiceProblemFeedback';
 
 export interface PracticeAssignmentResult {
@@ -14,5 +15,8 @@ export interface PracticeAssignmentResult {
   percent: number;
   /** @nullable */
   encouragement?: string | null;
+  /** @nullable */
+  focusSummary?: string | null;
   perProblem: PracticeProblemFeedback[];
+  focusPointers: PracticeFocusPointer[];
 }

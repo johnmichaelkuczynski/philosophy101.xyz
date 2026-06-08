@@ -324,6 +324,47 @@ export default function PracticeAssignmentRunner() {
             </div>
           )}
 
+          {result.focusPointers.length > 0 && (
+            <div className="rounded-lg border border-primary/30 bg-primary/5 p-6">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-lg">🎯</span>
+                <h2 className="font-serif font-bold text-primary text-lg">
+                  Your focus plan for the graded version
+                </h2>
+              </div>
+              <p className="text-xs text-muted-foreground mb-4">
+                Built from this run plus everything you've practiced so far — the precise
+                things to drill before you attempt the real {practice.kind}.
+              </p>
+              {result.focusSummary && (
+                <p className="text-sm font-medium mb-4">{result.focusSummary}</p>
+              )}
+              <ul className="flex flex-col gap-3">
+                {result.focusPointers.map((fp, i) => (
+                  <li key={i} className="flex gap-3">
+                    <span
+                      className={`shrink-0 mt-0.5 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                        fp.priority === "high"
+                          ? "bg-chart-4/20 text-chart-4"
+                          : fp.priority === "low"
+                            ? "bg-muted text-muted-foreground"
+                            : "bg-chart-1/20 text-chart-1"
+                      }`}
+                    >
+                      {fp.priority ?? "focus"}
+                    </span>
+                    <div className="text-sm">
+                      {fp.topicTitle && (
+                        <span className="font-semibold">{fp.topicTitle}: </span>
+                      )}
+                      <span>{fp.pointer}</span>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div className="flex flex-col gap-6">
             {result.perProblem.map((pr, i) => {
               const problem = practice.problems.find((p) => p.id === pr.problemId);
