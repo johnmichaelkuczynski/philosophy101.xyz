@@ -1,5 +1,7 @@
 - [Course answer-key QC diagnostic](course-qc-diagnostic.md) — LLM key-legitimacy checks must judge against the course's own lecture text (not generic knowledge), or correct course-specific keys false-flag.
 - [Clerk + wouter auth](clerk-wouter-auth.md) — protected-route HOC for wouter must use ComponentType<any> (not Record-constrained); base path `/` stays a public landing, dashboard lives at `/dashboard`.
+- [Batch LLM scripts](batch-llm-scripts.md) — background shell jobs get reaped; make multi-minute LLM transforms resumable+incremental and run foreground in ~120s windows.
+- [Question design = application not recall](question-design-rules.md) — every question (tutor/practice/graded) must be a concrete novel scenario testing principle-application, never a definition, text-independent; rules centralized in lib/questionDesign.ts.
 - [Per-topic practice grounding](practice-question-grounding.md) — drill questions must ground in lecture body + source corpus (not topic title); substantive reasoning prompts, banned jargon-labeling.
 - [Renaming an artifact dir](artifact-rename.md) — artifact IDs are immutable & path-bound; rename = recreate via createArtifact + cp overlay (rsync absent); stash dirs with .replit-artifact get auto-registered as phantom artifacts.
 - [Demo video answer scripts](demo-video-answer-scripts.md) — Scene typed-answer text lives in setTimeout state scripts decoupled from the displayed question/feedback; converting course content must update both or the demo self-contradicts.

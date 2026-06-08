@@ -19,6 +19,7 @@ import {
 import { chatJson } from "../lib/ai";
 import { gradeAnswer } from "../lib/grading";
 import { findRelevantMaterial } from "../lib/sourceMaterial";
+import { questionDesignBlock } from "../lib/questionDesign";
 
 const router: IRouter = Router();
 
@@ -160,12 +161,16 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
   const lectureExcerpt = (lec?.body ?? "").slice(0, 1800).trim();
   const sourceExcerpt = findRelevantMaterial(`${topic.title}\n${lectureExcerpt}`);
 
-  const groundingBlock = [
+  // The lecture/corpus is used ONLY to identify the concept and principles this
+  // topic teaches — NOT to be quoted or reused. The question must invent its own
+  // fresh, self-contained scenario so it is answerable by anyone who understands
+  // the principle, not only someone who read this specific text.
+  const conceptBlock = [
     sourceExcerpt
-      ? `SOURCE MATERIAL (authoritative — base the question on the SPECIFIC arguments, distinctions, examples, and moves in this text, not on generic knowledge):\n${sourceExcerpt}`
+      ? `REFERENCE (use this ONLY to understand the concept and principles at stake — do NOT reuse its wording, examples, names, or cases):\n${sourceExcerpt}`
       : "",
     lectureExcerpt
-      ? `LECTURE CONTEXT (the student has been reading this):\n${lectureExcerpt}`
+      ? `WHAT THIS TOPIC TEACHES (for your understanding only — never quote or reference it in the question):\n${lectureExcerpt}`
       : "",
   ]
     .filter(Boolean)
@@ -180,46 +185,33 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
       explanation: string;
     }>(
       [
-        `You are a college Philosophy 101 instructor writing ONE substantive practice question on the topic "${topic.title}" at difficulty "${difficultyLabel}" (${difficulty.toFixed(
+        `You are a college Philosophy 101 instructor writing ONE practice question on the topic "${topic.title}" at difficulty "${difficultyLabel}" (${difficulty.toFixed(
           1,
         )}/5).`,
         "",
-        "GOAL: The question must make the student DO PHILOSOPHY — reason, argue, draw a distinction and explain why it matters, evaluate a position, or apply a concept to a fresh case and defend that application. It is graded on the QUALITY OF REASONING in a few sentences of prose, not on recall.",
+        questionDesignBlock(),
         "",
-        groundingBlock
-          ? "GROUNDING: Build the question around the actual ideas in the material below. Engage a real argument, distinction, example, or move it contains — do not write a generic question that ignores it."
+        conceptBlock
+          ? "Use the reference material below ONLY to fix the concept/skill this topic is about, then invent your OWN concrete scenario to test it. Never quote, name, or reuse any example from the reference."
           : "",
-        groundingBlock,
-        groundingBlock ? "" : "",
-        "BANNED — these are anti-philosophical and you must NOT write them:",
-        "- Jargon-labeling / naming: 'which fallacy is this?', 'name the fallacy', 'what is the technical term for...'. Asking a student to slap a label on something is recall, not philosophy.",
-        "- One-word / yes-no / valid-invalid / fill-in-the-term answers.",
-        "- Vague interpretive guessing: 'what is this person primarily/mainly doing?', 'what best describes...'.",
-        "- Anything whose answer is just a definition recited from a textbook.",
+        conceptBlock,
         "",
-        "WRITE INSTEAD a question that demands genuine philosophical work, e.g.:",
-        "- Pose a concrete case and ask the student to argue for a position on it and give the reason that does the work.",
-        "- Give a claim or argument and ask the student to mount the STRONGEST objection to it, then say how a defender might reply.",
-        "- Ask the student to draw a distinction between two concepts AND explain, with an example, why the distinction matters philosophically.",
-        "- Ask whether a proposed analysis/principle succeeds, and to defend the verdict with a reason or counterexample of the student's own.",
-        "",
-        "The question must be self-contained: state any argument, case, or claim it refers to in full so the student can answer without the source in front of them. There can be more than one defensible answer; what is graded is whether the student reasons well and engages the core issue.",
-        "",
-        'Provide a MODEL ANSWER of several full sentences ("correctAnswer") that lays out what a strong response must establish and the reasoning behind it — not a single phrase. The "explanation" is a 1-2 sentence note on the key move a good answer must make.',
+        'OUTPUT: Provide a MODEL ANSWER of several full sentences ("correctAnswer") laying out what a strong response must establish and the reasoning behind it — not a single phrase. The "explanation" is a 1-2 sentence note on the key reasoning move a good answer must make.',
         `Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}.`,
         `Do not repeat any of these recent prompts: ${JSON.stringify(lastProblems.map((p) => p.prompt))}.`,
       ]
         .filter((line) => line !== "")
         .join("\n"),
-      userRequest || `Generate a new ${difficultyLabel} problem on ${topic.title}.`,
+      userRequest ||
+        `Generate a new ${difficultyLabel} scenario-based application question on ${topic.title}.`,
     );
   } catch {
     generated = {
-      prompt: `Consider the sentence "Nothing is a square circle." Everyone agrees it is true, yet read on the model of "Smith is a lawyer" it seems to say that some object — a "non-entity" — is a circle, which is absurd. Explain what has gone wrong in that reading, and give a better account of what the sentence actually claims. Why does this matter for how we should do philosophy?`,
+      prompt: `A study group is arguing. Mara says: "My argument can't be wrong — look, each step follows logically from the one before it, so the conclusion is guaranteed." Jon answers: "Your steps connect fine, but I still don't believe your conclusion." Can both of them be right at the same time? Explain how an argument's steps can all connect properly while its conclusion is still false, and tell Mara exactly what she would have to check to know whether her conclusion is actually true.`,
       correctAnswer:
-        "The absurd reading mistakes grammatical form for logical form: 'nothing' is not a name picking out a strange object, the way 'Smith' names a person. Properly analyzed, the sentence says that the property of being both square and circular is uninstantiated — that the set of square circles is empty — so it attributes a property to a property rather than positing a mysterious non-entity. This matters because it shows philosophical confusion can be dissolved by analyzing what a statement really claims, rather than by inventing exotic entities to make the surface grammar come out true.",
+        "Yes, both can be right. Mara is describing the FORM of her argument — if its structure is such that true premises would force the conclusion, the steps 'connect.' But a well-connected argument only transmits truth from the premises; it does not manufacture it. If even one starting premise is actually false, the conclusion can be false even though every inferential step is correct. So Jon can accept that the reasoning is well-formed while rejecting the conclusion. To know whether her conclusion is actually true, Mara must stop checking the connections between steps and instead check whether each of her starting premises is in fact true — i.e. test the premises against the world, not just the logic linking them.",
       explanation:
-        "A strong answer must distinguish grammatical form from logical form and recast the claim as being about whether a property is instantiated, not about a special object.",
+        "A strong answer separates the argument's structure from the truth of its premises and tells Mara to verify the premises, not the inferential links.",
     };
   }
 

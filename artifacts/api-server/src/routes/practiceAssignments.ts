@@ -21,6 +21,7 @@ import {
 } from "@workspace/api-zod";
 import { chatJson, chatText } from "../lib/ai";
 import { gradeAnswerRich } from "../lib/grading";
+import { questionDesignBlock } from "../lib/questionDesign";
 
 const router: IRouter = Router();
 
@@ -172,12 +173,20 @@ router.post(
             correctAnswer: string;
             explanation: string;
           }>(
-            'You are a college Philosophy 101 instructor writing a PARALLEL practice problem. Given a real graded problem (its prompt and model answer) and the relevant lecture text, write a NEW problem that tests the exact same concept and skill at the same depth and difficulty, but with a different scenario, example, or framing so it is not a copy. The new problem must be a substantive, essay/short-answer style question that asks the student to explain, distinguish, apply, or argue (never a one-word or yes/no recall question). Provide a model answer of several full sentences capturing the central point and reasoning. Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string} where explanation is a 1-2 sentence note on what a strong answer must contain.',
+            [
+              "You are a college Philosophy 101 instructor writing a PARALLEL practice problem for an upcoming graded assignment.",
+              "You are given a real graded problem. FIRST, identify the underlying PRINCIPLE or SKILL it is really testing (ignore how it is worded — even if the graded problem asks for a definition, the skill underneath is the ability to APPLY that idea).",
+              "THEN write a NEW problem that tests that same underlying skill at the same depth and difficulty, following the rules below. It must NOT be a copy of the graded problem and must NOT be a question that will appear on the graded assignment.",
+              "",
+              questionDesignBlock(),
+              "",
+              'OUTPUT: Provide a model answer of several full sentences capturing the central reasoning a strong response must contain. Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string} where explanation is a 1-2 sentence note on the key reasoning move a strong answer must make.',
+            ].join("\n"),
             JSON.stringify({
               topic: sp.topicTitle ?? "",
-              real_problem_prompt: sp.prompt,
-              real_problem_model_answer: sp.correctAnswer,
-              lecture_excerpt: lecture,
+              graded_problem_to_make_a_parallel_of: sp.prompt,
+              graded_problem_model_answer_for_skill_reference: sp.correctAnswer,
+              concept_reference_do_not_quote: lecture,
             }),
           );
           if (
@@ -194,12 +203,13 @@ router.post(
         } catch {
           /* fall through to fallback */
         }
-        // Fallback only on generation failure: reframe the original so the
-        // practice problem is never a verbatim copy of the graded one.
+        // Fallback only on generation failure: reuse the source graded
+        // problem verbatim. Those problems are already concrete-scenario,
+        // application-based questions, so prompt and model answer stay aligned
+        // and gradable (unlike an open "invent your own example" prompt, which
+        // has no fixed key to grade against).
         return {
-          prompt:
-            `Practice variant (same concept as the graded problem): ${sp.prompt}\n\n` +
-            `Answer in your own words, with your own example where one is asked for.`,
+          prompt: sp.prompt,
           correctAnswer: sp.correctAnswer,
           explanation: sp.explanation,
         };

@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db, lecturesTable } from "@workspace/db";
 import { AskTutorBody, AskTutorResponse } from "@workspace/api-zod";
 import { chatText, chatJson, FAST_MODEL } from "../lib/ai";
+import { questionDesignBlock } from "../lib/questionDesign";
 
 const router: IRouter = Router();
 
@@ -23,8 +24,16 @@ router.get("/tutor/suggestions/:lectureId", async (req, res): Promise<void> => {
 
   try {
     const out = await chatJson<{ questions: string[] }>(
-      'You are an encouraging college philosophy tutor. Reply as strict JSON of the form {"questions": string[]} with NO other keys.',
-      `From the lecture below, generate 6 short, concrete starter questions a student might want to ask after reading it. Cover every major idea in the reading (not just the first one). Each question must be one sentence, under ~18 words, in the student's voice (e.g. "Why does ...?", "Can you show me ...?", "What's the difference between ...?"). Inline math uses $...$ if needed.\n\nLECTURE TITLE: ${lecture.title}\n\nLECTURE BODY:\n"""\n${lecture.body}\n"""`,
+      [
+        'You are an encouraging college philosophy tutor. Reply as strict JSON of the form {"questions": string[]} with NO other keys.',
+        "",
+        "You are writing 6 starter prompts a student can bring to you (the tutor) after reading a lecture. These are NOT definition questions and NOT trivia about the reading — they are invitations to DO philosophy together on a concrete case.",
+        "",
+        questionDesignBlock(),
+        "",
+        "Each starter prompt must be in the student's first-person voice (e.g. \"Here's a case — help me figure out...\", \"I think X about this situation, am I reasoning correctly?\", \"How would I handle this example...\"), present or set up a concrete situation, and be answerable by anyone who understands the principle — not only someone who read this exact lecture. Keep each to one or two sentences. Cover several different ideas from the lecture (use the lecture only to choose WHICH skills to exercise, never to quote its examples). Inline math uses $...$ if needed.",
+      ].join("\n"),
+      `LECTURE TITLE: ${lecture.title}\n\nLECTURE BODY (for choosing which skills to exercise — do not quote its examples):\n"""\n${lecture.body}\n"""`,
       FAST_MODEL,
     );
     const questions = Array.isArray(out?.questions)
