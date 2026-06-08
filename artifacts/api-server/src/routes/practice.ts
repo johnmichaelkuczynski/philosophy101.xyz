@@ -3,6 +3,7 @@ import { and, desc, eq, sql } from "drizzle-orm";
 import {
   db,
   topicsTable,
+  lecturesTable,
   practiceSessionsTable,
   practiceProblemsTable,
   practiceAttemptsTable,
@@ -17,6 +18,7 @@ import {
 } from "@workspace/api-zod";
 import { chatJson } from "../lib/ai";
 import { gradeAnswer } from "../lib/grading";
+import { findRelevantMaterial } from "../lib/sourceMaterial";
 
 const router: IRouter = Router();
 
@@ -147,6 +149,28 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
       ? "hard"
       : "challenging";
 
+  // Ground the question in substantive content: the topic's lecture and, when
+  // relevant, the analytic-philosophy source corpus. Questions generated from a
+  // bare topic title come out shallow and jargon-y — grounding fixes that.
+  const [lec] = await db
+    .select({ body: lecturesTable.body })
+    .from(lecturesTable)
+    .where(eq(lecturesTable.topicId, topic.id))
+    .limit(1);
+  const lectureExcerpt = (lec?.body ?? "").slice(0, 1800).trim();
+  const sourceExcerpt = findRelevantMaterial(`${topic.title}\n${lectureExcerpt}`);
+
+  const groundingBlock = [
+    sourceExcerpt
+      ? `SOURCE MATERIAL (authoritative — base the question on the SPECIFIC arguments, distinctions, examples, and moves in this text, not on generic knowledge):\n${sourceExcerpt}`
+      : "",
+    lectureExcerpt
+      ? `LECTURE CONTEXT (the student has been reading this):\n${lectureExcerpt}`
+      : "",
+  ]
+    .filter(Boolean)
+    .join("\n\n");
+
   const userRequest = parsed.data.request?.trim() || "";
   let generated: { prompt: string; correctAnswer: string; explanation: string };
   try {
@@ -155,18 +179,47 @@ router.post("/practice/sessions/:sessionId/next", async (req, res): Promise<void
       correctAnswer: string;
       explanation: string;
     }>(
-      `You generate a single college philosophy practice problem for a college freshman. The problem MUST be on the topic "${topic.title}" and at difficulty "${difficultyLabel}" (${difficulty.toFixed(
-        1,
-      )}/5). Favor concept-identification, short-scenario, and true/false-with-reason questions. The answer must be a short string (a single word, a term, "yes"/"no", or one short phrase) — never multi-paragraph. Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}. Avoid these recent prompts: ${JSON.stringify(
-        lastProblems.map((p) => p.prompt),
-      )}.`,
+      [
+        `You are a college Philosophy 101 instructor writing ONE substantive practice question on the topic "${topic.title}" at difficulty "${difficultyLabel}" (${difficulty.toFixed(
+          1,
+        )}/5).`,
+        "",
+        "GOAL: The question must make the student DO PHILOSOPHY — reason, argue, draw a distinction and explain why it matters, evaluate a position, or apply a concept to a fresh case and defend that application. It is graded on the QUALITY OF REASONING in a few sentences of prose, not on recall.",
+        "",
+        groundingBlock
+          ? "GROUNDING: Build the question around the actual ideas in the material below. Engage a real argument, distinction, example, or move it contains — do not write a generic question that ignores it."
+          : "",
+        groundingBlock,
+        groundingBlock ? "" : "",
+        "BANNED — these are anti-philosophical and you must NOT write them:",
+        "- Jargon-labeling / naming: 'which fallacy is this?', 'name the fallacy', 'what is the technical term for...'. Asking a student to slap a label on something is recall, not philosophy.",
+        "- One-word / yes-no / valid-invalid / fill-in-the-term answers.",
+        "- Vague interpretive guessing: 'what is this person primarily/mainly doing?', 'what best describes...'.",
+        "- Anything whose answer is just a definition recited from a textbook.",
+        "",
+        "WRITE INSTEAD a question that demands genuine philosophical work, e.g.:",
+        "- Pose a concrete case and ask the student to argue for a position on it and give the reason that does the work.",
+        "- Give a claim or argument and ask the student to mount the STRONGEST objection to it, then say how a defender might reply.",
+        "- Ask the student to draw a distinction between two concepts AND explain, with an example, why the distinction matters philosophically.",
+        "- Ask whether a proposed analysis/principle succeeds, and to defend the verdict with a reason or counterexample of the student's own.",
+        "",
+        "The question must be self-contained: state any argument, case, or claim it refers to in full so the student can answer without the source in front of them. There can be more than one defensible answer; what is graded is whether the student reasons well and engages the core issue.",
+        "",
+        'Provide a MODEL ANSWER of several full sentences ("correctAnswer") that lays out what a strong response must establish and the reasoning behind it — not a single phrase. The "explanation" is a 1-2 sentence note on the key move a good answer must make.',
+        `Respond as strict JSON: {"prompt": string, "correctAnswer": string, "explanation": string}.`,
+        `Do not repeat any of these recent prompts: ${JSON.stringify(lastProblems.map((p) => p.prompt))}.`,
+      ]
+        .filter((line) => line !== "")
+        .join("\n"),
       userRequest || `Generate a new ${difficultyLabel} problem on ${topic.title}.`,
     );
   } catch {
     generated = {
-      prompt: `Practice (${topic.title}): In one sentence, explain the central idea of "${topic.title}" and give an example.`,
-      correctAnswer: "A clear statement of the key idea with a relevant example.",
-      explanation: "Re-read the lecture for this topic and state its main claim in your own words.",
+      prompt: `Consider the sentence "Nothing is a square circle." Everyone agrees it is true, yet read on the model of "Smith is a lawyer" it seems to say that some object — a "non-entity" — is a circle, which is absurd. Explain what has gone wrong in that reading, and give a better account of what the sentence actually claims. Why does this matter for how we should do philosophy?`,
+      correctAnswer:
+        "The absurd reading mistakes grammatical form for logical form: 'nothing' is not a name picking out a strange object, the way 'Smith' names a person. Properly analyzed, the sentence says that the property of being both square and circular is uninstantiated — that the set of square circles is empty — so it attributes a property to a property rather than positing a mysterious non-entity. This matters because it shows philosophical confusion can be dissolved by analyzing what a statement really claims, rather than by inventing exotic entities to make the surface grammar come out true.",
+      explanation:
+        "A strong answer must distinguish grammatical form from logical form and recast the claim as being about whether a property is instantiated, not about a special object.",
     };
   }
 
