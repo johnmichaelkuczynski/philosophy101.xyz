@@ -1,6 +1,6 @@
 kind = "video"
 previewPath = "/philosophy-101-demo/"
-title = "PhiloReason Demo Video"
+title = "Philosophy 101 — Demo Video"
 version = "1.0.0"
 id = "artifacts/philosophy-101-demo"
 router = "path"

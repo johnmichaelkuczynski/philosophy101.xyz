@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "PhiloReason"
+title = "Philosophy 101"
 version = "1.0.0"
 id = "artifacts/philosophy-101"
 router = "path"

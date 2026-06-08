@@ -531,7 +531,6 @@ function PracticePane({
               setTrace(t);
             }}
             disabled={!!grade || !problem}
-            promptSource={problem?.prompt}
           />
         </div>
 

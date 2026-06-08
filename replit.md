@@ -1,4 +1,4 @@
-# 🦉 PhiloReason
+# 🦉 Philosophy 101
 
 **The Philosophy Studio — A Four-Unit College Course That Teaches, Tutors, and Proofs Itself**
 
@@ -6,13 +6,13 @@
 
 ## 🧩 Overview
 
-PhiloReason is a self-paced, single-user web course that delivers a full college Philosophy 101 curriculum — taught, tutored, drilled, and graded entirely by AI, with built-in academic-integrity enforcement.
+Philosophy 101 is a self-paced, single-user web course that delivers a full college Philosophy 101 curriculum — taught, tutored, drilled, and graded entirely by AI, with built-in academic-integrity enforcement.
 
 It compresses the experience of a semester-style introductory philosophy class into one focused product: read the lecture at the depth you want, ask a tutor scoped to the exact section you're on, drill problems whose difficulty adapts to you in real time, and submit homework, tests, a midterm, and a final that are AI-graded with feedback and screened for AI-generated answers.
 
 The curriculum is organized into **four units and 29 topics**: Unit 1 (Logic & Critical Reasoning), Unit 2 (Knowledge & Reality — Epistemology), Unit 3 (Philosophy of Mind), and Unit 4 (Metaphysics, God & Ethics).
 
-Designed for **students, instructors evaluating AI-taught coursework, and researchers studying AI academic integrity**, PhiloReason pairs a real curriculum with two layers of AI-authorship detection — surfacing not just *whether* the writing looks AI-generated, but whether the *act of producing it* did.
+Designed for **students, instructors evaluating AI-taught coursework, and researchers studying AI academic integrity**, Philosophy 101 pairs a real curriculum with two layers of AI-authorship detection — surfacing not just *whether* the writing looks AI-generated, but whether the *act of producing it* did.
 
 ---
 
@@ -58,11 +58,11 @@ Designed for **students, instructors evaluating AI-taught coursework, and resear
 
 ## 💡 Core Idea
 
-PhiloReason reframes an AI-taught course as a *closed accountability loop*.
+Philosophy 101 reframes an AI-taught course as a *closed accountability loop*.
 
 It doesn't just teach the material and grade the homework — it **teaches**, **tutors**, **drills**, **grades**, **detects misuse**, and **proves the whole pipeline still works** with a single click. The result is a self-paced course that students can actually trust to be fair, and that instructors can actually trust to be honest.
 
-**PhiloReason — where the curriculum, the tutor, the grader, and the integrity check all live in one room.**
+**Philosophy 101 — where the curriculum, the tutor, the grader, and the integrity check all live in one room.**
 
 ---
 

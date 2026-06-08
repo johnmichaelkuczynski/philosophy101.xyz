@@ -225,7 +225,7 @@ function ClerkProviderWithRoutes() {
         signUp: {
           start: {
             title: "Create your account",
-            subtitle: "Start your Philosophy 101 course with PhiloReason",
+            subtitle: "Start your Philosophy 101 course",
           },
         },
       }}

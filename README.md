@@ -1,4 +1,4 @@
-# 🦉 PhiloReason
+# 🦉 Philosophy 101
 
 **A Four-Unit College Philosophy 101 Course — From Clear Reasoning to the Big Questions of Mind, Reality, God, and the Good**
 
@@ -6,11 +6,11 @@
 
 ## 🧩 Overview
 
-PhiloReason is a self-paced, single-user web course that walks through the questions an introductory philosophy class is really about: *How do we reason well? What can we actually know? What is the mind? What exists, is there a God, and how should we live?*
+Philosophy 101 is a self-paced, single-user web course that walks through the questions an introductory philosophy class is really about: *How do we reason well? What can we actually know? What is the mind? What exists, is there a God, and how should we live?*
 
 It is a complete, taught-and-graded Philosophy 101 course delivered end to end by AI: depth-adjustable lectures, a tutor that answers questions about the exact passage you're reading, adaptive practice that meets you at your level, and homework, tests, a midterm, and a final that are graded with written feedback. The curriculum is built around one connected arc — first the tools of reasoning, then the major areas they open up — presented in four focused units.
 
-Designed for **students, self-learners, and instructors evaluating AI-taught coursework**, PhiloReason pairs a real 29-topic syllabus with a built-in academic-integrity layer — so the course is one students can trust to be fair, and instructors can trust to be honest.
+Designed for **students, self-learners, and instructors evaluating AI-taught coursework**, Philosophy 101 pairs a real 29-topic syllabus with a built-in academic-integrity layer — so the course is one students can trust to be fair, and instructors can trust to be honest.
 
 ---
 
@@ -66,8 +66,8 @@ Configuration values the app expects at startup:
 
 ## 💡 Core Idea
 
-Introductory philosophy usually rushes to the famous answers — Descartes, Kant, the trolley problem — before students have the tools to weigh them. PhiloReason puts the tools first: a full unit on reasoning, then three units that apply it to knowledge, mind, and reality.
+Introductory philosophy usually rushes to the famous answers — Descartes, Kant, the trolley problem — before students have the tools to weigh them. Philosophy 101 puts the tools first: a full unit on reasoning, then three units that apply it to knowledge, mind, and reality.
 
 Read the idea, ground it in a real example, then state the philosophical judgment in your own words — and let the course check your reasoning fairly every step of the way.
 
-**PhiloReason — read the idea, ground the idea, write the idea.**
+**Philosophy 101 — read the idea, ground the idea, write the idea.**

@@ -2,8 +2,6 @@ import { useRef, useState } from "react";
 import { Send, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
-import { MathKeyboard } from "@/components/MathKeyboard";
-import { QuickPickBar } from "@/components/QuickPickBar";
 
 interface Props {
   index: number;
@@ -25,23 +23,6 @@ export function StarterQuestionCard({
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState("");
   const taRef = useRef<HTMLTextAreaElement | null>(null);
-
-  function insertAtCursor(sym: string) {
-    const ta = taRef.current;
-    if (!ta) {
-      setValue((v) => v + sym);
-      return;
-    }
-    const start = ta.selectionStart ?? value.length;
-    const end = ta.selectionEnd ?? value.length;
-    const next = value.slice(0, start) + sym + value.slice(end);
-    setValue(next);
-    requestAnimationFrame(() => {
-      ta.focus();
-      const pos = start + sym.length;
-      ta.setSelectionRange(pos, pos);
-    });
-  }
 
   function submit() {
     if (!value.trim()) return;
@@ -85,7 +66,6 @@ export function StarterQuestionCard({
       </div>
       {open && (
         <div className="px-2 pb-2 flex flex-col gap-2">
-          <QuickPickBar source={question} onInsert={insertAtCursor} />
           <textarea
             ref={taRef}
             value={value}
@@ -96,13 +76,12 @@ export function StarterQuestionCard({
                 submit();
               }
             }}
-            placeholder="Type your answer — use the math keys below for symbols…"
+            placeholder="Type your answer…"
             rows={3}
             className="bg-secondary border-none rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary resize-y min-h-[72px]"
             data-testid={`input-attempt-${index}`}
             autoFocus
           />
-          <MathKeyboard onInsert={insertAtCursor} />
           <div className="flex justify-end">
             <Button
               size="sm"

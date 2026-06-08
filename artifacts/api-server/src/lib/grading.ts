@@ -49,7 +49,7 @@ export async function gradeAnswer(opts: {
 
   try {
     const out = await chatJson<{ correct: boolean; explanation: string }>(
-      "You grade short college philosophy answers. Decide if the student's answer is semantically equivalent to the correct/model answer — accept paraphrases, synonyms, and answers that capture the same key idea or reach the same verdict (e.g. 'deductive' vs 'it's deductive', 'no, because it can be true by luck' vs 'no'). Be lenient about wording but strict about the substantive point. Output strict JSON {\"correct\": boolean, \"explanation\": string} where explanation is 1-3 short sentences and includes the correct answer.",
+      "You grade college Philosophy 101 short-answer/essay responses against a model answer. These are substantive questions that ask the student to explain, distinguish, or argue in a few sentences. Mark the answer correct if it captures the central point(s) and reasoning of the model answer — accept paraphrases, synonyms, different but valid examples, and answers that omit minor secondary details, as long as the main thesis and key justification are present and accurate. Mark it incorrect if it misses or misstates the central point, is vacuous/off-topic, or asserts the conclusion with no relevant reasoning. Be lenient about wording and phrasing but strict about substantive understanding. Output strict JSON {\"correct\": boolean, \"explanation\": string} where explanation is 1-3 short sentences of feedback that names what was right or missing and states the key idea of the correct answer.",
       JSON.stringify({
         prompt: opts.prompt,
         correct_answer: correct,

@@ -1057,193 +1057,486 @@ type SeedAssignment = {
 };
 
 const ASSIGNMENTS: SeedAssignment[] = [
-  // Unit 1
   {
-    kind: "homework",
-    title: "Homework 1.1 — Arguments, validity, and soundness",
-    weekNumber: 1,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice. Answer in your own words in the answer box.",
-    problems: [
-      { topicSlug: "what-is-philosophy", prompt: "How does philosophy primarily try to answer its questions — by experiment, by appeal to authority, or by reasoning? Answer in one word.", correctAnswer: "reasoning", explanation: "Philosophy answers fundamental questions through careful reasoning and argument rather than experiment or authority." },
-      { topicSlug: "arguments-premises-conclusions", prompt: "In an argument, what do we call the statement the premises are meant to support?", correctAnswer: "the conclusion", explanation: "The conclusion is the claim the premises are offered as reasons to believe." },
-      { topicSlug: "validity-soundness", prompt: "An argument has a false premise but its form guarantees the conclusion if the premises were true. Is it valid? Answer yes or no.", correctAnswer: "yes", explanation: "Validity is about form: if the premises were true the conclusion would have to be true, regardless of whether they actually are." },
-      { topicSlug: "validity-soundness", prompt: "What two conditions must an argument meet to be sound?", correctAnswer: "it must be valid and have all true premises", explanation: "A sound argument is valid and has all true premises, so its conclusion must be true." },
-    ],
+    "kind": "homework",
+    "title": "Homework 1.1 — Arguments, validity, and soundness",
+    "weekNumber": 1,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "what-is-philosophy",
+        "prompt": "Philosophy is said to answer its questions through reasoning rather than experiment or authority. Explain what this means, and give one example of a question philosophy addresses that science cannot settle by experiment.",
+        "correctAnswer": "Philosophy investigates fundamental questions by constructing and evaluating arguments — reasons anyone could in principle assess — rather than by running experiments (as in science) or appealing to faith or authority (as in religion). It steps back to examine the assumptions other fields take for granted. For example, the question of what *counts* as knowledge, or whether we have free will, cannot be decided by any measurement; no experiment tells us which definition of knowledge is correct, so the issue must be settled by argument.",
+        "explanation": "The point is philosophy's method (reasoned argument) and its distinctive subject matter (questions no experiment can decide)."
+      },
+      {
+        "topicSlug": "arguments-premises-conclusions",
+        "prompt": "Define an argument in the philosophical sense, and explain the difference between a premise and a conclusion using your own short example.",
+        "correctAnswer": "A philosophical argument is a set of statements in which one or more statements (the premises) are offered as reasons to support another statement (the conclusion). The premises are the supporting evidence or assumptions; the conclusion is the claim they are meant to establish. For example: 'All humans are mortal; Socrates is human; therefore Socrates is mortal' — the first two statements are premises and the 'therefore' statement is the conclusion they support.",
+        "explanation": "Premises give reasons; the conclusion is the supported claim."
+      },
+      {
+        "topicSlug": "validity-soundness",
+        "prompt": "Explain the difference between validity and soundness, and explain how an argument can be valid yet still have a false conclusion.",
+        "correctAnswer": "Validity is a feature of an argument's form: an argument is valid when, if all its premises were true, the conclusion would have to be true. Soundness is stronger — a sound argument is valid AND has all true premises, so its conclusion must actually be true. A valid argument can still have a false conclusion when one or more of its premises are actually false: validity preserves truth only from true premises, so a valid argument built on a false premise can lead to a false conclusion.",
+        "explanation": "Validity is about form; soundness adds actually-true premises."
+      },
+      {
+        "topicSlug": "validity-soundness",
+        "prompt": "Construct your own example of a valid but unsound argument, and explain why it is valid but not sound.",
+        "correctAnswer": "Example: 'All birds can fly; penguins are birds; therefore penguins can fly.' It is valid because the conclusion follows from the premises — if both premises were true, the conclusion would have to be true. It is unsound because the first premise is false (not all birds can fly), so although the form is correct it does not have all true premises and therefore fails to establish its conclusion.",
+        "explanation": "A correct form built on a false premise: valid but unsound."
+      }
+    ]
   },
   {
-    kind: "homework",
-    title: "Homework 1.2 — Reasoning, fallacies, and method",
-    weekNumber: 1,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice.",
-    problems: [
-      { topicSlug: "deductive-inductive", prompt: "Does a deductive argument aim to make its conclusion certain or merely probable? Answer in one word.", correctAnswer: "certain", explanation: "Deductive arguments aim to guarantee the conclusion; inductive ones aim only to make it probable." },
-      { topicSlug: "logical-fallacies", prompt: "Attacking the person making an argument instead of the argument itself is which fallacy?", correctAnswer: "ad hominem", explanation: "The ad hominem fallacy targets the arguer rather than the argument." },
-      { topicSlug: "reconstructing-arguments", prompt: "What principle says you should interpret an argument in its strongest plausible form?", correctAnswer: "the principle of charity", explanation: "Charity means engaging the best version of an argument, which makes any criticism stronger." },
-      { topicSlug: "philosophical-method", prompt: "What do we call a single case that refutes a general claim or proposed definition?", correctAnswer: "a counterexample", explanation: "One good counterexample can refute a universal claim or an analysis." },
-    ],
+    "kind": "homework",
+    "title": "Homework 1.2 — Reasoning, fallacies, and method",
+    "weekNumber": 1,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "deductive-inductive",
+        "prompt": "Explain the difference between deductive and inductive reasoning, including how each is evaluated and what kind of support the premises give the conclusion.",
+        "correctAnswer": "Deductive reasoning aims for certainty: in a valid deductive argument the premises guarantee the conclusion, and it is evaluated as valid/invalid (and sound/unsound). Inductive reasoning aims only for probability: the premises make the conclusion likely but not certain, and it is evaluated as strong/weak. A deductive conclusion contains nothing beyond the premises, while induction generalizes beyond the evidence, so even a strong inductive argument can have true premises and a false conclusion.",
+        "explanation": "Deduction = guaranteed/valid; induction = probable/strong."
+      },
+      {
+        "topicSlug": "logical-fallacies",
+        "prompt": "Explain what the ad hominem fallacy is and why it fails as a piece of reasoning, then give a brief example.",
+        "correctAnswer": "An ad hominem fallacy attacks the person making an argument rather than addressing the argument itself. It fails because the truth of a claim and the strength of its supporting reasons are independent of who offers them — even a flawed or hypocritical person can give a sound argument. For example, dismissing a doctor's argument about diet by saying 'she's overweight herself' attacks the arguer, not the reasons given, so it provides no grounds to reject the conclusion.",
+        "explanation": "Attacking the arguer leaves the argument's reasons untouched."
+      },
+      {
+        "topicSlug": "reconstructing-arguments",
+        "prompt": "Explain the principle of charity and why applying it actually makes your own criticism of an argument stronger.",
+        "correctAnswer": "The principle of charity says you should interpret an argument in its strongest, most plausible form before evaluating it — supplying reasonable missing premises and resolving ambiguities in the arguer's favor. Applying it makes your criticism stronger because if you refute the best version of a view, your objection cannot be dismissed as merely attacking a weak misreading (a straw man); defeating the strongest form leaves the opponent no better version to retreat to.",
+        "explanation": "Refuting the strongest version makes the criticism unanswerable."
+      },
+      {
+        "topicSlug": "philosophical-method",
+        "prompt": "Explain what a counterexample is and how it functions to refute a general claim or a proposed definition. Give a short example.",
+        "correctAnswer": "A counterexample is a single case that meets a general claim's or definition's conditions yet violates its conclusion, thereby showing the claim is not universally true. Because a universal claim asserts something about every case, one genuine exception is enough to refute it. For example, the definition 'knowledge is true belief' is refuted by a lucky guess that happens to be true: it is a true belief but not knowledge.",
+        "explanation": "One genuine exception refutes a universal claim or analysis."
+      }
+    ]
   },
   {
-    kind: "test",
-    title: "Unit 1 Test — Logic and Critical Reasoning",
-    weekNumber: 1,
-    isTimed: true,
-    timeLimitMinutes: 30,
-    instructions: "Timed. 30 minutes. Pasting is disabled; keystrokes are screened for AI use.",
-    problems: [
-      { topicSlug: "arguments-premises-conclusions", prompt: "In one sentence, define a philosophical argument.", correctAnswer: "An argument is a set of statements in which the premises are offered as reasons to support a conclusion.", explanation: "Premises support a conclusion." },
-      { topicSlug: "validity-soundness", prompt: "Explain the difference between a valid and a sound argument in one sentence.", correctAnswer: "A valid argument's form guarantees the conclusion if the premises are true, while a sound argument is valid and also has all true premises.", explanation: "Validity is about form; soundness adds true premises." },
-      { topicSlug: "deductive-inductive", prompt: "Give one example of inductive reasoning and explain why it is not deductive.", correctAnswer: "Concluding all swans are white because every observed swan is white; it is inductive because the premises make the conclusion probable but not certain, and it can be false.", explanation: "Induction goes beyond the evidence, so the conclusion is only probable." },
-      { topicSlug: "logical-fallacies", prompt: "Distorting an opponent's position to make it easier to attack is which fallacy?", correctAnswer: "straw man", explanation: "The straw man fallacy refutes a weakened misrepresentation of a view." },
-      { topicSlug: "philosophical-method", prompt: "Name the philosophical method that uses an imagined scenario to isolate an intuition.", correctAnswer: "a thought experiment", explanation: "Thought experiments test ideas through imagined cases like the brain in a vat." },
-    ],
-  },
-
-  // Unit 2
-  {
-    kind: "homework",
-    title: "Homework 2.1 — Knowledge, sources, and skepticism",
-    weekNumber: 2,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice.",
-    problems: [
-      { topicSlug: "epistemology", prompt: "Is knowledge the same as true belief? Answer yes or no, then give the reason in one phrase.", correctAnswer: "no; knowledge cannot be true by luck", explanation: "A lucky true guess is not knowledge; knowledge needs more than truth and belief." },
-      { topicSlug: "rationalism-empiricism", prompt: "Which tradition holds that sense experience is the ultimate source of knowledge — rationalism or empiricism?", correctAnswer: "empiricism", explanation: "Empiricists hold experience is the source; rationalists emphasize reason." },
-      { topicSlug: "skepticism", prompt: "State Descartes' one indubitable certainty in Latin or English.", correctAnswer: 'cogito ergo sum / "I think, therefore I am"', explanation: "Even a deceiver cannot make me doubt that I, the doubter, exist." },
-      { topicSlug: "skepticism", prompt: "Name the modern version of Descartes' evil demon scenario.", correctAnswer: "the brain in a vat", explanation: "A brain fed simulated experiences is the contemporary skeptical scenario." },
-    ],
-  },
-  {
-    kind: "homework",
-    title: "Homework 2.2 — Gettier, perception, and truth",
-    weekNumber: 2,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice.",
-    problems: [
-      { topicSlug: "jtb-gettier", prompt: "What three conditions make up the JTB analysis of knowledge?", correctAnswer: "justified, true, belief", explanation: "Knowledge is traditionally analyzed as justified true belief." },
-      { topicSlug: "jtb-gettier", prompt: "In one sentence, what do Gettier cases show about JTB?", correctAnswer: "They show that justified true belief is not sufficient for knowledge, because the belief can be true by luck.", explanation: "Gettier cases meet all three conditions yet aren't knowledge." },
-      { topicSlug: "perception-reality", prompt: "Locke called color and taste which kind of quality — primary or secondary?", correctAnswer: "secondary", explanation: "Secondary qualities are powers to produce sensations; primary qualities like shape belong to the object itself." },
-      { topicSlug: "theories-of-truth", prompt: "Which theory says a statement is true when it matches the way the world is?", correctAnswer: "the correspondence theory", explanation: "Correspondence ties truth to matching the facts; coherence and pragmatism are the alternatives." },
-    ],
+    "kind": "test",
+    "title": "Unit 1 Test — Logic and Critical Reasoning",
+    "weekNumber": 1,
+    "isTimed": true,
+    "timeLimitMinutes": 30,
+    "instructions": "Timed. 30 minutes. Answer each question in a short paragraph in your own words. Pasting is disabled; keystrokes are screened for AI use.",
+    "problems": [
+      {
+        "topicSlug": "arguments-premises-conclusions",
+        "prompt": "Define a philosophical argument and explain what distinguishes it from a mere assertion of opinion.",
+        "correctAnswer": "An argument is a set of statements in which premises are offered as reasons to support a conclusion. It differs from a mere assertion of opinion because it does not just state a claim — it gives reasons that can be evaluated, so others can assess whether the premises are true and whether they actually support the conclusion. An opinion stands alone; an argument exposes its supporting structure to rational scrutiny.",
+        "explanation": "An argument supplies evaluable reasons; an opinion does not."
+      },
+      {
+        "topicSlug": "validity-soundness",
+        "prompt": "Explain the relationship between validity and soundness, and why validity alone is not enough to establish that a conclusion is true.",
+        "correctAnswer": "Validity concerns form: a valid argument is one whose conclusion must be true if its premises are true. Soundness adds the requirement that the premises actually are true, so a sound argument (valid + true premises) must have a true conclusion. Validity alone is insufficient because a valid argument can be built on false premises and reach a false conclusion — validity guarantees truth-preservation, not truth, so we also need the premises to be true.",
+        "explanation": "Validity preserves truth; soundness also requires true premises."
+      },
+      {
+        "topicSlug": "deductive-inductive",
+        "prompt": "Give an example of inductive reasoning, explain why it is inductive rather than deductive, and state what this implies about the certainty of its conclusion.",
+        "correctAnswer": "Example: 'Every swan observed so far has been white, so all swans are white.' It is inductive because the premises make the conclusion probable but do not guarantee it — the argument generalizes beyond the observed cases. This implies the conclusion is not certain: it can be false even if every premise is true, as the discovery of black swans showed. Inductive arguments are assessed as strong or weak, never valid or invalid.",
+        "explanation": "Generalizing beyond evidence yields probability, not certainty."
+      },
+      {
+        "topicSlug": "logical-fallacies",
+        "prompt": "Explain the straw man fallacy and how it differs from a legitimate criticism of an opponent's view.",
+        "correctAnswer": "A straw man fallacy misrepresents or distorts an opponent's position into a weaker, easier-to-attack version, then refutes that distortion as if it defeated the real view. It differs from legitimate criticism because a fair criticism engages the opponent's actual claim — ideally its strongest form, per the principle of charity — whereas a straw man defeats a position the opponent never held, leaving the real argument untouched.",
+        "explanation": "Straw man attacks a distortion; fair criticism attacks the real view."
+      },
+      {
+        "topicSlug": "philosophical-method",
+        "prompt": "Explain what a thought experiment is and how philosophers use it to test a claim. Refer to one example.",
+        "correctAnswer": "A thought experiment is an imagined, often hypothetical scenario designed to isolate and test an intuition or principle when no real experiment could. Philosophers use it by describing a case and asking what we would judge about it, then treating that judgment as evidence for or against a theory. For example, the 'brain in a vat' scenario tests whether we can rule out radical skeptical possibilities, isolating the question of whether sense experience can guarantee knowledge of the external world.",
+        "explanation": "Imagined cases isolate intuitions used as evidence about theories."
+      }
+    ]
   },
   {
-    kind: "midterm",
-    title: "Midterm — Units 1 & 2",
-    weekNumber: 2,
-    isTimed: true,
-    timeLimitMinutes: 60,
-    instructions: "Cumulative midterm covering Units 1–2. 60 minutes. Pasting disabled; keystrokes screened.",
-    problems: [
-      { topicSlug: "what-is-philosophy", prompt: "Name the four areas of philosophy covered in this course.", correctAnswer: "logic/critical reasoning, epistemology, philosophy of mind, and metaphysics and ethics", explanation: "The course is organized into these four families of questions." },
-      { topicSlug: "validity-soundness", prompt: "Can a valid argument have a false conclusion? Answer yes or no and explain in one phrase.", correctAnswer: "yes; if at least one premise is false", explanation: "Validity only guarantees the conclusion if the premises are true; with a false premise a valid argument can have a false conclusion." },
-      { topicSlug: "deductive-inductive", prompt: "Are inductive arguments evaluated as valid/invalid or as strong/weak?", correctAnswer: "strong/weak", explanation: "We reserve valid/invalid for deduction; induction is strong or weak." },
-      { topicSlug: "epistemology", prompt: "Distinguish propositional knowledge from procedural knowledge in one sentence.", correctAnswer: "Propositional knowledge is knowing that something is the case, while procedural knowledge is knowing how to do something.", explanation: "Knowing-that vs. knowing-how." },
-      { topicSlug: "rationalism-empiricism", prompt: "Define a priori knowledge in one sentence.", correctAnswer: "A priori knowledge is knowledge justified independently of sense experience.", explanation: "E.g., that 7 + 5 = 12, grasped by reason alone." },
-      { topicSlug: "jtb-gettier", prompt: "What is the broad lesson Gettier cases teach about knowledge and luck?", correctAnswer: "Knowledge must exclude luck — a belief that is true only by luck is not knowledge even if justified.", explanation: "The fatal feature of Gettier cases is luck slipping through the justification." },
-      { topicSlug: "skepticism", prompt: "Why are skeptical scenarios like the brain in a vat so hard to refute? Answer in one sentence.", correctAnswer: "Because they are designed so that no observation could distinguish them from ordinary reality.", explanation: "Everything would seem exactly the same, so experience can't rule them out." },
-      { topicSlug: "theories-of-truth", prompt: "State one objection to the coherence theory of truth.", correctAnswer: "A set of beliefs can be perfectly coherent yet false, like a consistent novel.", explanation: "Internal consistency doesn't guarantee correspondence to reality." },
-    ],
-  },
-
-  // Unit 3
-  {
-    kind: "homework",
-    title: "Homework 3.1 — Mind, dualism, and materialism",
-    weekNumber: 3,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice.",
-    problems: [
-      { topicSlug: "mind-body-problem", prompt: "What is the chief objection to interactionist dualism — the problem of explaining what?", correctAnswer: "how a non-physical mind interacts with a physical body", explanation: "The interaction problem asks how mind and body causally affect each other if they are fundamentally different." },
-      { topicSlug: "dualism", prompt: "Substance dualism says there are how many fundamentally different kinds of substance?", correctAnswer: "two", explanation: "Physical substance (body) and mental substance (mind/soul)." },
-      { topicSlug: "materialism-physicalism", prompt: "Which materialist theory says mental states are defined by their causal role rather than their physical make-up?", correctAnswer: "functionalism", explanation: "Functionalism identifies mental states by their causal/functional role, allowing multiple realizability." },
-      { topicSlug: "materialism-physicalism", prompt: "In the Mary's Room argument, does Mary seem to learn something new when she first sees red? Answer yes or no.", correctAnswer: "yes", explanation: "She seems to learn what red looks like, suggesting not all facts are physical." },
-    ],
-  },
-  {
-    kind: "homework",
-    title: "Homework 3.2 — Identity, free will, and machine minds",
-    weekNumber: 3,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice.",
-    problems: [
-      { topicSlug: "personal-identity", prompt: "Locke's theory says personal identity over time consists mainly in what kind of continuity?", correctAnswer: "psychological continuity / memory", explanation: "Locke tied identity to a continuous chain of consciousness and memory." },
-      { topicSlug: "free-will-determinism", prompt: "Which position holds that free will and determinism are compatible?", correctAnswer: "compatibilism", explanation: "Compatibilists say freedom is acting from your own desires without compulsion, which is consistent with determinism." },
-      { topicSlug: "consciousness-self", prompt: "What is the 'hard problem of consciousness'? Answer in one sentence.", correctAnswer: "The problem of explaining why there is subjective experience at all — why physical processing is accompanied by something it is like to undergo it.", explanation: "The hard problem concerns the existence of felt experience, not cognitive function." },
-      { topicSlug: "artificial-minds", prompt: "In Searle's Chinese Room, the man manipulates symbols by their shape but lacks what — syntax or semantics?", correctAnswer: "semantics", explanation: "He has syntax (symbol manipulation) but no semantics (understanding of meaning)." },
-    ],
+    "kind": "homework",
+    "title": "Homework 2.1 — Knowledge, sources, and skepticism",
+    "weekNumber": 2,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "epistemology",
+        "prompt": "Explain why knowledge is usually taken to be more than just true belief. Use the idea of luck in your answer.",
+        "correctAnswer": "Knowledge is taken to be more than true belief because a belief can happen to be true purely by luck without counting as knowledge. If someone guesses the time correctly without looking at a clock, they have a true belief, but we would not say they *know* the time, because they had no good reason and were right only by chance. Knowledge therefore seems to require that the truth of the belief be appropriately connected to good reasons or justification, excluding lucky accidents.",
+        "explanation": "A lucky true guess is true belief but not knowledge."
+      },
+      {
+        "topicSlug": "rationalism-empiricism",
+        "prompt": "Explain the central disagreement between rationalism and empiricism about the source of knowledge, and give an example of the kind of knowledge each tradition emphasizes.",
+        "correctAnswer": "Rationalism and empiricism disagree about the ultimate source of knowledge. Empiricism holds that knowledge derives ultimately from sense experience — we learn what the world is like by observing it, e.g., that water boils at a certain temperature. Rationalism holds that reason can be a source of substantive knowledge independent of experience, emphasizing a priori truths grasped by thought alone, e.g., that 7 + 5 = 12. The dispute is over whether experience or reason is the foundation.",
+        "explanation": "Empiricism: experience; rationalism: reason / a priori truths."
+      },
+      {
+        "topicSlug": "skepticism",
+        "prompt": "Explain Descartes' method of doubt and how it leads to the one thing he claims cannot be doubted.",
+        "correctAnswer": "Descartes' method of doubt is to reject as false anything that can possibly be doubted, in order to find an absolutely certain foundation. He doubts the senses (they deceive), the external world (he might be dreaming), and even simple reasoning (an evil demon might trick him). Yet he finds one thing he cannot doubt: that he is thinking. Even if he is being deceived, there must be a thinker being deceived — so 'I think, therefore I am' is certain, because the very act of doubting confirms that he, the doubter, exists.",
+        "explanation": "Doubt itself presupposes a thinking, existing doubter — the cogito."
+      },
+      {
+        "topicSlug": "skepticism",
+        "prompt": "Explain the brain-in-a-vat scenario and why it poses a serious challenge to our claims to know the external world.",
+        "correctAnswer": "The brain-in-a-vat scenario imagines that your brain is kept alive in a vat and fed exactly the signals that would produce all your current experiences, so everything seems normal though there is no external world as you picture it; it is the modern version of Descartes' evil demon. It poses a serious challenge because, by design, no observation could distinguish being a brain in a vat from ordinary life — your experiences would be identical either way — so sense experience alone cannot rule it out, threatening the claim that we know the external world is real.",
+        "explanation": "Indistinguishable experiences mean perception can't refute it."
+      }
+    ]
   },
   {
-    kind: "test",
-    title: "Unit 3 Test — Philosophy of Mind",
-    weekNumber: 3,
-    isTimed: true,
-    timeLimitMinutes: 40,
-    instructions: "Timed. 40 minutes. Pasting disabled; keystrokes screened.",
-    problems: [
-      { topicSlug: "mind-body-problem", prompt: "In one sentence, state what the mind-body problem asks.", correctAnswer: "It asks what the relationship is between the mind and the physical body.", explanation: "The core question is how mental and physical states relate." },
-      { topicSlug: "dualism", prompt: "What is the strongest objection to substance dualism?", correctAnswer: "the interaction problem — explaining how a non-physical mind can causally affect the physical body", explanation: "Causation seems to require contact or energy a non-physical mind lacks." },
-      { topicSlug: "materialism-physicalism", prompt: "What does 'multiple realizability' suggest about the mind? Answer in one sentence.", correctAnswer: "That the same mental state can be realized in different physical substrates, so the mind is more like software than specific hardware.", explanation: "It argues against strict identity theory and for functionalism." },
-      { topicSlug: "free-will-determinism", prompt: "State the dilemma of determinism in one sentence.", correctAnswer: "If determinism is true our choices are fixed and unfree, but if choices are undetermined they are merely random and still not free or responsible.", explanation: "Either horn seems to threaten free will." },
-      { topicSlug: "artificial-minds", prompt: "What does Searle's Chinese Room aim to show about strong AI?", correctAnswer: "That running the right program (syntax) is not sufficient for genuine understanding (semantics).", explanation: "Computation alone can't produce a mind, on Searle's view." },
-    ],
-  },
-
-  // Unit 4
-  {
-    kind: "homework",
-    title: "Homework 4.1 — Metaphysics, God, and evil",
-    weekNumber: 4,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice.",
-    problems: [
-      { topicSlug: "metaphysics", prompt: "What is the branch of metaphysics concerned with what kinds of things exist?", correctAnswer: "ontology", explanation: "Ontology studies what exists and what kinds of being there are." },
-      { topicSlug: "arguments-god", prompt: "The cosmological argument concludes that the universe requires what?", correctAnswer: "a first cause / an uncaused cause", explanation: "It argues from the existence of the universe to a first or uncaused cause, identified with God." },
-      { topicSlug: "arguments-god", prompt: "Kant objected to the ontological argument by denying that existence is a what?", correctAnswer: "a predicate", explanation: "Kant argued existence adds nothing to a concept, so you can't define a thing into existence." },
-      { topicSlug: "problem-of-evil", prompt: "Which theodicy explains moral evil as the price of creatures having genuine free choice?", correctAnswer: "the free will defense", explanation: "The free will defense says a world with free agents is more valuable even though freedom permits evil." },
-    ],
-  },
-  {
-    kind: "homework",
-    title: "Homework 4.2 — The ethical theories and justice",
-    weekNumber: 4,
-    isTimed: false,
-    timeLimitMinutes: null,
-    instructions: "Untimed practice.",
-    problems: [
-      { topicSlug: "consequentialism", prompt: "According to utilitarianism, the right action produces the greatest what for the greatest number?", correctAnswer: "happiness", explanation: "Utilitarianism maximizes overall happiness or well-being, counting everyone equally." },
-      { topicSlug: "deontology", prompt: "Kant's Humanity formulation says to treat people never merely as a means but always as an what?", correctAnswer: "an end (in itself)", explanation: "Persons have dignity and must be treated as ends in themselves, not mere tools." },
-      { topicSlug: "virtue-ethics", prompt: "Aristotle says a virtue is a mean between two extremes; courage is the mean between cowardice and what?", correctAnswer: "recklessness", explanation: "Courage lies between the deficiency (cowardice) and the excess (recklessness)." },
-      { topicSlug: "political-philosophy", prompt: "Rawls asks us to choose society's rules from behind what device?", correctAnswer: "the veil of ignorance", explanation: "Behind the veil of ignorance you don't know your own social position, ensuring fair principles." },
-    ],
+    "kind": "homework",
+    "title": "Homework 2.2 — Gettier, perception, and truth",
+    "weekNumber": 2,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "jtb-gettier",
+        "prompt": "State the three conditions of the JTB analysis of knowledge and briefly explain why each was thought necessary.",
+        "correctAnswer": "The JTB analysis says knowledge is justified true belief: S knows that P if and only if (1) S believes P — you cannot know what you do not even believe; (2) P is true — you cannot know something false, only believe it; and (3) S is justified in believing P — you must have good reasons, not a lucky guess. Each condition rules out a way of falling short of knowledge: disbelief, falsehood, and unsupported belief respectively.",
+        "explanation": "Belief, truth, and justification each block a way of failing to know."
+      },
+      {
+        "topicSlug": "jtb-gettier",
+        "prompt": "Explain what Gettier cases are and what they show about the JTB analysis of knowledge.",
+        "correctAnswer": "Gettier cases are examples in which a person has a justified true belief that nevertheless intuitively fails to be knowledge, because the belief is true only by luck — typically the person reasons validly from a justified but false premise to a conclusion that happens to be true for an unrelated reason. They show that justified true belief is not sufficient for knowledge: all three JTB conditions can be met while lucky truth disqualifies the belief, so the traditional analysis is incomplete.",
+        "explanation": "JTB can be satisfied yet fail to be knowledge because of luck."
+      },
+      {
+        "topicSlug": "perception-reality",
+        "prompt": "Explain Locke's distinction between primary and secondary qualities, and give an example of each.",
+        "correctAnswer": "Locke distinguished primary qualities, which belong to objects themselves and exist whether or not anyone perceives them — such as shape, size, motion, and number — from secondary qualities, which are merely powers in objects to produce sensations in us, such as color, taste, sound, and smell. For example, the shape of an apple is a primary quality in the apple itself, whereas its red color is a secondary quality: the apple's power to cause a red sensation in a perceiver.",
+        "explanation": "Primary qualities are in the object; secondary are powers to cause sensations."
+      },
+      {
+        "topicSlug": "theories-of-truth",
+        "prompt": "Explain the correspondence theory of truth and contrast it with one rival theory.",
+        "correctAnswer": "The correspondence theory says a statement is true when it matches or corresponds to the way the world actually is — 'snow is white' is true because snow really is white. A rival is the coherence theory, which says a statement is true when it fits consistently within a larger system of beliefs. The key contrast is that correspondence ties truth to an external fact, while coherence ties it to internal consistency, which is why a perfectly coherent set of beliefs could still, on the correspondence view, be false.",
+        "explanation": "Correspondence: match the world; coherence: fit the belief system."
+      }
+    ]
   },
   {
-    kind: "final",
-    title: "Final Exam — All units",
-    weekNumber: 4,
-    isTimed: true,
-    timeLimitMinutes: 90,
-    instructions: "Cumulative final covering Units 1–4. 90 minutes. Pasting disabled; keystrokes screened.",
-    problems: [
-      { topicSlug: "validity-soundness", prompt: "Define a sound argument in one sentence.", correctAnswer: "A sound argument is a valid argument with all true premises, so its conclusion must be true.", explanation: "Soundness = validity + all true premises." },
-      { topicSlug: "deductive-inductive", prompt: "Which kind of reasoning aims for certainty — deductive or inductive?", correctAnswer: "deductive", explanation: "Deduction guarantees the conclusion; induction only makes it probable." },
-      { topicSlug: "jtb-gettier", prompt: "Is justified true belief sufficient for knowledge? Answer yes or no.", correctAnswer: "no", explanation: "Gettier cases show JTB can be met while the belief is true only by luck." },
-      { topicSlug: "skepticism", prompt: "Whose method of doubt led to 'I think, therefore I am'?", correctAnswer: "Descartes", explanation: "Descartes' method of doubt salvaged the cogito as the one certainty." },
-      { topicSlug: "dualism", prompt: "What is the main problem facing substance dualism?", correctAnswer: "the interaction problem", explanation: "Explaining how a non-physical mind affects a physical body." },
-      { topicSlug: "free-will-determinism", prompt: "Compatibilism defines acting freely as acting how?", correctAnswer: "according to your own desires, without external compulsion", explanation: "Freedom is the absence of constraint, not the absence of causation." },
-      { topicSlug: "consequentialism", prompt: "Give one standard objection to utilitarianism.", correctAnswer: "It can permit injustice, such as punishing an innocent person, if doing so maximizes overall happiness.", explanation: "Maximizing total welfare can override individual rights and justice." },
-      { topicSlug: "deontology", prompt: "State Kant's Universal Law formulation of the Categorical Imperative.", correctAnswer: "Act only on a maxim you can will to become a universal law.", explanation: "A maxim that can't be universalized without contradiction is forbidden." },
-      { topicSlug: "virtue-ethics", prompt: "What question does virtue ethics focus on, compared to act-focused theories?", correctAnswer: "What kind of person should I be? (character rather than which act to do)", explanation: "Virtue ethics centers on character and flourishing (eudaimonia)." },
-      { topicSlug: "problem-of-evil", prompt: "Why is natural evil especially hard for theodicies? Answer in one sentence.", correctAnswer: "Because suffering from earthquakes, disease, and animal pain is not caused by human free choices, so the free will defense doesn't obviously cover it.", explanation: "Natural evil resists the most common theodicy." },
-    ],
+    "kind": "midterm",
+    "title": "Midterm — Units 1 & 2",
+    "weekNumber": 2,
+    "isTimed": true,
+    "timeLimitMinutes": 60,
+    "instructions": "Timed. 60 minutes. Answer each question in a short paragraph in your own words. Pasting is disabled; keystrokes are screened for AI use.",
+    "problems": [
+      {
+        "topicSlug": "what-is-philosophy",
+        "prompt": "Explain how philosophy differs from both science and religion in how it tries to answer fundamental questions.",
+        "correctAnswer": "Philosophy, science, and religion all address fundamental questions but settle them differently. Science answers by observation and experiment, addressing questions empirical testing can decide. Religion may answer by appeal to faith, revelation, or sacred authority. Philosophy insists that answers be supported by arguments — reasons anyone could in principle evaluate — and it takes on precisely the questions, like what knowledge is or whether we have free will, that no experiment can settle and that it refuses to decide by authority alone.",
+        "explanation": "Science: experiment; religion: authority/faith; philosophy: evaluable argument."
+      },
+      {
+        "topicSlug": "validity-soundness",
+        "prompt": "Explain why a valid argument with a false conclusion must contain at least one false premise.",
+        "correctAnswer": "By definition, a valid argument is one in which, if all the premises are true, the conclusion must be true. So if a valid argument has a false conclusion, it cannot be that all its premises are true, because true premises in a valid argument would force a true conclusion. Therefore at least one premise must be false; otherwise validity would have guaranteed a true conclusion.",
+        "explanation": "Valid form + all true premises forces a true conclusion, so a false conclusion implies a false premise."
+      },
+      {
+        "topicSlug": "deductive-inductive",
+        "prompt": "Explain why inductive arguments are assessed as strong or weak rather than valid or invalid.",
+        "correctAnswer": "Validity is all-or-nothing: a valid argument's premises guarantee its conclusion, leaving no possibility of true premises with a false conclusion. Inductive arguments never offer that guarantee — their premises only raise the probability of the conclusion, which can be false even when the premises are true. Because they support conclusions to a degree rather than with certainty, we evaluate them as strong or weak (how much support) instead of valid or invalid.",
+        "explanation": "Induction gives degrees of probability, so it is strong/weak, not valid/invalid."
+      },
+      {
+        "topicSlug": "epistemology",
+        "prompt": "Distinguish propositional knowledge from procedural knowledge and give an example of each.",
+        "correctAnswer": "Propositional knowledge is knowing-that — knowing that some proposition is true, such as knowing that Paris is the capital of France. Procedural knowledge is knowing-how — having the ability or skill to do something, such as knowing how to ride a bicycle. They can come apart: one can know that a bicycle is propelled by pedaling without knowing how to ride, and an expert rider may know how to balance without being able to state the physics.",
+        "explanation": "Knowing-that (facts) vs. knowing-how (skills)."
+      },
+      {
+        "topicSlug": "rationalism-empiricism",
+        "prompt": "Explain what a priori knowledge is and why rationalists give it special importance.",
+        "correctAnswer": "A priori knowledge is knowledge that is justified independently of sense experience — it can be established by reason or understanding alone, such as that all bachelors are unmarried or that 7 + 5 = 12. Rationalists give it special importance because it shows reason can deliver substantive, certain knowledge without observation, supporting their claim that the senses are not the only or ultimate source of knowledge and that some truths about reality are graspable by thought alone.",
+        "explanation": "A priori = justified without experience; it shows reason alone can yield knowledge."
+      },
+      {
+        "topicSlug": "jtb-gettier",
+        "prompt": "Explain the broad lesson Gettier cases teach about the relationship between knowledge and luck.",
+        "correctAnswer": "Gettier cases teach that knowledge must exclude the wrong kind of luck. In each case the believer satisfies justification, truth, and belief, yet the belief is true only by a lucky accident rather than because of the justification, so it falls short of knowledge. The broad lesson is that justification and truth must be connected in the right way: a belief true merely by luck, even if well justified, is not knowledge, so any adequate analysis must rule out such luck.",
+        "explanation": "Knowledge requires the justification to explain the truth, not luck."
+      },
+      {
+        "topicSlug": "skepticism",
+        "prompt": "Explain why radical skeptical scenarios are so difficult to refute, and what this shows about the limits of sense experience.",
+        "correctAnswer": "Radical skeptical scenarios such as the evil demon or the brain in a vat are difficult to refute because they are constructed so that no possible observation could distinguish them from ordinary reality — every experience would be exactly the same whether or not the scenario is true. This shows a limit of sense experience: experience alone cannot certify that it is tracking an external world, since indistinguishable experiences are compatible with radically different realities, so empirical evidence cannot by itself rule the scenarios out.",
+        "explanation": "Designed indistinguishability shows experience can't certify the external world."
+      },
+      {
+        "topicSlug": "theories-of-truth",
+        "prompt": "State one objection to the coherence theory of truth and explain why it is a problem for that theory.",
+        "correctAnswer": "A standard objection is that a set of beliefs can be perfectly coherent yet entirely false — a well-constructed novel, or a paranoid but internally consistent worldview, hangs together without matching reality. This is a problem because the coherence theory identifies truth with consistency among beliefs, yet here we have maximal coherence without truth, suggesting coherence is at best a test for truth rather than its nature, which seems instead to require correspondence to how the world actually is.",
+        "explanation": "Coherent-but-false systems show consistency is not truth."
+      }
+    ]
   },
+  {
+    "kind": "homework",
+    "title": "Homework 3.1 — Mind, dualism, and materialism",
+    "weekNumber": 3,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "mind-body-problem",
+        "prompt": "Explain what the mind-body problem is and why it is a genuinely hard problem.",
+        "correctAnswer": "The mind-body problem asks what the relationship is between mental states — thoughts, feelings, conscious experiences — and physical states of the brain and body. It is hard because mental states seem to have features such as subjectivity, intentionality, and felt qualities that are difficult to identify with or explain in terms of purely physical processes, yet mind and body clearly affect each other. Any answer must explain how the apparently mental relates to the physical, and every option faces serious objections.",
+        "explanation": "Mental features resist physical explanation, yet mind and body interact."
+      },
+      {
+        "topicSlug": "dualism",
+        "prompt": "Explain substance dualism and state its strongest objection.",
+        "correctAnswer": "Substance dualism holds that reality contains two fundamentally different kinds of substance: physical substance (the body, extended in space) and mental substance (the mind or soul, non-physical and thinking). Its strongest objection is the interaction problem: if mind and body are utterly different kinds of thing, it is unclear how they could causally affect one another — how an immaterial mind could move a physical body — since causation seems to require contact or energy a non-physical mind lacks.",
+        "explanation": "Two substances; the interaction problem is the key objection."
+      },
+      {
+        "topicSlug": "materialism-physicalism",
+        "prompt": "Explain functionalism and how it differs from the mind-brain identity theory.",
+        "correctAnswer": "Functionalism holds that mental states are defined by their functional or causal role — by what they do: how they are caused by inputs, how they interact with other mental states, and how they produce behavior — rather than by their physical make-up. It differs from the identity theory, which says each mental state simply IS a specific brain state (e.g., pain = C-fiber firing). Functionalism allows multiple realizability: the same mental state could be realized in different substrates, so it is not tied to one physical type.",
+        "explanation": "Functionalism = defined by role (multiply realizable); identity = a specific brain state."
+      },
+      {
+        "topicSlug": "materialism-physicalism",
+        "prompt": "Explain the Mary's Room thought experiment and what it is supposed to show about physicalism.",
+        "correctAnswer": "In Mary's Room, Mary is a scientist who knows every physical fact about color vision but has lived her whole life in a black-and-white room. When she leaves and sees red for the first time, she seems to learn something new — what red actually looks like. The argument concludes that if she knew all the physical facts yet still learned something, then not all facts are physical: there are facts about subjective experience (qualia) that physical knowledge leaves out, which challenges physicalism.",
+        "explanation": "Learning 'what red is like' suggests non-physical facts about experience."
+      }
+    ]
+  },
+  {
+    "kind": "homework",
+    "title": "Homework 3.2 — Identity, free will, and machine minds",
+    "weekNumber": 3,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "personal-identity",
+        "prompt": "Explain Locke's psychological/memory theory of personal identity and give one objection to it.",
+        "correctAnswer": "Locke held that personal identity over time consists in psychological continuity, especially a continuous chain of consciousness and memory: you are the same person as some earlier person if you can remember that person's experiences. One objection is the brave-officer problem: a person may lose memories yet still be the same person, and memory itself seems to presuppose identity rather than constitute it, since to genuinely remember an experience is already to remember it as one's own.",
+        "explanation": "Identity = memory continuity; objection: memory presupposes identity / can be lost."
+      },
+      {
+        "topicSlug": "free-will-determinism",
+        "prompt": "Explain compatibilism and how it tries to reconcile free will with determinism.",
+        "correctAnswer": "Compatibilism holds that free will and determinism are compatible — actions can be both causally determined and free. It reconciles them by defining freedom not as the absence of causation but as the absence of constraint or compulsion: an action is free when it flows from your own desires and deliberation without external coercion, even if those desires were themselves caused. So a person acting on their own will, uncoerced, acts freely and is responsible, regardless of whether the universe is deterministic.",
+        "explanation": "Freedom = acting on your own uncoerced desires, compatible with determinism."
+      },
+      {
+        "topicSlug": "consciousness-self",
+        "prompt": "Explain the 'hard problem of consciousness' and how it differs from the 'easy problems.'",
+        "correctAnswer": "The hard problem of consciousness is the problem of explaining why there is subjective experience at all — why physical processing in the brain is accompanied by something it is like to undergo it, the felt qualities of experience. It differs from the 'easy problems,' which concern explaining cognitive functions like perception, attention, memory, and behavior control in terms of mechanisms. Even a complete functional explanation of those abilities seems to leave open why any of it is accompanied by inner experience.",
+        "explanation": "Hard problem: why there is felt experience at all, beyond function."
+      },
+      {
+        "topicSlug": "artificial-minds",
+        "prompt": "Explain Searle's Chinese Room argument and what it aims to show about whether computers can understand.",
+        "correctAnswer": "In Searle's Chinese Room, a person who knows no Chinese follows a rulebook that tells him how to respond to Chinese symbols with other Chinese symbols. From outside it looks as if the room understands Chinese, but the person inside manipulates symbols purely by their shape (syntax) without grasping their meaning (semantics). Searle argues a computer does no more, so running the right program is not sufficient for genuine understanding: syntax alone does not produce semantics, and so strong AI is mistaken.",
+        "explanation": "Symbol manipulation (syntax) is not understanding (semantics)."
+      }
+    ]
+  },
+  {
+    "kind": "test",
+    "title": "Unit 3 Test — Philosophy of Mind",
+    "weekNumber": 3,
+    "isTimed": true,
+    "timeLimitMinutes": 40,
+    "instructions": "Timed. 40 minutes. Answer each question in a short paragraph in your own words. Pasting is disabled; keystrokes are screened for AI use.",
+    "problems": [
+      {
+        "topicSlug": "mind-body-problem",
+        "prompt": "State the mind-body problem and explain why both dualism and materialism arise as responses to it.",
+        "correctAnswer": "The mind-body problem asks how mental states relate to physical states of the brain and body. Dualism arises because mental phenomena — consciousness, subjective experience, intentionality — seem so unlike physical processes that one is tempted to say the mind is a distinct, non-physical thing. Materialism arises from the opposite pull: the mind depends intimately on the brain, mental and physical events interact seamlessly, and science explains ever more of the mind physically, so it is tempting to say the mind just is something physical.",
+        "explanation": "Each view emphasizes one side: mind's strangeness vs. its dependence on the brain."
+      },
+      {
+        "topicSlug": "dualism",
+        "prompt": "Explain the interaction problem and why it is the strongest objection to substance dualism.",
+        "correctAnswer": "The interaction problem asks how a non-physical mind and a physical body could causally affect each other, given that they are supposed to be fundamentally different kinds of substance. It is the strongest objection because such interaction is undeniable — decisions move our limbs and injuries cause pain — yet causation seems to require contact, energy transfer, or location, all of which a non-physical, non-spatial mind lacks. Dualism thus posits an interaction it cannot explain.",
+        "explanation": "Dualism can't explain the mind-body causation it must affirm."
+      },
+      {
+        "topicSlug": "materialism-physicalism",
+        "prompt": "Explain multiple realizability and how it supports functionalism over the identity theory.",
+        "correctAnswer": "Multiple realizability is the claim that the same kind of mental state can be realized by different physical systems — pain might be realized by C-fibers in humans, a different structure in an octopus, or conceivably silicon in a machine. It supports functionalism, which defines mental states by their causal role rather than composition, because if one mental state can occur in many physical forms it cannot be identical to any single physical state-type, contrary to the identity theory. What matters is the role, not the stuff.",
+        "explanation": "Same state in different substrates can't be one brain-state type."
+      },
+      {
+        "topicSlug": "free-will-determinism",
+        "prompt": "Explain the dilemma of determinism — the problem posed by both determinism and indeterminism for free will.",
+        "correctAnswer": "The dilemma of determinism says free will seems threatened on either assumption. If determinism is true, every choice is fixed by prior causes reaching back before our birth, so we could never have done otherwise and our choices are not truly up to us. But if our choices are undetermined, they appear merely random, and a random act is no more free or responsible than a determined one. Since causation is either deterministic or not, free will seems undermined either way.",
+        "explanation": "Determinism removes 'could have done otherwise'; indeterminism makes acts random."
+      },
+      {
+        "topicSlug": "artificial-minds",
+        "prompt": "Explain what Searle's Chinese Room is meant to show about strong AI, and state one reply to it.",
+        "correctAnswer": "Searle's Chinese Room is meant to show that running the right program is not sufficient for genuine understanding: the person inside produces correct Chinese responses by manipulating symbols by shape (syntax) without understanding meaning (semantics), and a computer does no more, so strong AI is false. One reply is the Systems Reply: although the person does not understand Chinese, the whole system — person plus rulebook and processing — does, just as no single neuron understands English though the brain does.",
+        "explanation": "Searle: syntax isn't semantics; Systems Reply: the whole system understands."
+      }
+    ]
+  },
+  {
+    "kind": "homework",
+    "title": "Homework 4.1 — Metaphysics, God, and evil",
+    "weekNumber": 4,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "metaphysics",
+        "prompt": "Explain what metaphysics studies and what the sub-branch of ontology is specifically concerned with.",
+        "correctAnswer": "Metaphysics is the branch of philosophy that studies the fundamental nature of reality — what there is and what it is ultimately like, including existence, objects, properties, causation, time, and identity. Ontology is the sub-branch specifically concerned with what kinds of things exist and what it is for something to exist at all — for example, whether numbers, minds, or universals are real entities in addition to physical objects. Metaphysics asks about the structure of reality; ontology focuses on its inventory of being.",
+        "explanation": "Metaphysics: nature of reality; ontology: what kinds of things exist."
+      },
+      {
+        "topicSlug": "arguments-god",
+        "prompt": "Explain the cosmological argument for the existence of God and state one objection to it.",
+        "correctAnswer": "The cosmological argument reasons from the existence of the universe to a first or uncaused cause: everything that exists or begins to exist has a cause, an infinite regress of causes is impossible, and so there must be a first, uncaused cause, identified with God. One objection is that it seems to exempt God from its own premise: if everything requires a cause, what caused God, and if God can be uncaused, why not say the universe itself is the uncaused brute fact, removing the need for a further cause?",
+        "explanation": "From a first cause to God; objection: why not stop at an uncaused universe?"
+      },
+      {
+        "topicSlug": "arguments-god",
+        "prompt": "Explain the ontological argument and Kant's objection that existence is not a predicate.",
+        "correctAnswer": "The ontological argument tries to prove God's existence from the concept of God alone: God is the greatest conceivable being, and a being that exists in reality is greater than one existing only in the mind, so the greatest conceivable being must exist. Kant objects that existence is not a real predicate — it adds nothing to the concept of a thing but merely says the concept is instantiated. Since 'exists' does not describe a further property that could make a being 'greater,' you cannot define a thing into existence, and the argument fails.",
+        "explanation": "Existence doesn't add to a concept, so you can't define God into being."
+      },
+      {
+        "topicSlug": "problem-of-evil",
+        "prompt": "Explain the free will defense as a response to the problem of evil, and note one limitation it faces.",
+        "correctAnswer": "The problem of evil asks how an all-powerful, all-knowing, all-good God could permit evil and suffering. The free will defense responds that God gave creatures genuine free will, a great good, and that moral evil is the price of that freedom: a world of free agents who can choose good is more valuable than a world of puppets, even though freedom makes wrongdoing possible. One limitation is that it addresses moral evil but struggles with natural evil — suffering from earthquakes, disease, and animal pain — which no free choice causes.",
+        "explanation": "Free will explains moral evil but not natural evil."
+      }
+    ]
+  },
+  {
+    "kind": "homework",
+    "title": "Homework 4.2 — The ethical theories and justice",
+    "weekNumber": 4,
+    "isTimed": false,
+    "timeLimitMinutes": null,
+    "instructions": "Untimed practice. Answer each question in a few complete sentences, in your own words.",
+    "problems": [
+      {
+        "topicSlug": "consequentialism",
+        "prompt": "Explain utilitarianism's basic principle and give one standard objection to it.",
+        "correctAnswer": "Utilitarianism holds that the right action is the one that produces the greatest overall happiness or well-being for the greatest number, counting everyone's interests equally; consequences alone determine rightness. One standard objection is that it can permit or require injustice: if punishing an innocent person or sacrificing a few would maximize total happiness, utilitarianism seems to endorse it, conflicting with our conviction that individual rights and justice should not be overridden merely to increase aggregate welfare.",
+        "explanation": "Maximize happiness for all; objection: it can license injustice."
+      },
+      {
+        "topicSlug": "deontology",
+        "prompt": "Explain Kant's Categorical Imperative (Universal Law formulation) and how it differs from a consequentialist test of right action.",
+        "correctAnswer": "Kant's Categorical Imperative, in its Universal Law formulation, says to act only on a maxim that you could consistently will to become a universal law everyone follows. An action is wrong if its maxim cannot be universalized without contradiction — lying fails because if everyone lied, promising and trust would collapse, undermining the very practice the liar relies on. It differs from consequentialism because rightness depends on the universalizability of the principle behind the act and on duty, not on whether the act produces good outcomes.",
+        "explanation": "Right = universalizable maxim/duty, not best consequences."
+      },
+      {
+        "topicSlug": "virtue-ethics",
+        "prompt": "Explain Aristotle's doctrine of the mean using courage as an example, and how virtue ethics' central question differs from that of act-focused theories.",
+        "correctAnswer": "Aristotle's doctrine of the mean holds that a virtue is a disposition lying between two vices, one of excess and one of deficiency. Courage is the mean between the deficiency of cowardice (too much fear) and the excess of recklessness (too little fear). Virtue ethics differs from act-focused theories like utilitarianism and deontology because its central question is not 'which act is right?' but 'what kind of person should I be?' — it focuses on character and the virtues needed for a flourishing life (eudaimonia) rather than rules for individual acts.",
+        "explanation": "Virtue is a mean between extremes; the focus is character, not single acts."
+      },
+      {
+        "topicSlug": "political-philosophy",
+        "prompt": "Explain Rawls's veil of ignorance and how it is meant to produce fair principles of justice.",
+        "correctAnswer": "Rawls asks us to choose society's basic rules from behind a 'veil of ignorance,' an original position in which we do not know our own place in society — our wealth, race, talents, or conception of the good. Because no one knows whether they will end up advantaged or disadvantaged, self-interested choosers avoid principles that could leave anyone badly off and favor fair ones, such as equal basic liberties and arrangements benefiting the least well-off. The device produces fairness by removing the morally arbitrary knowledge people would use to rig the rules in their favor.",
+        "explanation": "Choosing rules blind to your own position yields fair principles."
+      }
+    ]
+  },
+  {
+    "kind": "final",
+    "title": "Final Exam — All units",
+    "weekNumber": 4,
+    "isTimed": true,
+    "timeLimitMinutes": 90,
+    "instructions": "Timed. 90 minutes. Answer each question in a short paragraph in your own words. Pasting is disabled; keystrokes are screened for AI use.",
+    "problems": [
+      {
+        "topicSlug": "validity-soundness",
+        "prompt": "Explain what makes an argument sound and why soundness guarantees a true conclusion while validity alone does not.",
+        "correctAnswer": "An argument is sound when it is valid and all of its premises are true. Validity means the conclusion must be true if the premises are true, but it says nothing about whether the premises are actually true, so a valid argument can have false premises and a false conclusion. Soundness adds that the premises really are true; combined with valid form, true premises force a true conclusion. Thus soundness guarantees a true conclusion because it secures both the right form and actually true starting points.",
+        "explanation": "Soundness = validity + true premises, which forces a true conclusion."
+      },
+      {
+        "topicSlug": "deductive-inductive",
+        "prompt": "Explain why deductive reasoning can deliver certainty while inductive reasoning cannot.",
+        "correctAnswer": "Deductive reasoning can deliver certainty because in a valid deductive argument the conclusion merely makes explicit what is already contained in the premises; if the premises are true it is impossible for the conclusion to be false. Inductive reasoning cannot, because it projects beyond the evidence in the premises — from observed cases to unobserved ones — so the premises can all be true while the conclusion is false. Going beyond the evidence is what makes induction useful but also what costs it certainty.",
+        "explanation": "Deduction unpacks the premises; induction goes beyond them."
+      },
+      {
+        "topicSlug": "jtb-gettier",
+        "prompt": "Explain why justified true belief is not sufficient for knowledge, referring to the role of luck.",
+        "correctAnswer": "Justified true belief is not sufficient for knowledge because Gettier cases show all three conditions can be met while the belief is true only by luck. A person can reason competently from justified evidence to a belief that happens to be true for reasons unconnected to that evidence; justification and truth come apart, linked only by accident. Since knowledge seems to require that one's justification actually explains why the belief is true, a belief true merely by luck — however justified — fails to be knowledge.",
+        "explanation": "Lucky truth severs justification from truth, so JTB isn't enough."
+      },
+      {
+        "topicSlug": "skepticism",
+        "prompt": "Explain how Descartes' method of doubt leads to the cogito and why he takes it to be certain.",
+        "correctAnswer": "Descartes' method of doubt rejects anything that can be doubted in search of an indubitable foundation: he doubts the senses, the external world (he might be dreaming), and even mathematics (an evil demon might deceive him). But he cannot doubt that he is thinking, because the very act of doubting is thinking, and there must be a thinker doing it. So 'I think, therefore I am' is certain: any attempt to doubt one's own existence presupposes a thinking subject who exists to do the doubting.",
+        "explanation": "Doubting is thinking, which guarantees the doubter exists."
+      },
+      {
+        "topicSlug": "dualism",
+        "prompt": "Explain the main problem facing substance dualism and why materialists take it to motivate a physical account of mind.",
+        "correctAnswer": "The main problem facing substance dualism is the interaction problem: if the mind is non-physical and the body physical, it is unclear how they could causally interact, yet they evidently do (intentions move limbs; injuries cause pain). Materialists take this to motivate a physical account because locating mental states in the brain dissolves the mystery — physical states interacting with physical states needs no special explanation — so identifying the mind with something physical avoids the causal gap dualism cannot bridge.",
+        "explanation": "Dualism's interaction gap motivates putting the mind in the physical brain."
+      },
+      {
+        "topicSlug": "free-will-determinism",
+        "prompt": "Explain how compatibilism defines free action and why it claims this is consistent with determinism.",
+        "correctAnswer": "Compatibilism defines a free action as one that flows from the agent's own desires and deliberation without external compulsion — acting as you want to act, uncoerced. It claims this is consistent with determinism because freedom, so defined, concerns the source of the action (your own will) rather than the absence of causes. Even if your desires and choices are themselves determined, you still act freely whenever you act on them without being forced, so determinism does not by itself remove freedom or responsibility.",
+        "explanation": "Freedom = uncoerced action from your own will, regardless of prior causes."
+      },
+      {
+        "topicSlug": "consequentialism",
+        "prompt": "Give one standard objection to utilitarianism and explain why it is thought to be a serious problem.",
+        "correctAnswer": "A standard objection is that utilitarianism can require injustice: because it counts only aggregate happiness, it could endorse punishing an innocent person, breaking promises, or sacrificing a minority whenever doing so maximizes total welfare. This is serious because it conflicts with deep convictions that individuals have rights and dignity that may not be traded away merely to benefit the majority; a theory that permits framing the innocent for the greater good seems to misidentify what makes actions right.",
+        "explanation": "It can sacrifice individual rights for aggregate welfare."
+      },
+      {
+        "topicSlug": "deontology",
+        "prompt": "State Kant's Universal Law formulation of the Categorical Imperative and explain how it determines whether an action is permissible.",
+        "correctAnswer": "Kant's Universal Law formulation says: act only on that maxim which you can at the same time will to become a universal law. To test an action you formulate its maxim and ask whether it could be universally adopted without contradiction. If universalizing it is self-defeating — as with lying, since universal lying would destroy the trust that makes lies work — the maxim is impermissible; if it can be consistently willed as a universal law, the action is permissible. Rightness depends on this universalizability, not on consequences.",
+        "explanation": "Test the maxim by universalizing it; contradiction means impermissible."
+      },
+      {
+        "topicSlug": "virtue-ethics",
+        "prompt": "Explain how virtue ethics' central question and approach differ from those of utilitarianism and deontology.",
+        "correctAnswer": "Utilitarianism and deontology are act-focused, offering criteria for which actions are right — maximizing happiness, or conforming to universalizable duty. Virtue ethics instead centers on character, asking 'what kind of person should I be?' rather than 'which act should I do?' It holds that we should cultivate virtues — stable traits like courage, honesty, and justice, each a mean between extremes — that constitute a flourishing life (eudaimonia). Right action is what a virtuous person would characteristically do, so character is prior to rules.",
+        "explanation": "Virtue ethics asks about character and flourishing, not rules for acts."
+      },
+      {
+        "topicSlug": "problem-of-evil",
+        "prompt": "Explain why natural evil poses a special difficulty for theodicies such as the free will defense.",
+        "correctAnswer": "Natural evil — suffering caused by earthquakes, disease, famine, and animal pain — poses a special difficulty because, unlike moral evil, it is not the result of anyone's free choices. The free will defense explains moral evil as the price of human freedom, but that strategy does not apply to suffering no free agent causes. The theist must then explain why an all-good, all-powerful God would create a world with so much seemingly pointless natural suffering, leaving the most common theodicy without its central resource.",
+        "explanation": "Natural evil isn't caused by free choices, so the free will defense can't cover it."
+      }
+    ]
+  }
 ];
 
 export async function seedIfEmpty(): Promise<void> {

@@ -53,11 +53,11 @@ export default function Landing() {
     <div className="min-h-[100dvh] bg-background text-foreground flex flex-col">
       <header className="flex items-center justify-between px-6 py-4 border-b border-border">
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-serif font-bold text-lg">
-            PR
+          <div className="w-9 h-8 bg-primary rounded-md flex items-center justify-center text-primary-foreground font-serif font-bold text-sm">
+            101
           </div>
           <span className="font-serif font-semibold text-lg tracking-tight">
-            PhiloReason
+            Philosophy 101
           </span>
         </div>
         <div className="flex items-center gap-2">
@@ -157,7 +157,7 @@ export default function Landing() {
       </main>
 
       <footer className="border-t border-border px-6 py-6 text-center text-sm text-muted-foreground">
-        PhiloReason — where the curriculum, the tutor, the grader, and the
+        Philosophy 101 — where the curriculum, the tutor, the grader, and the
         integrity check all live in one room.
       </footer>
     </div>
