@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "PhiloReason"
+version = "1.0.0"
+id = "artifacts/philosophy-101"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 19846
+
+[services.development]
+run = "pnpm --filter @workspace/philosophy-101 run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/philosophy-101", "run", "build" ]
+publicDir = "artifacts/philosophy-101/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "19846"
+BASE_PATH = "/"

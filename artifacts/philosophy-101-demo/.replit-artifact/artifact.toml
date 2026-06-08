@@ -1,0 +1,31 @@
+kind = "video"
+previewPath = "/philosophy-101-demo/"
+title = "PhiloReason Demo Video"
+version = "1.0.0"
+id = "artifacts/philosophy-101-demo"
+router = "path"
+
+[[integratedSkills]]
+name = "video-js"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/philosophy-101-demo/" ]
+localPort = 21187
+
+[services.development]
+run = "pnpm --filter @workspace/philosophy-101-demo run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/philosophy-101-demo", "run", "build" ]
+publicDir = "artifacts/philosophy-101-demo/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21187"
+BASE_PATH = "/philosophy-101-demo/"
