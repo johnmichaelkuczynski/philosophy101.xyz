@@ -574,6 +574,16 @@ function PracticePane({
   return (
     <div className="flex-1 flex flex-col min-h-0 overflow-y-auto">
       <div className="p-4 flex flex-col gap-4">
+        <Link href="/assignments">
+          <div className="rounded-md bg-chart-2/10 border border-chart-2/30 px-3 py-2 text-xs text-foreground hover:bg-chart-2/20 transition-colors cursor-pointer flex items-center justify-between gap-3">
+            <span>
+              <strong className="font-semibold">These are quick drills on this section.</strong>{" "}
+              For full homework/test-style <strong>practice assignments</strong> (unlimited versions,
+              live tutor, scored feedback), go to Assignments.
+            </span>
+            <span className="text-chart-2 font-semibold whitespace-nowrap">Practice assignments →</span>
+          </div>
+        </Link>
         <div className="flex items-center justify-between">
           <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
             Practice · {problem?.topicTitle ?? "this lecture"}
