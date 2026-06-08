@@ -130,3 +130,55 @@ export const practiceAttemptsTable = pgTable("practice_attempts", {
   trace: jsonb("trace"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const practiceAssignmentsTable = pgTable("practice_assignments", {
+  id: serial("id").primaryKey(),
+  assignmentId: integer("assignment_id")
+    .notNull()
+    .references(() => assignmentsTable.id, { onDelete: "cascade" }),
+  kind: text("kind").notNull(), // homework | test | midterm | final
+  title: text("title").notNull(),
+  weekNumber: integer("week_number").notNull(),
+  status: text("status").notNull().default("in_progress"), // in_progress | submitted
+  scorePercent: doublePrecision("score_percent"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  submittedAt: timestamp("submitted_at", { withTimezone: true }),
+});
+
+export const practiceAssignmentProblemsTable = pgTable("practice_assignment_problems", {
+  id: serial("id").primaryKey(),
+  practiceAssignmentId: integer("practice_assignment_id")
+    .notNull()
+    .references(() => practiceAssignmentsTable.id, { onDelete: "cascade" }),
+  sourceProblemId: integer("source_problem_id"),
+  topicId: integer("topic_id").notNull(),
+  position: integer("position").notNull(),
+  prompt: text("prompt").notNull(),
+  correctAnswer: text("correct_answer").notNull(),
+  explanation: text("explanation").notNull(),
+});
+
+export const practiceAssignmentAnswersTable = pgTable("practice_assignment_answers", {
+  id: serial("id").primaryKey(),
+  practiceAssignmentId: integer("practice_assignment_id")
+    .notNull()
+    .references(() => practiceAssignmentsTable.id, { onDelete: "cascade" }),
+  problemId: integer("problem_id")
+    .notNull()
+    .references(() => practiceAssignmentProblemsTable.id, { onDelete: "cascade" }),
+  answer: text("answer").notNull().default(""),
+  correct: boolean("correct"),
+  feedback: text("feedback"),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const practiceAssignmentMessagesTable = pgTable("practice_assignment_messages", {
+  id: serial("id").primaryKey(),
+  practiceAssignmentId: integer("practice_assignment_id")
+    .notNull()
+    .references(() => practiceAssignmentsTable.id, { onDelete: "cascade" }),
+  problemId: integer("problem_id"),
+  role: text("role").notNull(), // user | assistant
+  content: text("content").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});

@@ -257,6 +257,109 @@ export interface PracticeGrade {
   tutorTip?: string | null;
 }
 
+export type PracticeAssignmentKind = typeof PracticeAssignmentKind[keyof typeof PracticeAssignmentKind];
+
+
+export const PracticeAssignmentKind = {
+  homework: 'homework',
+  test: 'test',
+  midterm: 'midterm',
+  final: 'final',
+} as const;
+
+export type PracticeAssignmentStatus = typeof PracticeAssignmentStatus[keyof typeof PracticeAssignmentStatus];
+
+
+export const PracticeAssignmentStatus = {
+  in_progress: 'in_progress',
+  submitted: 'submitted',
+} as const;
+
+export interface PracticeAssignmentProblem {
+  id: number;
+  position: number;
+  prompt: string;
+  topicId: number;
+  /** @nullable */
+  topicTitle?: string | null;
+  /** @nullable */
+  savedAnswer?: string | null;
+  /** @nullable */
+  correct?: boolean | null;
+  /** @nullable */
+  feedback?: string | null;
+  /** @nullable */
+  modelAnswer?: string | null;
+}
+
+export type PracticeDiscussionMessageRole = typeof PracticeDiscussionMessageRole[keyof typeof PracticeDiscussionMessageRole];
+
+
+export const PracticeDiscussionMessageRole = {
+  user: 'user',
+  assistant: 'assistant',
+} as const;
+
+export interface PracticeDiscussionMessage {
+  /** @nullable */
+  problemId?: number | null;
+  role: PracticeDiscussionMessageRole;
+  content: string;
+}
+
+export interface PracticeAssignment {
+  id: number;
+  assignmentId: number;
+  kind: PracticeAssignmentKind;
+  title: string;
+  weekNumber: number;
+  status: PracticeAssignmentStatus;
+  /** @nullable */
+  scorePercent?: number | null;
+  /** @nullable */
+  instructions?: string | null;
+  problems: PracticeAssignmentProblem[];
+  messages: PracticeDiscussionMessage[];
+}
+
+export interface PracticeAssignmentAnswer {
+  problemId: number;
+  answer: string;
+  trace?: KeystrokeTrace;
+}
+
+export interface PracticeAssignmentSubmission {
+  answers: PracticeAssignmentAnswer[];
+}
+
+export interface PracticeProblemFeedback {
+  problemId: number;
+  correct: boolean;
+  userAnswer?: string;
+  modelAnswer: string;
+  feedback: string;
+}
+
+export interface PracticeAssignmentResult {
+  practiceId: number;
+  score: number;
+  total: number;
+  percent: number;
+  /** @nullable */
+  encouragement?: string | null;
+  perProblem: PracticeProblemFeedback[];
+}
+
+export interface DiscussFeedbackInput {
+  /** @nullable */
+  problemId?: number | null;
+  message: string;
+}
+
+export interface DiscussReply {
+  reply: string;
+}
+
 export interface TutorAskInput {
   /** @nullable */
   sessionId?: number | null;

@@ -24,6 +24,15 @@ export default function Assignments() {
           <p className="text-muted-foreground">Complete your homework, tests, midterm, and final exams.</p>
         </div>
 
+        <div className="p-5 rounded-lg bg-chart-2/10 border border-chart-2/30 flex flex-col gap-1">
+          <p className="font-serif font-semibold text-primary">Practice before you're graded.</p>
+          <p className="text-sm text-muted-foreground">
+            Every assignment has an <strong>unlimited</strong> practice version — fresh AI-generated
+            problems on the same concepts, with a live tutor on screen, rich feedback, and a chat to
+            talk it through. No score, no penalties, no AI detection. Reps here make the real thing easy.
+          </p>
+        </div>
+
         {isLoading ? (
           <div className="flex flex-col gap-6">
             <Skeleton className="h-8 w-32" />
@@ -61,12 +70,19 @@ export default function Assignments() {
                             <span className="font-semibold text-foreground">Score: {item.bestScore}%</span>
                           )}
                         </div>
-                        <Link href={`/assignments/${item.id}`}>
-                          <Button className="w-full" variant={item.status === 'submitted' ? "outline" : "default"}>
-                            {item.status === 'submitted' ? 'Review Results' : 
-                             item.status === 'in_progress' ? 'Resume' : 'Start'}
-                          </Button>
-                        </Link>
+                        <div className="flex flex-col gap-2">
+                          <Link href={`/assignments/${item.id}/practice`}>
+                            <Button className="w-full bg-chart-2 hover:bg-chart-2/90 text-white">
+                              Practice first (unlimited)
+                            </Button>
+                          </Link>
+                          <Link href={`/assignments/${item.id}`}>
+                            <Button className="w-full" variant={item.status === 'submitted' ? "outline" : "secondary"}>
+                              {item.status === 'submitted' ? 'Review Results' :
+                               item.status === 'in_progress' ? 'Resume graded attempt' : 'Start graded version'}
+                            </Button>
+                          </Link>
+                        </div>
                       </CardContent>
                     </Card>
                   ))}

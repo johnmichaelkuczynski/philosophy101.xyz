@@ -278,6 +278,90 @@ paths:
               schema:
                 $ref: "#/components/schemas/PracticeGrade"
 
+  /assignments/{assignmentId}/practice:
+    post:
+      operationId: generatePracticeAssignment
+      tags: [practice]
+      summary: Generate a fresh, unlimited practice version of an assignment (parallel problems, no stakes)
+      parameters:
+        - name: assignmentId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PracticeAssignment"
+
+  /assignments/practice/{practiceId}:
+    get:
+      operationId: getPracticeAssignment
+      tags: [practice]
+      summary: Get a practice-assignment instance (problems, saved answers, feedback, discussion)
+      parameters:
+        - name: practiceId
+          in: path
+          required: true
+          schema: { type: integer }
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PracticeAssignment"
+
+  /assignments/practice/{practiceId}/submit:
+    post:
+      operationId: submitPracticeAssignment
+      tags: [practice]
+      summary: Submit a practice assignment for rich, no-stakes feedback
+      parameters:
+        - name: practiceId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PracticeAssignmentSubmission"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PracticeAssignmentResult"
+
+  /assignments/practice/{practiceId}/discuss:
+    post:
+      operationId: discussPracticeFeedback
+      tags: [practice]
+      summary: Dialogue with the tutor about the feedback on a practice problem
+      parameters:
+        - name: practiceId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiscussFeedbackInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiscussReply"
+
   /tutor/ask:
     post:
       operationId: askTutor
@@ -619,6 +703,110 @@ components:
         explanation: { type: string }
         newDifficulty: { type: number }
         tutorTip: { type: ["string", "null"] }
+
+    PracticeAssignment:
+      type: object
+      required: [id, assignmentId, kind, title, weekNumber, status, problems, messages]
+      properties:
+        id: { type: integer }
+        assignmentId: { type: integer }
+        kind:
+          type: string
+          enum: [homework, test, midterm, final]
+        title: { type: string }
+        weekNumber: { type: integer }
+        status:
+          type: string
+          enum: [in_progress, submitted]
+        scorePercent: { type: ["number", "null"] }
+        instructions: { type: ["string", "null"] }
+        problems:
+          type: array
+          items:
+            $ref: "#/components/schemas/PracticeAssignmentProblem"
+        messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/PracticeDiscussionMessage"
+
+    PracticeAssignmentProblem:
+      type: object
+      required: [id, position, prompt, topicId]
+      properties:
+        id: { type: integer }
+        position: { type: integer }
+        prompt: { type: string }
+        topicId: { type: integer }
+        topicTitle: { type: ["string", "null"] }
+        savedAnswer: { type: ["string", "null"] }
+        correct: { type: ["boolean", "null"] }
+        feedback: { type: ["string", "null"] }
+        modelAnswer: { type: ["string", "null"] }
+
+    PracticeAssignmentSubmission:
+      type: object
+      required: [answers]
+      properties:
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/PracticeAssignmentAnswer"
+
+    PracticeAssignmentAnswer:
+      type: object
+      required: [problemId, answer]
+      properties:
+        problemId: { type: integer }
+        answer: { type: string }
+        trace:
+          $ref: "#/components/schemas/KeystrokeTrace"
+
+    PracticeAssignmentResult:
+      type: object
+      required: [practiceId, score, total, percent, perProblem]
+      properties:
+        practiceId: { type: integer }
+        score: { type: number }
+        total: { type: number }
+        percent: { type: number }
+        encouragement: { type: ["string", "null"] }
+        perProblem:
+          type: array
+          items:
+            $ref: "#/components/schemas/PracticeProblemFeedback"
+
+    PracticeProblemFeedback:
+      type: object
+      required: [problemId, correct, feedback, modelAnswer]
+      properties:
+        problemId: { type: integer }
+        correct: { type: boolean }
+        userAnswer: { type: string }
+        modelAnswer: { type: string }
+        feedback: { type: string }
+
+    PracticeDiscussionMessage:
+      type: object
+      required: [role, content]
+      properties:
+        problemId: { type: ["integer", "null"] }
+        role:
+          type: string
+          enum: [user, assistant]
+        content: { type: string }
+
+    DiscussFeedbackInput:
+      type: object
+      required: [message]
+      properties:
+        problemId: { type: ["integer", "null"] }
+        message: { type: string }
+
+    DiscussReply:
+      type: object
+      required: [reply]
+      properties:
+        reply: { type: string }
 
     TutorAskInput:
       type: object

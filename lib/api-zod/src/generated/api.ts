@@ -345,6 +345,135 @@ export const GradePracticeAnswerResponse = zod.object({
 
 
 /**
+ * @summary Generate a fresh, unlimited practice version of an assignment (parallel problems, no stakes)
+ */
+export const GeneratePracticeAssignmentParams = zod.object({
+  "assignmentId": zod.coerce.number()
+})
+
+export const GeneratePracticeAssignmentResponse = zod.object({
+  "id": zod.number(),
+  "assignmentId": zod.number(),
+  "kind": zod.enum(['homework', 'test', 'midterm', 'final']),
+  "title": zod.string(),
+  "weekNumber": zod.number(),
+  "status": zod.enum(['in_progress', 'submitted']),
+  "scorePercent": zod.number().nullish(),
+  "instructions": zod.string().nullish(),
+  "problems": zod.array(zod.object({
+  "id": zod.number(),
+  "position": zod.number(),
+  "prompt": zod.string(),
+  "topicId": zod.number(),
+  "topicTitle": zod.string().nullish(),
+  "savedAnswer": zod.string().nullish(),
+  "correct": zod.boolean().nullish(),
+  "feedback": zod.string().nullish(),
+  "modelAnswer": zod.string().nullish()
+})),
+  "messages": zod.array(zod.object({
+  "problemId": zod.number().nullish(),
+  "role": zod.enum(['user', 'assistant']),
+  "content": zod.string()
+}))
+})
+
+
+/**
+ * @summary Get a practice-assignment instance (problems, saved answers, feedback, discussion)
+ */
+export const GetPracticeAssignmentParams = zod.object({
+  "practiceId": zod.coerce.number()
+})
+
+export const GetPracticeAssignmentResponse = zod.object({
+  "id": zod.number(),
+  "assignmentId": zod.number(),
+  "kind": zod.enum(['homework', 'test', 'midterm', 'final']),
+  "title": zod.string(),
+  "weekNumber": zod.number(),
+  "status": zod.enum(['in_progress', 'submitted']),
+  "scorePercent": zod.number().nullish(),
+  "instructions": zod.string().nullish(),
+  "problems": zod.array(zod.object({
+  "id": zod.number(),
+  "position": zod.number(),
+  "prompt": zod.string(),
+  "topicId": zod.number(),
+  "topicTitle": zod.string().nullish(),
+  "savedAnswer": zod.string().nullish(),
+  "correct": zod.boolean().nullish(),
+  "feedback": zod.string().nullish(),
+  "modelAnswer": zod.string().nullish()
+})),
+  "messages": zod.array(zod.object({
+  "problemId": zod.number().nullish(),
+  "role": zod.enum(['user', 'assistant']),
+  "content": zod.string()
+}))
+})
+
+
+/**
+ * @summary Submit a practice assignment for rich, no-stakes feedback
+ */
+export const SubmitPracticeAssignmentParams = zod.object({
+  "practiceId": zod.coerce.number()
+})
+
+export const submitPracticeAssignmentBodyAnswersItemTraceBulkInsertCountDefault = 0;
+export const submitPracticeAssignmentBodyAnswersItemTraceLongestBulkInsertCharsDefault = 0;
+export const submitPracticeAssignmentBodyAnswersItemTraceRewriteSegmentsDefault = 0;
+
+export const SubmitPracticeAssignmentBody = zod.object({
+  "answers": zod.array(zod.object({
+  "problemId": zod.number(),
+  "answer": zod.string(),
+  "trace": zod.object({
+  "keystrokeCount": zod.number(),
+  "eraseCount": zod.number(),
+  "bulkInsertCount": zod.number().default(submitPracticeAssignmentBodyAnswersItemTraceBulkInsertCountDefault),
+  "longestBulkInsertChars": zod.number().default(submitPracticeAssignmentBodyAnswersItemTraceLongestBulkInsertCharsDefault),
+  "rewriteSegments": zod.number().default(submitPracticeAssignmentBodyAnswersItemTraceRewriteSegmentsDefault),
+  "durationMs": zod.number()
+}).optional()
+}))
+})
+
+export const SubmitPracticeAssignmentResponse = zod.object({
+  "practiceId": zod.number(),
+  "score": zod.number(),
+  "total": zod.number(),
+  "percent": zod.number(),
+  "encouragement": zod.string().nullish(),
+  "perProblem": zod.array(zod.object({
+  "problemId": zod.number(),
+  "correct": zod.boolean(),
+  "userAnswer": zod.string().optional(),
+  "modelAnswer": zod.string(),
+  "feedback": zod.string()
+}))
+})
+
+
+/**
+ * @summary Dialogue with the tutor about the feedback on a practice problem
+ */
+export const DiscussPracticeFeedbackParams = zod.object({
+  "practiceId": zod.coerce.number()
+})
+
+export const DiscussPracticeFeedbackBody = zod.object({
+  "problemId": zod.number().nullish(),
+  "message": zod.string()
+})
+
+export const DiscussPracticeFeedbackResponse = zod.object({
+  "reply": zod.string()
+})
+
+
+/**
  * @summary Ask the AI tutor a question (text reply with optional spoken audio URL)
  */
 export const AskTutorBody = zod.object({

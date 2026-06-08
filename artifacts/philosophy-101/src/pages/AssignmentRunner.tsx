@@ -158,6 +158,18 @@ export default function AssignmentRunner() {
           )}
         </div>
 
+        <div className="p-4 rounded-lg bg-secondary border border-border flex items-center justify-between gap-4 flex-wrap">
+          <p className="text-sm text-muted-foreground">
+            <strong className="text-foreground">This is the graded version</strong> — the tutor is off and answers are screened.
+            Want a no-stakes run with the live tutor first?
+          </p>
+          <Link href={`/assignments/${assignmentId}/practice`}>
+            <Button variant="outline" size="sm" className="border-chart-2 text-chart-2 hover:bg-chart-2/10">
+              Practice this first
+            </Button>
+          </Link>
+        </div>
+
         {currentProblem ? (
           <div className="flex flex-col gap-8">
             <div className="prose prose-slate dark:prose-invert max-w-none text-lg">
