@@ -3,6 +3,8 @@ name: Course unit count is hardcoded in several places
 description: Changing the number of units/weeks requires edits in multiple non-obvious spots, not just the seed data.
 ---
 
+Current curriculum = **4 units / 24 topics** (slugs `t1-1`..`t4-6`; weeks 8/6/4/6; 10 graded assignments = HW+Test per unit, midterm after unit 2, final after unit 4).
+
 The number of units ("weeks") is NOT derived from the data — it is hardcoded in several places. Changing it (e.g. 4 → 5 units) requires updating ALL of:
 
 - `artifacts/api-server/src/routes/course.ts` — `WEEK_TITLES` map (per-unit title + summary), the `/course/overview` loop (`[1,2,3,4,...]` array passed to `buildWeek`), and the `/course/weeks/:weekNumber` range guard (`weekNumber > N`).

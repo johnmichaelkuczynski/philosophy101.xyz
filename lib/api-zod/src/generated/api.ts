@@ -54,7 +54,7 @@ export const GetCourseOverviewResponse = zod.object({
 /**
  * @summary Get one week's lectures and assignment list
  */
-export const getWeekPathWeekNumberMax = 5;
+export const getWeekPathWeekNumberMax = 4;
 
 
 

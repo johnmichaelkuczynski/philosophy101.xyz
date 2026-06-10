@@ -9718,6 +9718,28 @@ var openai2 = new OpenAI({
   ...process.env.OPENAI_BASE_URL ? { baseURL: process.env.OPENAI_BASE_URL } : {}
 });
 
+// src/lib/questionDesign.ts
+var QUESTION_RULES = `RULES FOR THE QUESTION (these are absolute):
+1. CONCRETE SCENARIO. The question must center on a specific, concrete case you invent: a short argument, a claim someone makes, an exchange between two people, an example, or a situation. The student reasons about THAT case.
+2. APPLICATION, NOT RECALL. The task is to APPLY a principle to the case \u2014 diagnose what has gone wrong, decide what follows, judge whether an inference holds, defend or attack a position, construct a counterexample, or fix a flawed argument. Understanding is demonstrated by what the student DOES with the principle, not by stating it.
+3. NEVER ASK FOR A DEFINITION. Do NOT write "what is X", "define X", "explain what X is", "what is X trying to do", "describe the concept of X", or "explain the difference between X and Y" as the task. A student must not be able to answer by reciting a memorized definition. (It is fine if applying the principle REQUIRES knowing a definition \u2014 but the definition must be the tool, never the deliverable.)
+4. TEXT-INDEPENDENT. Invent your OWN fresh scenario. NEVER reference an example, name, character, or case from any particular lecture or reading (e.g. do not mention "the rabbit from the text"). Anyone who genuinely understands the principle must be able to answer WITHOUT having read any specific lecture.
+5. SELF-CONTAINED. State the whole case inside the question so it can be answered with no other materials in front of the student. There may be more than one defensible answer; what is judged is the quality of the reasoning.`;
+var BANNED_QUESTION_PATTERNS = `BANNED \u2014 never write any of these:
+- "What is X?" / "Define X" / "Explain what X is" / "What is X trying to do?" / "Describe X" / "Explain the difference between X and Y" as the task itself.
+- One-word, yes/no, true/false, or fill-in-the-term answers.
+- "Name the fallacy" / "what is the technical term for..." / any pure labeling task.
+- Vague interpretive guessing: "what is this person primarily/mainly doing?", "what best describes...".
+- Anything answerable by reciting a textbook definition, or anything that references a specific lecture's own examples.`;
+var QUESTION_TRANSFORM_EXAMPLE = `TRANSFORMATION EXAMPLE (do this kind of move):
+- BAD (definition recall): "Explain the difference between validity and soundness."
+- GOOD (concrete application): "A friend says: 'My argument has to be true \u2014 every step follows logically from the last!' Their reasoning is indeed airtight in form, but you suspect the conclusion is false. Explain how that is possible, and tell your friend exactly what they would need to check to know whether the conclusion is actually true."
+- BAD (definition recall): "What is the ad hominem fallacy?"
+- GOOD (concrete application): "In a debate, Sam responds to Dana's argument for a carbon tax by pointing out that Dana flies on private jets. Sam claims this defeats Dana's argument. Say whether Sam's response gives any reason to reject the argument's conclusion, and defend your verdict."`;
+function questionDesignBlock() {
+  return [QUESTION_RULES, "", BANNED_QUESTION_PATTERNS, "", QUESTION_TRANSFORM_EXAMPLE].join("\n");
+}
+
 // scripts/generate-course.ts
 function pLimit(concurrency) {
   let active = 0;
@@ -9749,99 +9771,167 @@ var BOOK = path2.join(
   WS,
   "attached_assets/Pasted--PART-I-The-Analysis-of-Analysis-Chapter-1-Analytic-Phi_1780961071154.txt"
 );
+var BULLETS = path2.join(
+  WS,
+  "attached_assets/Philosophy101_BulletPoints_TEN_per_topic.txt"
+);
 var CONTENT_DIR = path2.join(WS, "artifacts/api-server/src/content");
 var TOPICS_OUT = path2.join(CONTENT_DIR, "topics.json");
 var ASSIGN_OUT = path2.join(CONTENT_DIR, "graded-assignments.json");
 var LIMIT = process.env.LIMIT ? parseInt(process.env.LIMIT, 10) : 0;
 var PHASE = process.env.PHASE ?? "all";
+var ONLY = process.env.ONLY ? process.env.ONLY.split(",").map((s) => s.trim()) : null;
 var FORCE = process.env.FORCE === "1";
 var CONCURRENCY = process.env.CONCURRENCY ? parseInt(process.env.CONCURRENCY, 10) : 4;
-var CHAPTERS = [
-  // Unit 1 — Part I: The Analysis of Analysis
-  { n: 1, unit: 1, start: 10, end: 860 },
-  { n: 2, unit: 1, start: 861, end: 1139 },
-  { n: 3, unit: 1, start: 1140, end: 1394 },
-  // Unit 2 — Part II: Philosophy of Language
-  { n: 4, unit: 2, start: 1400, end: 1739 },
-  { n: 5, unit: 2, start: 1740, end: 1885 },
-  { n: 6, unit: 2, start: 1886, end: 2170 },
-  { n: 7, unit: 2, start: 2171, end: 2535 },
-  { n: 8, unit: 2, start: 2536, end: 3138 },
-  { n: 9, unit: 2, start: 3139, end: 3447 },
-  // Unit 3 — Part III: Knowledge (Epistemology)
-  { n: 10, unit: 3, start: 3453, end: 3857 },
-  { n: 11, unit: 3, start: 3858, end: 4153 },
-  { n: 12, unit: 3, start: 4154, end: 4326 },
-  { n: 13, unit: 3, start: 4327, end: 4734 },
-  // Unit 4 — Part IV: Metaphysics
-  { n: 14, unit: 4, start: 4740, end: 4849 },
-  { n: 15, unit: 4, start: 4850, end: 5144 },
-  { n: 16, unit: 4, start: 5145, end: 5582 },
-  { n: 17, unit: 4, start: 5583, end: 6225 },
-  { n: 18, unit: 4, start: 6226, end: 6639 },
-  // Unit 5 — Part V: Value (Ethics & Religion)
-  { n: 19, unit: 5, start: 6647, end: 6864 },
-  { n: 20, unit: 5, start: 6865, end: 6983 },
-  { n: 21, unit: 5, start: 6984, end: 7166 },
-  { n: 22, unit: 5, start: 7167, end: 7418 },
-  { n: 23, unit: 5, start: 7419, end: 7574 },
-  { n: 24, unit: 5, start: 7575, end: 7726 },
-  { n: 25, unit: 5, start: 7727, end: 8020 },
-  { n: 26, unit: 5, start: 8021, end: 8096 },
-  { n: 27, unit: 5, start: 8097, end: 9168 }
-];
 var UNIT_TITLES = {
-  1: "The Analysis of Analysis",
-  2: "Philosophy of Language",
-  3: "Knowledge & Epistemology",
-  4: "Metaphysics, Mind & Modality",
-  5: "Ethics, Value & Religion"
+  1: "Language, Logic, and Analysis",
+  2: "Knowledge and Epistemology",
+  3: "Mind, Freedom, and Metaphysics",
+  4: "Ethics, Value, and Law"
 };
+var CH = {
+  1: [10, 860],
+  2: [861, 1139],
+  3: [1140, 1394],
+  4: [1400, 1739],
+  5: [1740, 1885],
+  6: [1886, 2170],
+  7: [2171, 2535],
+  8: [2536, 3138],
+  9: [3139, 3447],
+  10: [3453, 3857],
+  11: [3858, 4153],
+  12: [4154, 4326],
+  13: [4327, 4734],
+  14: [4740, 4849],
+  15: [4850, 5144],
+  16: [5145, 5582],
+  17: [5583, 6225],
+  18: [6226, 6639],
+  19: [6647, 6864],
+  20: [6865, 6983],
+  21: [6984, 7166],
+  22: [7167, 7418],
+  23: [7419, 7574],
+  24: [7575, 7726],
+  25: [7727, 8020],
+  26: [8021, 8096],
+  27: [8097, 9168]
+};
+var TOPIC_SPECS = [
+  // Unit 1 — Language, Logic, and Analysis
+  { code: "1.1", unit: 1, title: "What Philosophy Is and How It Differs from Science", chapters: [1, 2, 3] },
+  { code: "1.2", unit: 1, title: "The Meaning of Meaning", chapters: [4, 3] },
+  { code: "1.3", unit: 1, title: "Language and Thought", chapters: [5, 8] },
+  { code: "1.4", unit: 1, title: "Do We Think in Words?", chapters: [5] },
+  { code: "1.5", unit: 1, title: "Perception and Conception", chapters: [8, 9] },
+  { code: "1.6", unit: 1, title: "Names, Reference, and Literal vs. Implied Meaning", chapters: [6, 8] },
+  { code: "1.7", unit: 1, title: "Necessity, Possibility, and the Analytic\u2013Synthetic Distinction", chapters: [18] },
+  { code: "1.8", unit: 1, title: "Deduction, Induction, and Inference", chapters: [12, 11] },
+  // Unit 2 — Knowledge and Epistemology
+  { code: "2.1", unit: 2, title: "Knowledge as Justified True Belief", chapters: [10] },
+  { code: "2.2", unit: 2, title: "Sources of Justification and Testimony", chapters: [10, 11] },
+  { code: "2.3", unit: 2, title: "A Priori vs. A Posteriori Knowledge", chapters: [13, 18] },
+  { code: "2.4", unit: 2, title: "Knowledge by Acquaintance, Self-Knowledge, and the Intuitive vs. Discursive", chapters: [10, 3] },
+  { code: "2.5", unit: 2, title: "Skepticism and the Foundations of Knowledge", chapters: [11, 12] },
+  { code: "2.6", unit: 2, title: "Empiricism vs. Rationalism", chapters: [13, 2] },
+  // Unit 3 — Mind, Freedom, and Metaphysics
+  { code: "3.1", unit: 3, title: "The Mind\u2013Body Problem: Dualism vs. Materialism", chapters: [16, 15] },
+  { code: "3.2", unit: 3, title: "Free Will, Determinism, and the Libet Experiment", chapters: [14, 15] },
+  { code: "3.3", unit: 3, title: "Personal Identity", chapters: [16] },
+  { code: "3.4", unit: 3, title: "Causation", chapters: [17] },
+  // Unit 4 — Ethics, Value, and Law
+  { code: "4.1", unit: 4, title: "What Ethics Is", chapters: [19] },
+  { code: "4.2", unit: 4, title: "Emotivism, Moral Realism, and Flourishing", chapters: [20, 21, 22] },
+  { code: "4.3", unit: 4, title: "Utilitarianism, Hedonism, Egoism, and Kant's Ethics", chapters: [24, 23] },
+  { code: "4.4", unit: 4, title: "Philosophy of Religion and Existentialism", chapters: [25, 26] },
+  { code: "4.5", unit: 4, title: "Philosophy of Law", chapters: [27] },
+  { code: "4.6", unit: 4, title: "Capstone Synthesis", chapters: [1, 3] }
+];
+function slugForCode(code) {
+  return `t${code.replace(".", "-")}`;
+}
 var bookLines = readFileSync(BOOK, "utf8").split("\n");
-function chapterText(c) {
-  return bookLines.slice(c.start - 1, c.end).join("\n").trim();
+function chapterText(n) {
+  const range = CH[n];
+  if (!range) return "";
+  return bookLines.slice(range[0] - 1, range[1]).join("\n").trim();
+}
+var SOURCE_CAP_TOTAL = 18e3;
+function sourceForTopic(spec) {
+  const perChapter = Math.floor(SOURCE_CAP_TOTAL / spec.chapters.length);
+  return spec.chapters.map((n) => `--- Source (book chapter ${n}) ---
+${chapterText(n).slice(0, perChapter)}`).join("\n\n");
+}
+function loadBullets() {
+  const lines = readFileSync(BULLETS, "utf8").split("\n");
+  const map = /* @__PURE__ */ new Map();
+  let current = null;
+  const headerRe = /^(\d+\.\d+)\s+\S/;
+  for (const raw of lines) {
+    const line = raw.replace(/\r$/, "");
+    const h = line.match(headerRe);
+    if (h) {
+      current = h[1];
+      map.set(current, []);
+      continue;
+    }
+    if (current && line.startsWith("- ")) {
+      map.get(current).push(line.slice(2).trim());
+    }
+  }
+  return map;
 }
 function log(msg) {
   const t = (/* @__PURE__ */ new Date()).toISOString().slice(11, 19);
   console.log(`[${t}] ${msg}`);
 }
-var LECTURE_SYS = `You are a distinguished professor writing ONE lecture for a rigorous, upper-level university course in analytic philosophy.
+var LECTURE_SYS = `You are a distinguished professor writing ONE lecture for a rigorous, upper-level university course in analytic philosophy. The course is taught strictly from a single assigned book.
 
-ABSOLUTE GROUNDING RULE: Use ONLY the ideas, distinctions, arguments, examples, terminology, and named thinkers that appear in the SOURCE TEXT provided by the user. Do NOT import outside philosophy, do NOT invent your own examples, do NOT soften or popularize away from the source. If the source argues for a controversial or non-standard position, present THAT position as the lecture's view (you are teaching this author's course, not a neutral survey). Reproduce the source's own examples verbatim in spirit (e.g. "the present King of France", "square circle", a specific named person, etc.).
+YOUR TASK: Develop the TEN KEY POINTS the user gives you \u2014 in the order given \u2014 into one dense, flowing lecture. Each of the ten points is a thesis this course holds; teach it, argue for it, and illustrate it. Do not merely restate the bullets: explain WHY each holds, walk through the supporting argument step by step, and connect the points into a single coherent line of thought.
 
-DENSITY: Write a dense, substantive lecture of roughly 1900-2700 words. Walk through each argument step by step, define every technical term the source uses on first appearance, and preserve the logical structure (premises -> conclusion, objection -> reply). Prefer depth over breadth: it is better to fully develop the chapter's core arguments than to name-drop everything.
+ABSOLUTE GROUNDING RULE: Teach ONLY from the assigned book. Use ONLY the ideas, distinctions, arguments, examples, terminology, and named thinkers found in the TEN KEY POINTS and the SOURCE TEXT provided. Do NOT import outside philosophy, do NOT invent your own examples, do NOT soften or popularize away from the source. This book argues for specific, sometimes non-standard positions (e.g. that there is no necessary a posteriori, that determinism is a prerequisite for freedom, that flourishing is the sole non-derivative good) \u2014 present THOSE positions as the lecture's view; you are teaching this author's course, not a neutral survey. Use the source's own examples (e.g. "the present King of France", "square circle", "Hesperus is Phosphorus", Larry, Smith vs. Brown) where they fit.
 
-TONE: Authoritative, precise, and clear \u2014 a brilliant lecturer making hard material followable. Use concrete worked examples from the source. No filler, no "in this lecture we will", no exercises, no summary of what philosophy is in general.
+DENSITY: Write a dense, substantive lecture of roughly 2200-3200 words. Define every technical term on first appearance, preserve logical structure (premises -> conclusion, objection -> reply), and prefer depth over breadth.
+
+TONE: Authoritative, precise, and clear \u2014 a brilliant lecturer making hard material followable. No filler, no "in this lecture we will", no exercises, no questions, no closing exhortations.
 
 OUTPUT FORMAT \u2014 respond in EXACTLY this shape and nothing else:
-TITLE: <a concise 3-8 word topic title drawn from the source content>
 BLURB: <one sentence, max 140 characters, catalog-style description of the lecture>
 ===BODY===
-<GitHub-flavored Markdown. Begin with a single H1 ("# <title>"). Use ## section headers, **bold** for key technical terms on first use, and numbered/bulleted lists for argument steps. Do not include any exercises or questions.>`;
-async function generateLecture(c) {
-  const src = chapterText(c);
-  const user = `SOURCE TEXT \u2014 Chapter ${c.n} (this is the ONLY material you may teach from):
+<GitHub-flavored Markdown. Begin with a single H1 ("# <the exact title given>"). Use ## section headers, **bold** for key technical terms on first use, and numbered/bulleted lists for argument steps. Do not include any exercises or questions.>`;
+async function generateLecture(spec, bullets) {
+  const src = sourceForTopic(spec);
+  const tenPoints = bullets.map((b, i) => `${i + 1}. ${b}`).join("\n");
+  const user = `TOPIC: ${spec.code} ${spec.title}
+UNIT: ${spec.unit} \u2014 ${UNIT_TITLES[spec.unit]}
 
-${src}`;
+TEN KEY POINTS to develop, in this order (each is a thesis to teach and defend):
+${tenPoints}
+
+SOURCE TEXT from the assigned book (the ONLY material you may teach from; use it for arguments, examples, and terminology):
+
+${src}
+
+Write the lecture now. The H1 must read exactly: "# ${spec.title}".`;
   const resp = await openai.chat.completions.create({
     model: TEXT_MODEL,
-    max_completion_tokens: 8e3,
+    max_completion_tokens: 6500,
+    reasoning_effort: "low",
     messages: [
       { role: "system", content: LECTURE_SYS },
       { role: "user", content: user }
     ]
   });
   const out = resp.choices[0]?.message?.content?.trim() ?? "";
-  const titleM = out.match(/^TITLE:\s*(.+)$/m);
   const blurbM = out.match(/^BLURB:\s*(.+)$/m);
   const bodyIdx = out.indexOf("===BODY===");
   const body = (bodyIdx >= 0 ? out.slice(bodyIdx + "===BODY===".length) : out).trim();
-  const title = titleM?.[1]?.trim().replace(/[*#]/g, "") || `Chapter ${c.n}`;
   const blurb = blurbM?.[1]?.trim().replace(/[*#]/g, "") || "";
-  if (body.length < 600) {
-    throw new Error(`Chapter ${c.n}: body too short (${body.length} chars) \u2014 likely a bad generation`);
+  if (body.length < 1200) {
+    throw new Error(`${spec.code}: body too short (${body.length} chars) \u2014 likely a bad generation`);
   }
-  return { title, blurb, body };
+  return { blurb, body };
 }
 function loadTopics() {
   if (existsSync(TOPICS_OUT)) {
@@ -9854,49 +9944,54 @@ function loadTopics() {
   return [];
 }
 function writeTopics(topics) {
-  const ordered = [...topics].sort((a, b) => a._chapter - b._chapter);
-  const perUnit = {};
+  const ordered = [...topics].sort((a, b) => a._order - b._order);
   for (const t of ordered) {
-    perUnit[t.weekNumber] = (perUnit[t.weekNumber] ?? 0) + 1;
-    t.lectureTitle = `${t.weekNumber}.${perUnit[t.weekNumber]} ${t.title}`;
+    t.lectureTitle = `${t._code} ${t.title}`;
   }
   writeFileSync(TOPICS_OUT, JSON.stringify(ordered, null, 2) + "\n");
 }
 async function runLectures() {
-  let chapters = CHAPTERS;
-  if (LIMIT > 0) chapters = chapters.slice(0, LIMIT);
+  const bulletMap = loadBullets();
+  let specs = TOPIC_SPECS;
+  if (ONLY) specs = specs.filter((s) => ONLY.includes(s.code));
+  if (LIMIT > 0) specs = specs.slice(0, LIMIT);
   const existing = loadTopics();
   const bySlug = new Map(existing.map((t) => [t.slug, t]));
   const limit2 = pLimit(CONCURRENCY);
   let done = 0;
   await Promise.all(
-    chapters.map(
-      (c) => limit2(async () => {
-        const slug = `ch${c.n}`;
+    specs.map(
+      (spec, idx) => limit2(async () => {
+        const slug = slugForCode(spec.code);
+        const bullets = bulletMap.get(spec.code);
+        if (!bullets || bullets.length < 5) {
+          throw new Error(`${spec.code}: missing/short bullets (${bullets?.length ?? 0}) in approved file`);
+        }
         if (!FORCE && bySlug.get(slug)?.body) {
-          log(`skip ch${c.n} (already generated)`);
+          log(`skip ${spec.code} (already generated)`);
           done++;
           return;
         }
-        log(`generating ch${c.n} (unit ${c.unit})...`);
-        const { title, blurb, body } = await generateLecture(c);
+        log(`generating ${spec.code} (unit ${spec.unit}) "${spec.title}"...`);
+        const { blurb, body } = await generateLecture(spec, bullets);
         const topic = {
           slug,
-          title,
-          weekNumber: c.unit,
+          title: spec.title,
+          weekNumber: spec.unit,
           blurb,
-          lectureTitle: `${c.unit}.0 ${title}`,
+          lectureTitle: `${spec.code} ${spec.title}`,
           body,
-          _chapter: c.n
+          _code: spec.code,
+          _order: TOPIC_SPECS.indexOf(spec) >= 0 ? TOPIC_SPECS.indexOf(spec) : idx
         };
         bySlug.set(slug, topic);
         writeTopics([...bySlug.values()]);
         done++;
-        log(`  done ch${c.n}: "${title}" (${body.length} chars) [${done}/${chapters.length}]`);
+        log(`  done ${spec.code}: "${spec.title}" (${body.length} chars) [${done}/${specs.length}]`);
       })
     )
   );
-  const all = [...bySlug.values()].sort((a, b) => a._chapter - b._chapter);
+  const all = [...bySlug.values()].sort((a, b) => a._order - b._order);
   writeTopics(all);
   log(`lectures complete: ${all.length} topics`);
   return all;
@@ -9914,12 +10009,13 @@ function probSys(n, slugs) {
 Output STRICT JSON of the form:
 {"problems":[{"topicSlug":"...","prompt":"...","correctAnswer":"...","explanation":"...","hint":"..."}]}
 
-RULES:
+${questionDesignBlock()}
+
+ADDITIONAL RULES:
 - Produce EXACTLY ${n} problems.
 - "topicSlug" MUST be one of: ${slugs.join(", ")}. Distribute problems across several of these topics.
-- Each "prompt" must present a CONCRETE scenario, dialogue, argument, or worked case and ask the student to APPLY the course's concepts \u2014 analyze, reconstruct, evaluate, find a counterexample, or apply a distinction. NEVER ask "define X" or "what is Y".
-- Ground every problem STRICTLY in the supplied lecture material \u2014 use that material's own arguments, distinctions, and examples. Do not introduce outside philosophy.
-- "correctAnswer": a model answer of 150-300 words that a strong student would write, in prose.
+- Ground every problem in the principles taught in the supplied lecture material (use that material's own distinctions and positions to decide what a correct answer is). Do not introduce outside philosophy. But the SCENARIO in each prompt must be fresh and invented, never one of the lecture's own examples.
+- "correctAnswer": a model answer of 150-300 words that a strong student would write, in prose, reasoning from the course's positions.
 - "explanation": 1-2 sentences naming the principle being tested and what a strong answer must show.
 - "hint" is optional; include it only when genuinely useful.
 Return ONLY the JSON object.`;
@@ -9928,7 +10024,8 @@ async function generateProblems(n, units, topics, perTopicChars) {
   const { text, slugs } = unitContext(topics, units, perTopicChars);
   const resp = await openai.chat.completions.create({
     model: TEXT_MODEL,
-    max_completion_tokens: 8e3,
+    max_completion_tokens: 7e3,
+    reasoning_effort: "low",
     response_format: { type: "json_object" },
     messages: [
       { role: "system", content: probSys(n, slugs) },
@@ -9957,7 +10054,7 @@ ${text}` }
 }
 function assignmentSpecs() {
   const specs = [];
-  for (const u of [1, 2, 3, 4, 5]) {
+  for (const u of [1, 2, 3, 4]) {
     specs.push({
       kind: "homework",
       title: `Homework ${u} \u2014 ${UNIT_TITLES[u]}`,
@@ -9967,7 +10064,7 @@ function assignmentSpecs() {
       instructions: "Untimed practice. Answer each question in a few complete sentences, in your own words.",
       count: 5,
       units: [u],
-      perTopicChars: 4500
+      perTopicChars: 4e3
     });
     specs.push({
       kind: "test",
@@ -9978,18 +10075,18 @@ function assignmentSpecs() {
       instructions: "Timed test. Answer each question thoroughly and in your own words.",
       count: 5,
       units: [u],
-      perTopicChars: 4500
+      perTopicChars: 4e3
     });
-    if (u === 3) {
+    if (u === 2) {
       specs.push({
         kind: "midterm",
-        title: "Midterm Examination \u2014 Units 1\u20133",
-        weekNumber: 3,
+        title: "Midterm Examination \u2014 Units 1\u20132",
+        weekNumber: 2,
         isTimed: true,
         timeLimitMinutes: 90,
-        instructions: "Timed midterm covering Units 1\u20133. Answer each question thoroughly in your own words.",
+        instructions: "Timed midterm covering Units 1\u20132. Answer each question thoroughly in your own words.",
         count: 6,
-        units: [1, 2, 3],
+        units: [1, 2],
         perTopicChars: 1800
       });
     }
@@ -9997,13 +10094,13 @@ function assignmentSpecs() {
   specs.push({
     kind: "final",
     title: "Final Examination \u2014 Comprehensive",
-    weekNumber: 5,
+    weekNumber: 4,
     isTimed: true,
     timeLimitMinutes: 120,
-    instructions: "Timed comprehensive final covering all five units. Answer each question thoroughly in your own words.",
+    instructions: "Timed comprehensive final covering all four units. Answer each question thoroughly in your own words.",
     count: 8,
-    units: [1, 2, 3, 4, 5],
-    perTopicChars: 1400
+    units: [1, 2, 3, 4],
+    perTopicChars: 1300
   });
   return specs;
 }
@@ -10064,7 +10161,7 @@ async function runAssignments(topics) {
 }
 async function main() {
   if (!existsSync(CONTENT_DIR)) mkdirSync(CONTENT_DIR, { recursive: true });
-  log(`PHASE=${PHASE} LIMIT=${LIMIT} FORCE=${FORCE} CONCURRENCY=${CONCURRENCY}`);
+  log(`PHASE=${PHASE} LIMIT=${LIMIT} ONLY=${ONLY?.join(",") ?? "-"} FORCE=${FORCE} CONCURRENCY=${CONCURRENCY}`);
   let topics = [];
   if (PHASE === "lectures" || PHASE === "all") {
     topics = await runLectures();

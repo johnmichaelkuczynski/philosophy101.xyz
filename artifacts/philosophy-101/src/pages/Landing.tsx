@@ -36,17 +36,16 @@ const features = [
   },
   {
     icon: Scale,
-    title: "Five Units, 27 Chapters",
-    body: "From the analysis of meaning to language, knowledge, mind, and value.",
+    title: "Four Units, 24 Topics",
+    body: "From language and analysis to knowledge, mind, and how we ought to live.",
   },
 ];
 
 const units = [
-  { n: 1, title: "The Analysis of Analysis" },
-  { n: 2, title: "Philosophy of Language" },
-  { n: 3, title: "Knowledge & Epistemology" },
-  { n: 4, title: "Metaphysics, Mind & Modality" },
-  { n: 5, title: "Ethics, Value & Religion" },
+  { n: 1, title: "Language, Logic, and Analysis" },
+  { n: 2, title: "Knowledge and Epistemology" },
+  { n: 3, title: "Mind, Freedom, and Metaphysics" },
+  { n: 4, title: "Ethics, Value, and Law" },
 ];
 
 export default function Landing() {
@@ -85,7 +84,7 @@ export default function Landing() {
         <section className="max-w-4xl mx-auto px-6 pt-20 pb-16 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary text-secondary-foreground text-xs font-medium mb-6">
             <Scale className="w-3.5 h-3.5" />
-            A five-unit college analytic philosophy course
+            A four-unit college analytic philosophy course
           </div>
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-primary leading-tight mb-5">
             Read the idea. Ground the idea. Write the idea.

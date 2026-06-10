@@ -21,29 +21,24 @@ const router: IRouter = Router();
 
 const WEEK_TITLES: Record<number, { title: string; summary: string }> = {
   1: {
-    title: "The Analysis of Analysis",
+    title: "Language, Logic, and Analysis",
     summary:
-      "What analytic philosophy is and does: logical form and conceptual analysis, properties beyond space and time, propositions as sets of properties, and clarifying meanings rather than positing entities.",
+      "What philosophy is and how it analyzes thought: logical form and conceptual analysis, meaning and reference, definite descriptions, sense and the limits of definition, and how language connects to the world.",
   },
   2: {
-    title: "Philosophy of Language",
+    title: "Knowledge and Epistemology",
     summary:
-      "Meaning, reference, and semantic rules: thought without language, definite descriptions and scope, Frege's logicism and incompleteness, semantic and content externalism, and how thought connects to the world.",
+      "Justified true belief and beyond: the sources and structure of justification, a priori and a posteriori knowledge, acquaintance and self-knowledge, Gettier-style cases, and skepticism about the foundations of knowledge.",
   },
   3: {
-    title: "Knowledge & Epistemology",
+    title: "Mind, Freedom, and Metaphysics",
     summary:
-      "Justified true belief and beyond: hyper-justified belief and Gettier-style cases, Descartes and skepticism, inference and causal anomalies, and the reach and limits of empiricism.",
+      "Determinism and predictability, compatibilist freedom and the will, personal and objectual identity, and causality, explanation, and the structure of the modal categories.",
   },
   4: {
-    title: "Metaphysics, Mind & Modality",
+    title: "Ethics, Value, and Law",
     summary:
-      "Determinism and predictability, compatibilist freedom and the will, personal and objectual identity, causality and explanation, and modality and analytic truth.",
-  },
-  5: {
-    title: "Ethics, Value & Religion",
-    summary:
-      "Intrinsic good and the right, emotivism and its collapse, moral conventionalism and nihilism, subjecthood and flourishing, Kant on rationality and autonomy, welfare and duty, religion and the Euthyphro, existentialism, and moral protection in law.",
+      "Intrinsic good and the right, emotivism and its collapse, moral conventionalism and nihilism, flourishing and welfare, Kantian rationality and autonomy, religion and the Euthyphro, and moral protection in law.",
   },
 };
 
@@ -118,7 +113,7 @@ async function buildWeek(weekNumber: number) {
 }
 
 router.get("/course/overview", async (_req, res) => {
-  const weeks = await Promise.all([1, 2, 3, 4, 5].map(buildWeek));
+  const weeks = await Promise.all([1, 2, 3, 4].map(buildWeek));
   const assignmentsTotal = weeks.reduce((s, w) => s + w.assignments.length, 0);
   const assignmentsCompleted = weeks.reduce(
     (s, w) => s + w.assignments.filter((a) => a.status === "submitted").length,
@@ -144,7 +139,7 @@ router.get("/course/weeks/:weekNumber", async (req, res): Promise<void> => {
     ? req.params.weekNumber[0]
     : req.params.weekNumber;
   const weekNumber = parseInt(raw ?? "", 10);
-  if (!Number.isFinite(weekNumber) || weekNumber < 1 || weekNumber > 5) {
+  if (!Number.isFinite(weekNumber) || weekNumber < 1 || weekNumber > 4) {
     res.status(400).json({ error: "invalid weekNumber" });
     return;
   }

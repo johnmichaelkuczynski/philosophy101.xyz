@@ -25,3 +25,13 @@ esbuild first (JSON loader + a `createRequire` banner), then `node` the bundle;
 set `NODE_ENV=production` so pino doesn't spawn its pretty-print worker thread.
 The OpenAI integration only needs `OPENAI_API_KEY`/`OPENAI_BASE_URL` from env,
 which are present in the shell, so no server/route is required.
+
+**Reasoning-model gotcha:** the chat model here (gpt-5.x family) is a reasoning
+model — a SINGLE dense generation call can exceed the 120s bash cap on its own,
+so the whole window gets SIGKILLed and nothing writes. Two fixes, both needed:
+- pass `reasoning_effort: "low"` on generation calls (cuts server-side latency a
+  lot; quality stays fine for lecture/problem writing);
+- keep CONCURRENCY low (~2). With concurrency 4 a slow wave can have all 4 calls
+  in-flight at the 120s kill and lose the entire window's work; at 2 each pair
+  reliably finishes and writes within the window. Resumability then makes the
+  job converge over ~8-12 windows.
