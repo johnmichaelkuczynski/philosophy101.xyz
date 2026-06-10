@@ -1,0 +1,310 @@
+PHILOSOPHY 101 — TEN KEY BULLET POINTS PER TOPIC
+(Substance drawn only from the assigned book, "Analytic Philosophy as Logical Analysis." No outside sources.)
+
+
+===========================================================
+UNIT 1
+===========================================================
+
+1.1 WHAT PHILOSOPHY IS AND HOW IT DIFFERS FROM SCIENCE
+- Philosophy delineates the structures of the categories (event, cause, mind, knowledge, truth, justice, etc.) through which we understand the world; this is its sole function.
+- We use these categories expertly but understand them poorly; philosophy makes explicit the conditions a thing must satisfy to fall under them — meta-knowledge, not first-order knowledge.
+- Philosophical puzzles differ from empirical ones: empirical puzzles are settled by gathering facts, philosophical ones by analyzing concepts and structure.
+- Philosophy is not merely linguistic analysis; the real objects of analysis are often propositions (sentence-meanings), not sentences.
+- Science discovers contingent spatiotemporal facts; philosophy clarifies necessary structural relations among properties — a priori conceptual analysis, not empirical observation.
+- The philosopher seeks the laws governing the laws, standing to the physicist as the physicist stands to the engineer and the engineer to the stranded motorist.
+- Philosophy is uniquely "metaknowledge" because it analyzes the preconditions of all knowledge — the analysis of analysis, the logic of logic, the science of science.
+- Analytic philosophy follows the rule that when a correct belief seems to entail an absurdity, one clarifies its logical form rather than positing exotic entities.
+- Philosophy proceeds by explication, making explicit the previously unrecognized implications already latent in beliefs we hold.
+- Unlike the botanist, who prizes the actual over the possible, the philosopher prizes the possible over the actual, using the actual only to illuminate structural necessity.
+
+1.2 THE MEANING OF MEANING
+- "Meaning" has three senses: evidential (smoke means fire), psychological (speaker intent), and linguistic (what a sentence says).
+- Only the linguistic sense concerns the nature of language, and it is not reducible to the other two.
+- Psychological meaning is parasitic on linguistic meaning: you cannot mean something by a sentence unless you already know what it means.
+- Linguistic meaning is not speaker-meaning: sentences never uttered by anyone still have determinate meanings.
+- The meaning of a true-or-false sentence is a proposition; propositions are mind-independent abstract structures distinct from the sentences expressing them.
+- Evidential meaning is a non-causal relation in which one state counts as evidence for another because no reasonable alternative explanation remains.
+- A proposition is identical with a set of properties, and its truth consists in the joint instantiatedness of those properties.
+- Linguistic meaning is compositional and normative: it is fixed by the meanings of a sentence's parts and their mode of combination, regardless of individual intent.
+- The Gricean reduction of meaning to speaker-intention fails because it cannot assign meaning to subsentential expressions like "of" or "or."
+- Semantic rules are not psychological reports of what people do mean but rules defining what expressions literally say.
+
+1.3 LANGUAGE AND THOUGHT
+- Knowledge of language sharply enhances intelligence, yet we do NOT think in language — neither a natural language nor an innate one.
+- Thought is prior to language: linguistic competence presupposes the ability to make judgments.
+- Propositions are digital (they decompose into discrete units); perceptions are analogue (seamless).
+- Distinct sentences express one proposition and one sentence carries many meanings, so thoughts cannot be identical with sentence-tokens.
+- Language aids thought by supplying a manipulable system of "icons" that integrate otherwise compartmentalized streams of cognition.
+- Sentences have a unique decomposition into discrete significant parts, whereas images are continuous and lack any finite unit of significance.
+- Language enhances intelligence chiefly by letting us label and manipulate abstract principles we can already grasp independently of it.
+- Our ability to tell linguistic from non-linguistic behavior shows we grasp a concept in practice before we can state its conditions.
+- Language-less creatures can still have discursive thought, since the capacity to judge precedes any capacity to encode judgments in a code.
+- Whatever can be grasped through language can be grasped independently of it, because language is a tool for communication and integration, not the medium of thought.
+
+1.4 DO WE THINK IN WORDS?
+- No: we routinely have sophisticated thoughts we cannot put into words, and articulating a thought often requires hard prior thinking.
+- The slogan "if you can't say it, you don't know it" is false; knowledge shows itself in drawings, movements, and perceptual discriminations.
+- Version 1 (we think in English, Spanish, etc.) fails: speakers of different languages share thoughts, and paraphrase and disambiguation would be impossible.
+- Version 2 (an innate code) is viciously circular: understanding any code, even an innate one, already requires thinking.
+- It feels as though we think in words because mental imagery accompanies thought, but those feeble images are not the thought itself.
+- That the same thought is expressible by different sentences (paraphrase) directly refutes the claim that thinking is conducted in a natural language.
+- If thought were itself linguistic, the familiar experience of a thought one cannot yet verbalize would be impossible.
+- Thinking requires judging whether a code is being applied correctly, a judgment that cannot itself be reduced to more code.
+- The "inner voice" is the mind using linguistic icons to stabilize and focus attention during complex reasoning.
+- An innate "language of thought" launches a regress, since interpreting the innate code would require a still-prior level of understanding.
+
+1.5 PERCEPTION AND CONCEPTION
+- Perception is purely descriptive: to see an object is to grasp an existence-claim it uniquely satisfies.
+- You never perceive a bare object plus its properties; you perceive organized property- and relation-instances.
+- Conception, like perception, is descriptive: to think of a thing is to grasp some existence-claim it uniquely satisfies.
+- Semantic rules are descriptively threadbare but are always learned through descriptively rich, pre-semantic perceptual information.
+- An utterance can literally mean something spare while implicating something far richer absorbed from its pre-semantic context.
+- Seeing an object involves seeing instances of its morphological, chromatic, and kinematic properties organized into a structure.
+- Perception is always of truths or falsehoods (propositions), e.g., that there is a thing of such-and-such a kind over there.
+- Every sensory message is consistent with the object's non-existence, so the eyes report property-instantiation, not identity.
+- To think about a thing is derivative of propositional thought — really to think that some truth holds concerning it.
+- We routinely confuse what the eyes tell us (descriptive information) with what prior knowledge reads into it (identification).
+
+1.6 NAMES, REFERENCE, LITERAL VS. IMPLIED MEANING
+- Following Mill, proper names denote without connoting; names are rigid designators, while descriptions are not.
+- Definite descriptions are not singular terms; on Russell's Theory of Descriptions, "the phi is psi" quantifies rather than refers.
+- A name's literal meaning is exhausted by its referent; everything richer is non-literal implicature.
+- Competent speakers separate literal meaning from implicature: "Larry doesn't have a mustache" is merely false, not self-contradictory.
+- Reference-fixing is not meaning-giving: a description can fix who "Larry" picks out without becoming the name's meaning.
+- Names are rigid because they pick out the same object in every possible world in which that object exists.
+- Descriptions like "the author of Hamlet" are non-rigid, since we can conceive of worlds where someone else, or no one, fits them.
+- Frege and Russell erred in inferring from the fact that our concepts of people are descriptive that the names for them must be descriptive too.
+- "Hesperus is Phosphorus" is informative because the pre-semantic information used to fix the names is smuggled into the communicated message.
+- "Socrates died of hemlock" is not a tautology because one can know the semantic rule for "Socrates" without knowing his biography.
+
+1.7 NECESSITY, POSSIBILITY, AND THE ANALYTIC-SYNTHETIC DISTINCTION
+- Necessity and possibility are properties of propositions, not of objects — there are no impossible or merely possible objects.
+- Necessity does not come in degrees; apparent degrees merely reflect how many conditions must hold for a proposition to be true.
+- There is NO necessary a posteriori; Kripke's Hesperus/Phosphorus argument confuses the threadbare semantic rule with the rich pre-semantic information.
+- Analytic truth is high-resolution structural truth: a proposition is necessary in virtue of its structure plus its constituents' substructure.
+- Quine's denial of analyticity is self-defeating and would entail that nothing confirms anything.
+- A statement is analytic when its negation is incoherent or internally inconsistent.
+- Formal truth is a special case of analytic truth (true under all interpretations), but not every analytic truth is formal.
+- Quine's naturalized epistemology is incoherent, since science cannot scientifically prove that observation is a source of knowledge.
+- Informal analytic truths (e.g., "triangles have three sides") turn on the meanings of their terms rather than on logical form alone.
+- The analytic-synthetic distinction must be kept, since without it we cannot mark the difference between clarifying a concept and discovering a fact.
+
+1.8 DEDUCTION, INDUCTION, AND INFERENCE
+- An inference forms a new belief on the basis of old ones; deductive inference aims at entailment, inductive inference at confirmation.
+- There are two kinds of induction — enumeration and inference to the best explanation — and the latter is fundamental.
+- Naked enumerative induction is worthless (the gambler's fallacy) unless it warrants positing a structure that explains the regularity.
+- Deduction is ampliative, contrary to the textbook view: the conclusion genuinely amplifies the premises.
+- Formal logic is largely irrelevant to thought; formal entailment is parasitic on informal, conceptual entailment.
+- Deduction expands explicit knowledge precisely by revealing implications we had not yet recognized.
+- Inference to the best explanation works by minimizing causal anomalies to settle on the most probable explanation of the data.
+- Applying a logical rule or algorithm still requires an underlying act of judgment that only a thinking being can perform.
+- An inference is deductive only when the truth of the premises necessitates the truth of the conclusion by structural entailment.
+- The gambler's fallacy shows that mere counting of instances yields no predictive power without belief in an underlying structure.
+
+
+===========================================================
+UNIT 2
+===========================================================
+
+2.1 KNOWLEDGE AS JUSTIFIED TRUE BELIEF
+- Knowledge requires truth, belief, and justification — but Gettier and Russell cases (the Ford promotion, the stopped clock) show JTB is not sufficient.
+- A lucky guess, or a belief reached from false premises that happens to land on truth, is not knowledge.
+- The missing fourth condition is that justification and truth be non-accidentally connected.
+- Knowledge is hyper-justified true belief: justified AND embodying a correct explanation of the very data doing the justifying.
+- In the Larry-in-Texas case you know because your belief correctly explains the evidence; in the Martian-reroute variant you don't, because your explanation is wrong.
+- A belief produced by intellectual ability rather than luck or prejudice is thereby justified, so justification is built into genuine discovery.
+- Procedural knowledge (knowing how) is bona fide knowledge that has been integrated deeply enough to be mobilized automatically.
+- The gap between knowledge and philosophy is the gap between knowing through the categories and having meta-knowledge about them.
+- One cannot accept a proposition without grasping it; merely having it described to you is not belief.
+- Intuitive breakthroughs count as knowledge because a correct belief reached by intuition rather than luck is justified by the logic embodied in the discovery.
+
+2.2 SOURCES OF JUSTIFICATION AND TESTIMONY
+- There are exactly three ultimate sources of justification: perceptual, introspective, and rational inference.
+- Most knowledge combines perception and inference; some purely conceptual knowledge uses inference alone; some self-knowledge is introspective.
+- Testimony yields knowledge only if the source is reliable AND the hearer has independent evidence of that reliability (the cult leader vs. the physician).
+- Testimony is not a fourth source: it reduces to perception (hearing or reading the words, plus evidence of reliability) combined with inference.
+- Childhood testimony typically begins as mere belief and becomes knowledge later, once corroborated or rediscovered independently.
+- Intersubjective corroboration is a primary way the merely suggested content of testimony is converted into justified belief.
+- We trust intuitions because later data vindicate them, but they remain "intuitions" only while their justifications stay unarticulated.
+- An "unjustified belief" may mean either a belief with no basis or one whose existing justification has simply not been stated.
+- Justification is often encoded in the very thoughts that produced the belief, so justification is frequently inseparable from discovery.
+- For testimony to transmit knowledge, the hearer must have good reason to authenticate the speaker, or the speaker's justification never becomes the hearer's.
+
+2.3 A PRIORI VS. A POSTERIORI KNOWLEDGE
+- Analytic (conceptual) knowledge is acquired by analyzing the object of belief (circles are figures of uniform curvature).
+- Synthetic knowledge has a non-conceptual component; no conceptual analysis settles it (whether Rumsfeld was born in the US).
+- Synthetic/a posteriori knowledge is of spatiotemporal facts; analytic/a priori knowledge is of timeless relations among properties.
+- There is no necessary a posteriori and no synthetic a priori: the a priori/a posteriori line tracks the analytic/synthetic line.
+- A priori knowledge is non-empirical, and non-empirical knowledge is itself a prerequisite for empirical knowledge.
+- A priori knowledge is available merely in virtue of how the mind is structured, like software bundled with a new computer.
+- Kripke's "Hesperus is Phosphorus" is not necessary a posteriori, since the literal identity is the a priori, analytic truth that x = x.
+- The illusion of necessary a posteriori truths arises from conflating a sentence's literal meaning with its contingent connotations.
+- Rigid designators pick out the same object in all possible worlds because their semantic rules do not depend on the object's properties.
+- Since names refer directly, an identity between two names is either an analytic triviality or it communicates a contingent description.
+
+2.4 KNOWLEDGE BY ACQUAINTANCE, SELF-KNOWLEDGE, INTUITIVE VS. DISCURSIVE
+- Awareness of objects largely collapses into knowledge of truths, so acquaintance is mostly descriptive and propositional.
+- The likely exception is direct awareness of one's own conscious states (intense pain), where appearance and reality merge.
+- Some self-knowledge is more direct than external knowledge, but much self-knowledge is theoretical and indirect.
+- Beliefs like "1+1=2" are not constituents of consciousness, so much of the mind is unconscious — vindicating a core claim of psychoanalysis.
+- Intuitive vs. discursive: Timmy and Jones both know it is a circle, but Jones also knows the grounds and the fact under two descriptions, dissolving Moore's paradox of analysis.
+- Discursive thought is remedial; thought is most efficient precisely insofar as it remains intuitive.
+- To "know" a person is usually a derivative way of saying one knows many specific truths about that person.
+- Even acquaintance-talk reduces to descriptive recognition of property-instances rather than contact with bare objects.
+- Because every sensory message is consistent with non-existence, the object of thought is always a propositional existence-claim, not the thing itself.
+- An intuition is a belief whose justification is currently unknown to the holder, even though that justification may exist and be valid.
+
+2.5 SKEPTICISM AND THE FOUNDATIONS OF KNOWLEDGE
+- Skepticism is doubt, not disbelief; philosophical skepticisms target whole categories (the external world, induction, unconscious states, universals).
+- Hume's problem of induction: enumerative induction seems to need the Uniformity Principle, yet the UP can only be known inductively — a vicious circle.
+- The operative principle is not the UP but the Minimization of Causal anomalies (MC): prefer the theory leaving fewer unexplained connections.
+- MC is analytically true (inherent in the very concept of explanation), so it needs no inductive validation, which breaks Hume's circle without begging the question.
+- Hume wrongly assumes enumerative induction is primary; in fact it is parasitic on inference to the best explanation.
+- Skepticism about the external world is the doubt that perception represents reality rather than a vast, consistent hallucination.
+- Minimizing causal anomalies is not a rule of thumb but a requirement of the logic of explanation: prefer fewer unexplained explainers.
+- Direct knowledge is known without inference (like pain); indirect knowledge must be figured out by deductive or non-deductive reasoning.
+- Incoherent demands (like a "square circle") mark pseudo-tasks that fail to express any possible state of affairs, not limits on power.
+- Descartes' demand for rigorous establishment pushes toward axiomatizing knowledge to show our representations are not mere dreams.
+
+2.6 EMPIRICISM VS. RATIONALISM
+- Strict empiricism (all knowledge is sense-based) is indefensible; at least some knowledge is non-perceptual.
+- We understand the world through universals, which are non-spatiotemporal, causally impotent, and unperceivable, yet indispensable — so empiricism fails.
+- Not all thoughts are pictorial: conditionals, negations, disjunctions, and dependence-relations cannot be imaged.
+- Images are too specific in some respects and too general in others, and are not self-referentially true or false, so grasping truth is not sense-based.
+- Berkeley unwittingly refutes empiricism (no general idea is an image), then collapses it into idealism; Platonism about properties requires a rationalist epistemology.
+- A Platonist ontology — spatiotemporal things as instances of non-spatiotemporal properties — forces a rationalist epistemology.
+- Properties must exist because common predication ("Sally and Fred are both intelligent") commits us to a shared entity not identical with its instances.
+- Anti-Platonist reductions fail because co-extensive properties (creature with a heart vs. with a kidney) are distinct even if their instances coincide.
+- Higher-order properties (such as "being uninstantiated") show the realm of properties exists independently of any spatiotemporal members.
+- Conceptualism is false, since properties such as the resemblance among rocks existed before there were any minds to conceive them.
+
+
+===========================================================
+UNIT 3
+===========================================================
+
+3.1 THE MIND-BODY PROBLEM: DUALISM VS. MATERIALISM
+- Materialism is probably correct: the mental affects the physical, anything that affects the physical is itself physical (Fodor's argument), and such interactions do not violate physical law.
+- Epiphenomenalism is false: causation is bidirectional, so if the physical affects the mental, the mental affects the physical.
+- The dualist's strongest cards: the mental has properties (intentionality, phenomenology) the physical seems to lack, and an appearance cannot have hidden parts.
+- There is a real explanatory gap, but, contra Davidson, it does not establish dualism, since identity does not require translatability.
+- Behaviorism and functionalism both fail: behaviorism ignores prior mental states, and functionalism strips the mental of causal powers.
+- On the favored view, mental states are identical with neural events or structures, making the mental a subset of the physical world.
+- Intentionality is the property of being "about" something, which the dualist insists no purely physical arrangement could possess.
+- The explanatory gap is met by identifying the mind with the enduring structure that mediates mentation, not with the passing stream of thoughts.
+- A materialist still counts as a mentalist when mental events are identified with neural patterns, grounding the self in stable personality architecture.
+- Behaviorism founders because beliefs and intentions are not mere dispositions to behave; responses depend on prior mental states.
+
+3.2 FREE WILL, DETERMINISM, AND THE LIBET EXPERIMENT
+- Indeterminism does not help freedom — it hurts it: an undetermined choice is rootless, more like a seizure than a free act.
+- Determinism is in fact a prerequisite for freedom: indeterministic mechanisms would leave you willing but unable, like someone with Parkinson's.
+- Locke/Moore-style compatibilism holds that a free act is one caused by your choice; Frankfurt cases refine but do not refute the core.
+- Frankfurt's deeper point: freedom requires acting on second-order desires that align with your first-order ones.
+- The ego-syntonic/ego-dystonic distinction explains it: freedom is identifying with the desires you act on.
+- Determinism is the thesis that the state of the world at a time fixes the entire future, so each choice flows from the distant past.
+- Freedom is not the absence of causes but the presence of the right causes — your own choices and desires.
+- Acting on a desire you reject (ego-dystonic) is unfree even when the act originates within you.
+- A free agent acts on first-order desires that he also wants to have (the relevant second-order desires).
+- Unpredictability of behavior is no evidence of indeterminism, since even deterministic systems can be logically unpredictable.
+
+3.3 PERSONAL IDENTITY
+- Statements of personal identity share the logical structure of object identity: a shared causal sequence or co-instantiated unique properties.
+- You are your mind — and even a materialist counts as a mentalist if mental events are identical with patterns of neural activity.
+- The strongest physicalist challenge: a person survives a thought-free coma, yet nothing that goes out of existence comes back.
+- You are your mind, but your mind is a structure that generates thoughts rather than the thoughts themselves, so it persists through gaps in consciousness.
+- Structure-preserving continuity is the essence of diachronic identity; teleportation and atom-reassembly yield mere duplicates.
+- Numerical identity (being one and the same thing) is distinct from qualitative identity (exact similarity); only the former is required for persistence.
+- Diachronic identity consists in causal succession with robust explanatory and predictive connectedness, and so it admits of degrees.
+- The "ice-man" type case shows a sentient creature survives an interruption of mental activity provided its structure stays intact.
+- Personal identity is not a four-dimensional "space-time worm," a view that denies genuine change and mishandles fission cases.
+- To be identical with your past self is to be its successor in a continuous causal sequence, not to share all properties at once.
+
+3.4 CAUSATION
+- Only events (and conditions, which themselves consist of events) are causes — objects are not — and nothing non-spatiotemporal can be a cause.
+- A "cause" is really an INUS-condition (Mackie): an insufficient but non-redundant part of an unnecessary but sufficient condition.
+- Aristotle's formal and material "causes" are incoherent; final causes reduce to efficient causes, so only efficient causation is basic.
+- Hume's regularity analysis fails three ways: it cannot distinguish real from pseudo-causation, it makes adjacent events causal, and it is circular because space and time are causal notions.
+- Hume's counterfactual analysis also fails: counterfactuals are disguised causal claims, so the analysis is circular.
+- Persistence and spatial occupancy are themselves causally loaded, so the idea of a causally sterile world of pure sequence is incoherent.
+- A causal sequence is a continuous series in which each event causes its successor, and such sequences fix the boundaries of objects.
+- Evidential meaning is often underwritten by causation but is not identical with it, since effects can be evidence of their causes.
+- Causation cannot reduce to mere sequence, because spatial and temporal separation require a continuous chain linking cause to effect.
+- The unobservability of causal "glue" is no more an objection to causation than the unobservability of electrons is an objection to them.
+
+
+===========================================================
+UNIT 4
+===========================================================
+
+4.1 WHAT ETHICS IS
+- Ethics clarifies the structures of normative categories (good, bad, just, commendable) by stating the conditions an act must meet to fall under them.
+- Ethics concerns intrinsic, not instrumental, goodness — what is good apart from its consequences.
+- Moral attributes are non-privative and non-binary: commendable and condemnable are both positive properties, so one act can be both.
+- "Right" means least bad and "wrong" means least good; an outweighed obligation is not cancelled (stealing to save your children is right yet still leaves a real wrong).
+- Key distinctions: legality is not morality; the goodness of an act is not the goodness of the agent (intention fixes praise and blame); and judging without sufficient information can be condemnable.
+- Ethics adds no new facts to the sciences; it analyzes the structures of concepts like "good" and "just."
+- Descriptive statements say how things are, whereas normative statements register satisfaction or violation of a standard.
+- A moral law can hold categorically and still be overridden by a weightier obligation in a particular case.
+- An act is intrinsically good when its goodness does not depend on consequences or the agent's practical interests.
+- The goodness of an agent tracks intention, while the goodness of an act tracks conformity to normative structures.
+
+4.2 EMOTIVISM, MORAL REALISM, AND FLOURISHING
+- Emotivism is false: emotions are themselves contentful and doxastic — they embody beliefs about value, so they can be correct or incorrect.
+- Moral realism holds: ethical claims carry a factual component, so morality is not mere opinion.
+- The one thing with non-derivative moral value is flourishing — the actualization of one's abilities; the value of altruism is derivative of it.
+- A self-effacing "moral" life (Smith) can be a worthless life, while a flourishing scoundrel (Brown) can have the better life.
+- An ethical system that requires you to mutilate your true self is incoherent; still, flourishing must be distinguished from mere self-indulgence.
+- Because emotions are essentially value-beliefs, one can sincerely judge "x is good" coolly and without any feeling.
+- Moral truths supervene on our psychological-biological structure, so the moral facts are fixed once the biological and psychological facts are.
+- Altruism has value only insofar as it facilitates the flourishing of others, not intrinsically.
+- A world of milquetoast do-gooders who never act on self-interest would be immoral, since it would block genius and flourishing.
+- Moral truth is not made by opinion, culture, or legislation but is grounded in the fixed capacities and vulnerabilities of human nature.
+
+4.3 UTILITARIANISM, HEDONISM, EGOISM, AND KANT'S ETHICS
+- Psychological hedonism and egoism are false: people pursue activities because they see value in them, and that value is why the activities yield pleasure (Beethoven vs. the heroin user).
+- Ethical hedonism and egoism are likewise false and dehumanizing, since they would require the Beethovens of the world to become idlers.
+- Kant's two categorical imperatives fail: they are not equivalent, both wrongly forbid lying or manipulating even to avert catastrophe, and Kant conflates the good with the praiseworthy.
+- Utilitarianism captures a truth (helping is good) but faces fatal counterexamples (transplant, framing); rule-utilitarianism collapses into act-utilitarianism or deontology.
+- Consequentialists and deontologists want the same thing — a world in which rights are not violated — and disagree only about how to achieve it.
+- The doctrine of double effect distinguishes intended results from merely foreseen ones, as when a doctor causes pain in order to save a life.
+- Kant wrongly models morality on legality, assuming a moral law holds only if it dictates the outcome of an action.
+- Rationality and autonomy are at bottom the same: autonomy is deciding how to live, rationality deciding how to think.
+- Kant's argument for the rationality of morality fails because it equivocates on what it is to "universalize" a principle.
+- An autonomy-based principle is a better approximation of moral truth, licensing intervention only to prevent greater violations of autonomy.
+
+4.4 PHILOSOPHY OF RELIGION AND EXISTENTIALISM
+- Philosophy has almost nothing to teach about religion: the famous "paradoxes" (omnipotence, the first cause) are logical puzzles with no bearing on God's existence.
+- Religious belief is by its nature not evidence-dependent, so attacking it on scientific or logical grounds begs the question, and liberalizing it abandons it.
+- The one genuine contribution is the Euthyphro argument: morality is grounded in the structures of properties, not in God's decrees (even God cannot make rape good, just as He cannot make a square circle).
+- Aquinas's first-cause and degree arguments fail on grounds of syntactic ambiguity.
+- Existentialism is an attitude more than a doctrine; choosing one's values has real merit, but the claim "there are no values one must accept" is false (some are hardwired).
+- Paradoxes of omnipotence, like the stone too heavy to lift, are quantifier puzzles that apply to any agent, not specially to a deity.
+- Aquinas's first-cause argument conflates "every event has a predecessor" with "some event precedes all events."
+- Existentialism is right that choosing values rather than merely inheriting them yields a freer, more psychologically viable life.
+- The doctrine "there are no values one must accept" is refuted by values hardwired into our emotional and biological architecture (compare Chomsky on language).
+- Philosophy of religion has grown overly technical, often losing sight of religion in favor of logical exercises.
+
+4.5 PHILOSOPHY OF LAW
+- Legality and morality are distinct: acts can be legal yet immoral (antebellum slavery) and illegal yet moral (freeing slaves), though the two often overlap.
+- Much talk of "inviolable rights" is best understood in rule-utilitarian terms: rule-bending that seems locally harmless would have disastrous systemic effects.
+- National sovereignty is not intrinsically inviolable; it belongs to governments, which are legitimate only insofar as they serve their constituents.
+- Legal systems punish attempts less than completed crimes; the best rationale is evidential — failure can signal a lack of resolve — not a difference in moral status.
+- Law's relation to morality is itself a delicate structural question, handled through the same analysis of normative categories that governs ethics.
+- A legal system supplies the structure needed to protect basic rights and coordinate society.
+- Anything failing certain minimal moral requirements is, by the very concept of law, not a legitimate legal system.
+- The moralistic thesis holds that law is not merely power or coercion but is bound up with moral protection.
+- National sovereignty is a derivative right, holding only to the extent a state actually protects its citizens' interests.
+- Legal positivism wrongly severs law from morality, missing that legal obligations are a species of moral obligation.
+
+4.6 CAPSTONE SYNTHESIS
+- One thread runs through the system: conception and perception are descriptive, language mirrors thought, and reference is direct — which dissolves the confusions in Frege, Russell on names, and Kripke.
+- Platonism about properties grounds the whole edifice: universals are real, non-spatiotemporal, and known a priori, which forces a rationalist epistemology and sinks strict empiricism.
+- Necessity, analyticity, and entailment are matters of structure and substructure; deduction is ampliative; and formal logic is parasitic on informal conceptual truth.
+- In metaphysics: materialism about mind, determinism as the basis (not the enemy) of freedom, structure-preserving continuity for identity, and causation as real anti-Humean production.
+- In value theory: moral realism with flourishing as the sole non-derivative good, and consequentialism and deontology unified.
+- Philosophy throughout is the delineation of the structures of categories like person, event, knowledge, and value-judgment.
+- Propositions are identical with sets of properties, and truth is the joint instantiatedness of those properties.
+- Thought is independent of language, and linguistic meaning is fixed by a non-psychological, external dimension.
+- Knowledge is not bare justified true belief but true belief whose justification correctly explains the relevant data.
+- The whole system rests on the recognition that logical form routinely diverges from surface grammatical form, demanding rigorous analysis.
