@@ -26,7 +26,8 @@ import WeekView from "@/pages/WeekView";
 import LectureView from "@/pages/LectureView";
 import AssignmentRunner from "@/pages/AssignmentRunner";
 import PracticeAssignmentRunner from "@/pages/PracticeAssignmentRunner";
-import Diagnostics from "@/pages/Diagnostics";
+import SystemCheck from "@/pages/SystemCheck";
+import DiagnosticTests from "@/pages/DiagnosticTests";
 import TopicPractice from "@/pages/TopicPractice";
 
 // Resolves the key from window.location.hostname so the same build serves
@@ -192,7 +193,14 @@ function Router() {
         component={protectedComponent(AssignmentRunner)}
       />
       <Route path="/analytics" component={protectedComponent(Analytics)} />
-      <Route path="/diagnostics" component={protectedComponent(Diagnostics)} />
+      <Route
+        path="/diagnostics"
+        component={protectedComponent(DiagnosticTests)}
+      />
+      <Route
+        path="/system-check"
+        component={protectedComponent(SystemCheck)}
+      />
       <Route
         path="/weeks/:weekNumber"
         component={protectedComponent(WeekView)}

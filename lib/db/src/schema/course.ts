@@ -7,6 +7,7 @@ import {
   timestamp,
   jsonb,
   doublePrecision,
+  uniqueIndex,
 } from "drizzle-orm/pg-core";
 
 export const topicsTable = pgTable("topics", {
@@ -182,3 +183,52 @@ export const practiceAssignmentMessagesTable = pgTable("practice_assignment_mess
   content: text("content").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+// ---------- Diagnostics: ungraded, no-penalty, no-AI-detection comprehension checks ----------
+// A diagnostic "run" is one fresh instance of a diagnostic test. Every run gets a
+// newly generated question set (never reusing the previous run's prompts), so the
+// same diagnostic can be retaken without repeating itself.
+export const diagnosticRunsTable = pgTable("diagnostic_runs", {
+  id: serial("id").primaryKey(),
+  scope: text("scope").notNull(), // pre_course | week | final
+  weekNumber: integer("week_number"), // set only when scope = 'week'
+  title: text("title").notNull(),
+  status: text("status").notNull().default("in_progress"), // in_progress | completed
+  scorePercent: doublePrecision("score_percent"),
+  correctCount: integer("correct_count"),
+  totalCount: integer("total_count"),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  completedAt: timestamp("completed_at", { withTimezone: true }),
+});
+
+export const diagnosticQuestionsTable = pgTable("diagnostic_questions", {
+  id: serial("id").primaryKey(),
+  runId: integer("run_id")
+    .notNull()
+    .references(() => diagnosticRunsTable.id, { onDelete: "cascade" }),
+  position: integer("position").notNull(),
+  prompt: text("prompt").notNull(),
+  correctAnswer: text("correct_answer").notNull(),
+  explanation: text("explanation").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+});
+
+export const diagnosticAnswersTable = pgTable(
+  "diagnostic_answers",
+  {
+    id: serial("id").primaryKey(),
+    runId: integer("run_id")
+      .notNull()
+      .references(() => diagnosticRunsTable.id, { onDelete: "cascade" }),
+    questionId: integer("question_id")
+      .notNull()
+      .references(() => diagnosticQuestionsTable.id, { onDelete: "cascade" }),
+    answer: text("answer").notNull().default(""),
+    correct: boolean("correct"),
+    feedback: text("feedback"),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("diagnostic_answers_run_question_uq").on(t.runId, t.questionId),
+  ],
+);

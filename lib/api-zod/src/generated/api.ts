@@ -601,3 +601,75 @@ export const GenerateReportResponse = zod.object({
 })
 
 
+/**
+ * @summary List the six diagnostics with a summary of the most recent run of each
+ */
+export const ListDiagnosticTestsResponse = zod.object({
+  "tests": zod.array(zod.object({
+  "scope": zod.enum(['pre_course', 'week', 'final']),
+  "weekNumber": zod.number().nullish(),
+  "title": zod.string(),
+  "description": zod.string(),
+  "questionCount": zod.number(),
+  "lastRun": zod.union([zod.object({
+  "runId": zod.number(),
+  "scorePercent": zod.number(),
+  "correctCount": zod.number(),
+  "totalCount": zod.number(),
+  "takenAt": zod.coerce.date()
+}),zod.null()]).optional()
+}))
+})
+
+
+/**
+ * @summary Start a diagnostic — generates a FRESH question set that never repeats the previous run
+ */
+export const StartDiagnosticTestBody = zod.object({
+  "scope": zod.enum(['pre_course', 'week', 'final']),
+  "weekNumber": zod.number().nullish().describe('Required (1-4) when scope is \'week\'; ignored otherwise')
+})
+
+export const StartDiagnosticTestResponse = zod.object({
+  "runId": zod.number(),
+  "scope": zod.enum(['pre_course', 'week', 'final']),
+  "weekNumber": zod.number().nullish(),
+  "title": zod.string(),
+  "questions": zod.array(zod.object({
+  "id": zod.number(),
+  "position": zod.number(),
+  "prompt": zod.string()
+}))
+})
+
+
+/**
+ * @summary Submit a diagnostic for ungraded feedback (no penalty, no AI detection)
+ */
+export const SubmitDiagnosticTestParams = zod.object({
+  "runId": zod.coerce.number()
+})
+
+export const SubmitDiagnosticTestBody = zod.object({
+  "answers": zod.array(zod.object({
+  "questionId": zod.number(),
+  "answer": zod.string()
+}))
+})
+
+export const SubmitDiagnosticTestResponse = zod.object({
+  "runId": zod.number(),
+  "scorePercent": zod.number(),
+  "correctCount": zod.number(),
+  "totalCount": zod.number(),
+  "results": zod.array(zod.object({
+  "questionId": zod.number(),
+  "prompt": zod.string(),
+  "correct": zod.boolean(),
+  "correctAnswer": zod.string(),
+  "explanation": zod.string(),
+  "feedback": zod.string()
+}))
+})
+
+

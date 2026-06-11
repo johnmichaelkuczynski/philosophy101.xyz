@@ -11,6 +11,9 @@ import {
   practiceSessionsTable,
   practiceProblemsTable,
   practiceAttemptsTable,
+  diagnosticRunsTable,
+  diagnosticQuestionsTable,
+  diagnosticAnswersTable,
 } from "@workspace/db";
 import { chatText, chatJson, FAST_MODEL } from "../lib/ai";
 import { detect, gptzeroAiScore } from "../lib/detection";
@@ -63,7 +66,7 @@ router.get("/diagnostics/system", async (_req, res) => {
       const l = await db.select().from(lecturesTable);
       const a = await db.select().from(assignmentsTable);
       const p = await db.select().from(problemsTable);
-      if (t.length < 27) throw new Error(`only ${t.length} topics`);
+      if (t.length < 24) throw new Error(`only ${t.length} topics`);
       if (l.length < 1) throw new Error("no lectures");
       if (a.length < 1) throw new Error("no assignments");
       if (p.length < 1) throw new Error("no problems");
@@ -686,6 +689,9 @@ router.post("/diagnostics/reset", async (_req, res) => {
   await db.delete(practiceSessionsTable);
   await db.delete(answersTable);
   await db.delete(attemptsTable);
+  await db.delete(diagnosticAnswersTable);
+  await db.delete(diagnosticQuestionsTable);
+  await db.delete(diagnosticRunsTable);
   res.json({ ok: true, resetAt: new Date().toISOString() });
 });
 

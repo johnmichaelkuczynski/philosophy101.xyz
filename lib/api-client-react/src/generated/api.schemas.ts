@@ -169,6 +169,105 @@ export interface AnswerSaved {
   ok: boolean;
 }
 
+export type DiagnosticTestSummaryScope = typeof DiagnosticTestSummaryScope[keyof typeof DiagnosticTestSummaryScope];
+
+
+export const DiagnosticTestSummaryScope = {
+  pre_course: 'pre_course',
+  week: 'week',
+  final: 'final',
+} as const;
+
+export interface DiagnosticRunSummary {
+  runId: number;
+  scorePercent: number;
+  correctCount: number;
+  totalCount: number;
+  takenAt: string;
+}
+
+export interface DiagnosticTestSummary {
+  scope: DiagnosticTestSummaryScope;
+  /** @nullable */
+  weekNumber?: number | null;
+  title: string;
+  description: string;
+  questionCount: number;
+  lastRun?: DiagnosticRunSummary | null;
+}
+
+export interface DiagnosticTestCatalog {
+  tests: DiagnosticTestSummary[];
+}
+
+export type StartDiagnosticTestInputScope = typeof StartDiagnosticTestInputScope[keyof typeof StartDiagnosticTestInputScope];
+
+
+export const StartDiagnosticTestInputScope = {
+  pre_course: 'pre_course',
+  week: 'week',
+  final: 'final',
+} as const;
+
+export interface StartDiagnosticTestInput {
+  scope: StartDiagnosticTestInputScope;
+  /**
+     * Required (1-4) when scope is 'week'; ignored otherwise
+     * @nullable
+     */
+  weekNumber?: number | null;
+}
+
+export type DiagnosticTestRunScope = typeof DiagnosticTestRunScope[keyof typeof DiagnosticTestRunScope];
+
+
+export const DiagnosticTestRunScope = {
+  pre_course: 'pre_course',
+  week: 'week',
+  final: 'final',
+} as const;
+
+export interface DiagnosticTestQuestion {
+  id: number;
+  position: number;
+  prompt: string;
+}
+
+export interface DiagnosticTestRun {
+  runId: number;
+  scope: DiagnosticTestRunScope;
+  /** @nullable */
+  weekNumber?: number | null;
+  title: string;
+  questions: DiagnosticTestQuestion[];
+}
+
+export interface DiagnosticAnswerInput {
+  questionId: number;
+  answer: string;
+}
+
+export interface DiagnosticTestSubmission {
+  answers: DiagnosticAnswerInput[];
+}
+
+export interface DiagnosticQuestionResult {
+  questionId: number;
+  prompt: string;
+  correct: boolean;
+  correctAnswer: string;
+  explanation: string;
+  feedback: string;
+}
+
+export interface DiagnosticTestResult {
+  runId: number;
+  scorePercent: number;
+  correctCount: number;
+  totalCount: number;
+  results: DiagnosticQuestionResult[];
+}
+
 export interface ProblemResult {
   problemId: number;
   correct: boolean;

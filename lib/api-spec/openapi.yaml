@@ -22,6 +22,8 @@ tags:
     description: AI-generation and diachronic detection
   - name: analytics
     description: User performance analytics and reports
+  - name: diagnosticTests
+    description: Ungraded, no-penalty, no-detection comprehension diagnostics (regenerated fresh each time)
 paths:
   /healthz:
     get:
@@ -480,6 +482,62 @@ paths:
               schema:
                 $ref: "#/components/schemas/AnalyticsReport"
 
+  /diagnostic-tests:
+    get:
+      operationId: listDiagnosticTests
+      tags: [diagnosticTests]
+      summary: List the six diagnostics with a summary of the most recent run of each
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagnosticTestCatalog"
+
+  /diagnostic-tests/start:
+    post:
+      operationId: startDiagnosticTest
+      tags: [diagnosticTests]
+      summary: Start a diagnostic — generates a FRESH question set that never repeats the previous run
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/StartDiagnosticTestInput"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagnosticTestRun"
+
+  /diagnostic-tests/{runId}/submit:
+    post:
+      operationId: submitDiagnosticTest
+      tags: [diagnosticTests]
+      summary: Submit a diagnostic for ungraded feedback (no penalty, no AI detection)
+      parameters:
+        - name: runId
+          in: path
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DiagnosticTestSubmission"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DiagnosticTestResult"
+
 components:
   schemas:
     HealthStatus:
@@ -639,6 +697,115 @@ components:
       required: [ok]
       properties:
         ok: { type: boolean }
+
+    DiagnosticTestCatalog:
+      type: object
+      required: [tests]
+      properties:
+        tests:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiagnosticTestSummary"
+
+    DiagnosticTestSummary:
+      type: object
+      required: [scope, title, description, questionCount]
+      properties:
+        scope:
+          type: string
+          enum: [pre_course, week, final]
+        weekNumber: { type: ["integer", "null"] }
+        title: { type: string }
+        description: { type: string }
+        questionCount: { type: integer }
+        lastRun:
+          oneOf:
+            - $ref: "#/components/schemas/DiagnosticRunSummary"
+            - type: "null"
+
+    DiagnosticRunSummary:
+      type: object
+      required: [runId, scorePercent, correctCount, totalCount, takenAt]
+      properties:
+        runId: { type: integer }
+        scorePercent: { type: number }
+        correctCount: { type: integer }
+        totalCount: { type: integer }
+        takenAt: { type: string, format: date-time }
+
+    StartDiagnosticTestInput:
+      type: object
+      required: [scope]
+      properties:
+        scope:
+          type: string
+          enum: [pre_course, week, final]
+        weekNumber:
+          type: ["integer", "null"]
+          description: Required (1-4) when scope is 'week'; ignored otherwise
+
+    DiagnosticTestRun:
+      type: object
+      required: [runId, scope, title, questions]
+      properties:
+        runId: { type: integer }
+        scope:
+          type: string
+          enum: [pre_course, week, final]
+        weekNumber: { type: ["integer", "null"] }
+        title: { type: string }
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiagnosticTestQuestion"
+
+    DiagnosticTestQuestion:
+      type: object
+      required: [id, position, prompt]
+      properties:
+        id: { type: integer }
+        position: { type: integer }
+        prompt: { type: string }
+
+    DiagnosticTestSubmission:
+      type: object
+      required: [answers]
+      properties:
+        answers:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiagnosticAnswerInput"
+
+    DiagnosticAnswerInput:
+      type: object
+      required: [questionId, answer]
+      properties:
+        questionId: { type: integer }
+        answer: { type: string }
+
+    DiagnosticTestResult:
+      type: object
+      required: [runId, scorePercent, correctCount, totalCount, results]
+      properties:
+        runId: { type: integer }
+        scorePercent: { type: number }
+        correctCount: { type: integer }
+        totalCount: { type: integer }
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/DiagnosticQuestionResult"
+
+    DiagnosticQuestionResult:
+      type: object
+      required: [questionId, prompt, correct, correctAnswer, explanation, feedback]
+      properties:
+        questionId: { type: integer }
+        prompt: { type: string }
+        correct: { type: boolean }
+        correctAnswer: { type: string }
+        explanation: { type: string }
+        feedback: { type: string }
 
     AttemptResult:
       type: object

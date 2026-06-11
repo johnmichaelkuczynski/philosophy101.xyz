@@ -32,6 +32,10 @@ import type {
   CourseOverview,
   DetectionResult,
   DetectionScanInput,
+  DiagnosticTestCatalog,
+  DiagnosticTestResult,
+  DiagnosticTestRun,
+  DiagnosticTestSubmission,
   DiscussFeedbackInput,
   DiscussReply,
   ExpandLectureInput,
@@ -46,6 +50,7 @@ import type {
   PracticeProblem,
   PracticeSession,
   PracticeSessionInput,
+  StartDiagnosticTestInput,
   Topic,
   TopicAnalytics,
   TutorAskInput,
@@ -1912,5 +1917,225 @@ export const useGenerateReport = <TError = ErrorType<unknown>,
         TContext
       > => {
       return useMutation(getGenerateReportMutationOptions(options));
+    }
+
+export const getListDiagnosticTestsUrl = () => {
+
+
+
+
+  return `/api/diagnostic-tests`
+}
+
+/**
+ * @summary List the six diagnostics with a summary of the most recent run of each
+ */
+export const listDiagnosticTests = async ( options?: RequestInit): Promise<DiagnosticTestCatalog> => {
+
+  return customFetch<DiagnosticTestCatalog>(getListDiagnosticTestsUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListDiagnosticTestsQueryKey = () => {
+    return [
+    `/api/diagnostic-tests`
+    ] as const;
+    }
+
+
+export const getListDiagnosticTestsQueryOptions = <TData = Awaited<ReturnType<typeof listDiagnosticTests>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listDiagnosticTests>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListDiagnosticTestsQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listDiagnosticTests>>> = ({ signal }) => listDiagnosticTests({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listDiagnosticTests>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListDiagnosticTestsQueryResult = NonNullable<Awaited<ReturnType<typeof listDiagnosticTests>>>
+export type ListDiagnosticTestsQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary List the six diagnostics with a summary of the most recent run of each
+ */
+
+export function useListDiagnosticTests<TData = Awaited<ReturnType<typeof listDiagnosticTests>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listDiagnosticTests>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListDiagnosticTestsQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getStartDiagnosticTestUrl = () => {
+
+
+
+
+  return `/api/diagnostic-tests/start`
+}
+
+/**
+ * @summary Start a diagnostic — generates a FRESH question set that never repeats the previous run
+ */
+export const startDiagnosticTest = async (startDiagnosticTestInput: StartDiagnosticTestInput, options?: RequestInit): Promise<DiagnosticTestRun> => {
+
+  return customFetch<DiagnosticTestRun>(getStartDiagnosticTestUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      startDiagnosticTestInput,)
+  }
+);}
+
+
+
+
+export const getStartDiagnosticTestMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof startDiagnosticTest>>, TError,{data: BodyType<StartDiagnosticTestInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof startDiagnosticTest>>, TError,{data: BodyType<StartDiagnosticTestInput>}, TContext> => {
+
+const mutationKey = ['startDiagnosticTest'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof startDiagnosticTest>>, {data: BodyType<StartDiagnosticTestInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  startDiagnosticTest(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type StartDiagnosticTestMutationResult = NonNullable<Awaited<ReturnType<typeof startDiagnosticTest>>>
+    export type StartDiagnosticTestMutationBody = BodyType<StartDiagnosticTestInput>
+    export type StartDiagnosticTestMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Start a diagnostic — generates a FRESH question set that never repeats the previous run
+ */
+export const useStartDiagnosticTest = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof startDiagnosticTest>>, TError,{data: BodyType<StartDiagnosticTestInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof startDiagnosticTest>>,
+        TError,
+        {data: BodyType<StartDiagnosticTestInput>},
+        TContext
+      > => {
+      return useMutation(getStartDiagnosticTestMutationOptions(options));
+    }
+
+export const getSubmitDiagnosticTestUrl = (runId: number,) => {
+
+
+
+
+  return `/api/diagnostic-tests/${runId}/submit`
+}
+
+/**
+ * @summary Submit a diagnostic for ungraded feedback (no penalty, no AI detection)
+ */
+export const submitDiagnosticTest = async (runId: number,
+    diagnosticTestSubmission: DiagnosticTestSubmission, options?: RequestInit): Promise<DiagnosticTestResult> => {
+
+  return customFetch<DiagnosticTestResult>(getSubmitDiagnosticTestUrl(runId),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      diagnosticTestSubmission,)
+  }
+);}
+
+
+
+
+export const getSubmitDiagnosticTestMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitDiagnosticTest>>, TError,{runId: number;data: BodyType<DiagnosticTestSubmission>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof submitDiagnosticTest>>, TError,{runId: number;data: BodyType<DiagnosticTestSubmission>}, TContext> => {
+
+const mutationKey = ['submitDiagnosticTest'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof submitDiagnosticTest>>, {runId: number;data: BodyType<DiagnosticTestSubmission>}> = (props) => {
+          const {runId,data} = props ?? {};
+
+          return  submitDiagnosticTest(runId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SubmitDiagnosticTestMutationResult = NonNullable<Awaited<ReturnType<typeof submitDiagnosticTest>>>
+    export type SubmitDiagnosticTestMutationBody = BodyType<DiagnosticTestSubmission>
+    export type SubmitDiagnosticTestMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Submit a diagnostic for ungraded feedback (no penalty, no AI detection)
+ */
+export const useSubmitDiagnosticTest = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitDiagnosticTest>>, TError,{runId: number;data: BodyType<DiagnosticTestSubmission>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof submitDiagnosticTest>>,
+        TError,
+        {runId: number;data: BodyType<DiagnosticTestSubmission>},
+        TContext
+      > => {
+      return useMutation(getSubmitDiagnosticTestMutationOptions(options));
     }
 

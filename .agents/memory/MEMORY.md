@@ -9,3 +9,4 @@
 - [Course content re-seed](course-content-reseed.md) — seedIfEmpty skips when topics exist; truncate course tables + restart api-server to apply seed.ts content edits.
 - [Practice vs graded asymmetry](practice-vs-graded.md) — practice = no AI-detection + live tutor + unlimited fresh instances; graded = detection on, tutor off. Don't "unify" them.
 - [Lazy gen request-scoping](lazy-gen-request-scoping.md) — async generate-on-open responses must be ignored if the user navigated away, or stale content bleeds across items.
+- [Student diagnostics (fresh tests)](diagnostics-fresh-tests.md) — 3rd assessment mode: ungraded, no-detection, regenerated-fresh; novelty enforced server-side (Jaccard dedupe + retry), not just prompted.

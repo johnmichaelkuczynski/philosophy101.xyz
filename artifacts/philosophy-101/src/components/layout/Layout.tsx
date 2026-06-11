@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, PenTool, BarChart3, Activity, RotateCcw, LogOut } from "lucide-react";
+import { LayoutDashboard, PenTool, BarChart3, Stethoscope, Activity, RotateCcw, LogOut } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useClerk, useUser } from "@clerk/react";
 
@@ -12,6 +12,7 @@ export function Sidebar() {
   const navItems = [
     { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
     { href: "/assignments", label: "Assignments", icon: PenTool },
+    { href: "/diagnostics", label: "Diagnostics", icon: Stethoscope },
     { href: "/analytics", label: "Analytics", icon: BarChart3 },
   ];
 
@@ -57,7 +58,7 @@ export function Sidebar() {
 
 function TopBar() {
   const [location, setLocation] = useLocation();
-  const active = location.startsWith("/diagnostics");
+  const active = location.startsWith("/system-check");
   const qc = useQueryClient();
   const { signOut } = useClerk();
   const { user } = useUser();
@@ -95,17 +96,17 @@ function TopBar() {
         <RotateCcw className={`w-4 h-4 ${resetting ? "animate-spin" : ""}`} />
         {resetting ? "Resetting…" : "Reset course"}
       </button>
-      <Link href="/diagnostics">
+      <Link href="/system-check">
         <button
           className={`inline-flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
             active
               ? "bg-primary text-primary-foreground"
               : "border border-border hover:bg-secondary"
           }`}
-          data-testid="button-diagnostic"
+          data-testid="button-system-check"
         >
           <Activity className="w-4 h-4" />
-          Diagnostic
+          System Check
         </button>
       </Link>
 

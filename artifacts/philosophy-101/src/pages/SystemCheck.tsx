@@ -15,11 +15,6 @@ type RunResult = {
   steps: Step[];
 };
 
-const API = `${import.meta.env.BASE_URL.replace(/\/$/, "")}/api`.replace(
-  /^\/api/,
-  "/api",
-);
-
 function apiUrl(path: string): string {
   // The api-server is mounted at /api at the proxy level, not under the artifact path.
   return `/api${path}`;
@@ -72,7 +67,7 @@ function ResultCard({ title, result }: { title: string; result: RunResult | null
   );
 }
 
-export default function Diagnostics() {
+export default function SystemCheck() {
   const [sysBusy, setSysBusy] = useState(false);
   const [synthBusy, setSynthBusy] = useState(false);
   const [qcBusy, setQcBusy] = useState(false);
@@ -140,9 +135,9 @@ export default function Diagnostics() {
     <Layout>
       <div className="max-w-4xl mx-auto p-8 space-y-8">
         <div>
-          <h1 className="font-serif text-3xl mb-1">Diagnostics</h1>
+          <h1 className="font-serif text-3xl mb-1">System Check</h1>
           <p className="text-muted-foreground">
-            Three self-tests to verify the course app is healthy end-to-end.
+            Operator self-tests that verify the course app is healthy end-to-end.
           </p>
         </div>
 
@@ -150,7 +145,7 @@ export default function Diagnostics() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 className="font-serif text-xl flex items-center gap-2">
-                <Activity className="w-5 h-5" /> Diagnostic 1 — System check
+                <Activity className="w-5 h-5" /> Test 1 — System check
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
                 Verifies database connectivity, content seed, OpenAI integration (chat + JSON
@@ -176,7 +171,7 @@ export default function Diagnostics() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 className="font-serif text-xl flex items-center gap-2">
-                <Activity className="w-5 h-5" /> Diagnostic 2 — Synthetic student
+                <Activity className="w-5 h-5" /> Test 2 — Synthetic student
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
                 Walks a synthetic student through the whole course: reads every lecture,
@@ -206,7 +201,7 @@ export default function Diagnostics() {
           <div className="flex items-start justify-between gap-4">
             <div>
               <h2 className="font-serif text-xl flex items-center gap-2">
-                <ShieldCheck className="w-5 h-5" /> Diagnostic 3 — Answer-key quality control
+                <ShieldCheck className="w-5 h-5" /> Test 3 — Answer-key quality control
               </h2>
               <p className="text-sm text-muted-foreground mt-1">
                 Uses OpenAI to independently re-derive the answer to a sample of course
